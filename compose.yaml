@@ -1,0 +1,13 @@
+services:
+  nginx_server:
+    image: nginx:stable
+    ports: 
+      - 8000:80
+    volumes:
+      - ./nginx_server/confs:/etc/nginx/conf.d
+      - ./nginx_server/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - db_server
+  db_server:
+    image: postgres:14
+    env_file: ./envs/postgres.env
