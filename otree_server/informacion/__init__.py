@@ -1,3 +1,7 @@
+"""File containing the general and payments information for players
+Version: 1.0
+Made By: Edgar RP
+"""
 from otree.api import *
 
 
@@ -25,16 +29,22 @@ class Player(BasePlayer):
 
 
 # PAGES
-class MyPage(Page):
-    pass
+class O001_general(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento
+    
+
+class O002_pago(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento
+        
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            fmi=player.session.config["treatment_FMI"]
+        )
 
 
-class ResultsWaitPage(WaitPage):
-    pass
-
-
-class Results(Page):
-    pass
-
-
-page_sequence = [MyPage, ResultsWaitPage, Results]
+page_sequence = [O001_general, O002_pago]
