@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.0 -->
+    <!-- Version 1.1 -->
     <style>
         #_otree-title {
             display: none;
@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="row text-center mt-5">
                 <div class="alert alert-warning" role="alert">
-                    <h2>Consentimiento Informado</h2>
+                    <h2 class="text-capitalize">Consentimiento Informado</h2>
                 </div>
             </div>
             <div id="slide1" class="row my-3">
@@ -89,10 +89,10 @@
             let next = document.getElementById("slide"+(idx+1))
             fade(prev, 600, "out");
             fade(next, 600, "in");
-            idx++;
-            if (idx == 4){
+            if (idx == 3){
                 document.getElementById("fake_button").classList.add("d-none");
             }
+            idx++;
         };
     </script>
 {{ endblock }}
