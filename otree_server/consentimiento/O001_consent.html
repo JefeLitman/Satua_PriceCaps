@@ -1,10 +1,6 @@
 {{ block content }}
-    <!-- Version 1.1 -->
-    <style>
-        #_otree-title {
-            display: none;
-        }
-    </style>
+    <!-- Version 1.2 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
             <div class="row text-center mt-5">
@@ -53,37 +49,9 @@
             </div>
         </div>
     </div>
+    <script src="{{ static 'global/animation.js' }}"></script>
     <script>
         let idx = 1;
-        fade = (element, time, direction) => {
-            if (direction === "in"){
-                element.style.opacity = 0;
-                element.classList.remove("d-none");
-            }
-            else{
-                element.style.opacity = 1;
-            }
-
-            let last = +Date.now();
-            let tick = function() {
-                let delta = direction === "in" ? (Date.now() - last) : -(Date.now() - last);
-                element.style.opacity = +element.style.opacity + (delta / time);
-                last = +Date.now();
-
-                let comparison = direction === "in" ? +element.style.opacity < 1 : +element.style.opacity > 0;
-                if (comparison) {
-                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-                }
-                else{
-                    if (direction === "out"){
-                        element.classList.add("d-none");
-                    }
-                }
-            };
-
-            tick();
-        }
-
         document.getElementById("next").onclick = () => {
             let prev = document.getElementById("slide"+idx)
             let next = document.getElementById("slide"+(idx+1))
