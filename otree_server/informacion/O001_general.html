@@ -1,0 +1,88 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <style>
+        #_otree-title {
+            display: none;
+        }
+    </style>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-success" role="alert">
+                    <h2 class="text-capitalize">Instrucciones generales</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Bienvenido a esta sesión. A continuación participará en un estudio sobre toma de decisiones. Esta sesión durará X minutos. Todas las interacciones en la sesión serán a través del computador. Por lo tanto, todas sus decisiones serán anónimas y su identidad se mantendrá privada.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide2" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Los participantes han sido divididos al azar en grupos de 4. Esto significa que usted fue asignado al azar a un grupo con otros tres participantes. Su grupo estará conformado por los mismos participantes durante toda la sesión. Sin embargo, no sabrá quiénes son estos participantes, ni ellos sabrán quién es usted.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide3" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Antes de comenzar, le pedimos que no hable con otros participantes durante la sesión. Si tiene alguna pregunta, levante la mano y nos acercaremos a su puesto. Con gusto atenderemos sus consultas en privado. Si no cumple con esta regla, nos veremos obligados a excluirlo de la sesión. Apreciamos su cooperación.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let idx = 1;
+        fade = (element, time, direction) => {
+            if (direction === "in"){
+                element.style.opacity = 0;
+                element.classList.remove("d-none");
+            }
+            else{
+                element.style.opacity = 1;
+            }
+
+            let last = +Date.now();
+            let tick = function() {
+                let delta = direction === "in" ? (Date.now() - last) : -(Date.now() - last);
+                element.style.opacity = +element.style.opacity + (delta / time);
+                last = +Date.now();
+
+                let comparison = direction === "in" ? +element.style.opacity < 1 : +element.style.opacity > 0;
+                if (comparison) {
+                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                }
+                else{
+                    if (direction === "out"){
+                        element.classList.add("d-none");
+                    }
+                }
+            };
+
+            tick();
+        }
+
+        document.getElementById("next").onclick = () => {
+            if (idx == 3){
+                document.getElementById("submit").click();
+            }
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, 600, "out");
+            fade(next, 600, "in");
+            idx++;
+        };
+    </script>
+{{ endblock }}
