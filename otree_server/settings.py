@@ -1,19 +1,13 @@
 """File containing the general settings for the oTree app
-Version: 0.1
+Version: 0.2
 Made By: Edgar RP
 """
 from os import environ
 
-# Variables to set as environment
-#environ['DATABASE_URL'] = 'postgres://<user>:<pass>@<server>/<db_name>'
-#environ['OTREE_ADMIN_PASSWORD'] = "test"
-#environ['OTREE_PRODUCTION'] = '1'
-#environ['OTREE_AUTH_LEVEL'] = 'DEBUG'
-
 SESSION_CONFIGS = [
     dict(
-        name='Instrucciones',
-        app_sequence=['instructions'],
+        name='Precios_Maximos',
+        app_sequence=['consentimiento', 'informacion'],
         num_demo_participants=4,
         treatment_FMI=True
     ),
@@ -28,7 +22,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=15000, doc=""
 )
 
-PARTICIPANT_FIELDS = []
+PARTICIPANT_FIELDS = ["consentimiento"]
 SESSION_FIELDS = []
 
 # ISO-639 code
@@ -39,7 +33,7 @@ LANGUAGE_CODE = 'es'
 REAL_WORLD_CURRENCY_CODE = 'COP'
 USE_POINTS = True
 
-ADMIN_USERNAME = 'admin'
+ADMIN_USERNAME = 'rosario'
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
