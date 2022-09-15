@@ -1,0 +1,103 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <style>
+        #_otree-title {
+            display: none;
+        }
+    </style>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-success" role="alert">
+                    <h2 class="text-capitalize">Pago</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Usted recibirá <b>15.000 COP</b> por asistir si permanece durante toda la sesión. <b>También tendrá la oportunidad de ganar dinero adicional.</b> Estas ganancias adicionales dependen de lo que usted y otros participantes de su grupo hagan durante la sesión. Lo explicaremos en detalle más adelante.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide2" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Durante la sesión no hablaremos de COP sino de puntos. Por lo tanto, sus ganancias se calcularán primero en puntos. Los puntos que gane durante la sesión se convertirán a COP al final de la sesión. Aplicaremos la siguiente tasa de conversión:</p>
+                        <p class="text-center"><b>X puntos = Y COP</b></p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide3" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>
+                            Esta sesión se divide en 6 secciones. Le daremos instrucciones al inicio de cada sección. 
+                            {{ if fmi }}
+                                En 5 de las 6 secciones tendrá la oportunidad de ganar dinero.
+                            {{ endif }}
+                        </p>
+                        <p><b>
+                            Al final de la sesión, una de las 
+                            {{ if fmi }}
+                                5
+                            {{ else }}
+                                6
+                            {{ endif }}
+                            secciones será seleccionada al azar, y le pagaremos las ganancias que haya obtenido en esa sección. Todas las secciones tienen la misma probabilidad de ser seleccionadas. Sus ganancias en la sección seleccionada se sumarán a su pago inicial de 15.000 COP. Le recordamos que los pagos se harán de manera digital únicamente a cuentas bancarias autorizadas por la universidad. Los pagos se verán reflejados en las próximas 48 horas una vez usted haya diligenciado y enviado el formulario para pagos que le compartiremos al final de la sesión.
+                        </b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let idx = 1;
+        fade = (element, time, direction) => {
+            if (direction === "in"){
+                element.style.opacity = 0;
+                element.classList.remove("d-none");
+            }
+            else{
+                element.style.opacity = 1;
+            }
+
+            let last = +Date.now();
+            let tick = function() {
+                let delta = direction === "in" ? (Date.now() - last) : -(Date.now() - last);
+                element.style.opacity = +element.style.opacity + (delta / time);
+                last = +Date.now();
+
+                let comparison = direction === "in" ? +element.style.opacity < 1 : +element.style.opacity > 0;
+                if (comparison) {
+                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                }
+                else{
+                    if (direction === "out"){
+                        element.classList.add("d-none");
+                    }
+                }
+            };
+
+            tick();
+        }
+
+        document.getElementById("next").onclick = () => {
+            if (idx == 3){
+                document.getElementById("submit").click();
+            }
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, 600, "out");
+            fade(next, 600, "in");
+            idx++;
+        };
+    </script>
+{{ endblock }}
