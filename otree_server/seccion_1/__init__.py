@@ -1,3 +1,7 @@
+"""File containing the section 1 configuration for players
+Version: 0.1
+Made By: Edgar RP
+"""
 from otree.api import *
 
 
@@ -8,7 +12,7 @@ Your app description
 
 class C(BaseConstants):
     NAME_IN_URL = 'seccion_1'
-    PLAYERS_PER_GROUP = None
+    PLAYERS_PER_GROUP = 4
     NUM_ROUNDS = 1
 
 
@@ -25,16 +29,7 @@ class Player(BasePlayer):
 
 
 # PAGES
-class MyPage(Page):
+class O001_instrucciones(Page):
     pass
 
-
-class ResultsWaitPage(WaitPage):
-    pass
-
-
-class Results(Page):
-    pass
-
-
-page_sequence = [MyPage, ResultsWaitPage, Results]
+page_sequence = [O001_instrucciones]
