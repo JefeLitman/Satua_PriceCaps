@@ -1,5 +1,5 @@
 """File containing the general settings for the oTree app
-Version: 0.2
+Version: 0.3
 Made By: Edgar RP
 """
 from os import environ
@@ -32,6 +32,15 @@ LANGUAGE_CODE = 'es'
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'COP'
 USE_POINTS = True
+
+ROOMS = [
+    dict(
+        name='espera',
+        display_name='Sala de espera',
+        participant_label_file='labels.txt',
+        use_secure_urls=False
+    )
+]
 
 ADMIN_USERNAME = 'rosario'
 # for security, best to set admin password in an environment variable
