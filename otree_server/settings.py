@@ -1,5 +1,5 @@
 """File containing the general settings for the oTree app
-Version: 0.3
+Version: 0.4
 Made By: Edgar RP
 """
 from os import environ
@@ -7,7 +7,7 @@ from os import environ
 SESSION_CONFIGS = [
     dict(
         name='Precios_Maximos',
-        app_sequence=['consentimiento', 'informacion'],
+        app_sequence=['consentimiento', 'informacion', 'seccion_1'],
         num_demo_participants=4,
         treatment_FMI=True
     ),
