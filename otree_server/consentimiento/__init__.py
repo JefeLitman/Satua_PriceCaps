@@ -1,5 +1,5 @@
 """File containing the consent pages for the players
-Version: 0.1
+Version: 1.0
 Made By: Edgar RP
 """
 from otree.api import *
@@ -24,20 +24,12 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
-
+    accepted = models.BooleanField()
 
 # PAGES
-class MyPage(Page):
-    pass
+class O001_consent(Page):
+    form_model = 'player'
+    form_fields = ['accepted']
 
 
-class ResultsWaitPage(WaitPage):
-    pass
-
-
-class Results(Page):
-    pass
-
-
-page_sequence = [MyPage, ResultsWaitPage, Results]
+page_sequence = [O001_consent]
