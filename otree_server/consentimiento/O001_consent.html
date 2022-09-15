@@ -1,0 +1,98 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <style>
+        #_otree-title {
+            display: none;
+        }
+    </style>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-warning" role="alert">
+                    <h2>Consentimiento Informado</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Esta sesión durará aproximadamente X minutos. En ella contestará preguntas y tomará decisiones. <b>Sus respuestas y sus decisiones serán anónimas. La información sobre sus respuestas y sus decisiones será utilizada para fines estrictamente académicos.</b> No hay riesgos previstos asociados con la participación en esta sesión.</p>
+                        <p>Si completa la sesión, su pago oscilará entre 10.000 y 60.000 pesos. Su pago dependerá de sus decisiones y de las decisiones de los demás participantes. Ningún otro participante conocerá su pago.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide2" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p><b>Su participación en la sesión es totalmente voluntaria. Puede retirarse en cualquier momento.</b> Sin embargo, si decide retirarse antes de que la sesión termine, no recibirá el pago.</p>
+                        <p>Adicionalmente, por protocolos de bioseguridad, deberá permanecer con el tapabocas que le entregamos o con su tapabocas durante la sesión. Si no cumple con esta indicación, tendremos que excluirlo de la sesión sin remuneración alguna.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide3" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Para recibir el pago deberá responder un formulario con sus datos bancarios al final de la sesión. Esta información no será utilizada con ningún otro fin.</p>
+                        <p>Si quiere una copia de este consentimiento informado, por favor pregúntenos por ella. Si tiene otras preguntas o inquietudes, puede escribir al siguiente correo: <b class="text-primary">rebel@urosario.du.co</b></p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide4" class="row my-3 d-none">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Aceptación</h5>
+                        <p class="card-text">Haga click en "Acepto" si está de acuerdo en continuar. Al aceptar declaro que comprendo la información anterior y mis derechos y compromisos durante esta sesión. También entiendo que puedo abandonar la sesión en cualquier momento renunciando a recibir el pago.</p>
+                        <button name="accepted" value="True" class="btn btn-success me-3">Acepto</button>
+                        <button name="accepted" value="False" class="btn btn-danger ms-3">No acepto</button>
+                    </div>
+                </div>
+            </div>
+            <div id="fake_button" class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let idx = 1;
+        fade = (element, time, direction) => {
+            if (direction === "in"){
+                element.style.opacity = 0;
+                element.classList.remove("d-none");
+            }
+            else{
+                element.style.opacity = 1;
+            }
+
+            let last = +Date.now();
+            let tick = function() {
+                let delta = direction === "in" ? (Date.now() - last) : -(Date.now() - last);
+                element.style.opacity = +element.style.opacity + (delta / time);
+                last = +Date.now();
+
+                let comparison = direction === "in" ? +element.style.opacity < 1 : +element.style.opacity > 0;
+                if (comparison) {
+                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                }
+                else{
+                    if (direction === "out"){
+                        element.classList.add("d-none");
+                    }
+                }
+            };
+
+            tick();
+        }
+
+        document.getElementById("next").onclick = () => {
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, 600, "out");
+            fade(next, 600, "in");
+            idx++;
+            if (idx == 4){
+                document.getElementById("fake_button").classList.add("d-none");
+            }
+        };
+    </script>
+{{ endblock }}
