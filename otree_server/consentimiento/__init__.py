@@ -1,5 +1,5 @@
 """File containing the consent pages for the players
-Version: 1.0
+Version: 1.1
 Made By: Edgar RP
 """
 from otree.api import *
@@ -30,6 +30,10 @@ class Player(BasePlayer):
 class O001_consent(Page):
     form_model = 'player'
     form_fields = ['accepted']
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        player.participant.consentimiento = player.accepted
 
 
 page_sequence = [O001_consent]
