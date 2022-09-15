@@ -1,0 +1,83 @@
+{{ block content }}
+    <!-- Version 0.1 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-primary" role="alert">
+                    <h2 class="text-capitalize">Seccion 1</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Ahora le daré instrucciones para la Sección 1.</p>
+                        <p>Los 4 participantes de un grupo participarán en un <b>mercado</b> como <b>compradores</b>. Además, hay 5 vendedores en cada grupo. A diferencia de los compradores, los vendedores no son personas sino computadoras.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide2" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>En cada período de intercambio, cada comprador puede adquirir 1 unidad del producto y cada vendedor automatizado puede vender 1 unidad del producto. <b>Usted puede ganar dinero al hacer una compra.</b></p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide3" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">¿Cómo puede ganar dinero en cada período?</h5>
+                        <p class="card-text">El producto tiene un valor para usted que será asignado por el computador. A este valor  lo llamaremos <b>"su valor".</b> En cada período usted puede ganar dinero en el mercado si compra 1 unidad del producto a un precio de mercado inferior a su valor.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide4" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">¿Cómo puede ganar dinero en cada período?</h5>
+                        <p class="card-text">Este valor puede cambiar a lo largo de los períodos y puede diferir entre los compradores. Usted conocerá su valor en cada período. Usted sólo conocerá su valor; no sabrá los valores de otros compradores ni otros compradores sabrán su valor. Veamos un ejemplo en la pantalla.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide5" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">¿Cómo puede ganar dinero en cada período?</h5>
+                        <p class="card-text">La primera fila (debajo del área superior) muestra su valor. En este ejemplo, su valor es de 10 puntos.</p>
+                    </div>
+                    <img src="{{ static 'seccion_1/decision_screen.png' }}" class="card-img-bottom img-fluid">
+                </div>
+            </div>
+            <div id="slide6" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">¿Cómo puede ganar dinero en cada período?</h5>
+                        <p class="card-text">Si compra el producto en un período determinado, usted debe pagar un precio de mercado. Todos los compradores del grupo pagan el mismo precio. Pronto le explicaremos cómo se determina este precio de mercado.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script>
+        let idx = 1;
+        document.getElementById("next").onclick = () => {
+            if (idx == 6){
+                document.getElementById("submit").click();
+            }
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, 600, "out");
+            fade(next, 600, "in");
+            idx++;
+        };
+    </script>
+{{ endblock }}
