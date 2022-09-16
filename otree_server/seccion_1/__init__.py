@@ -1,5 +1,5 @@
 """File containing the section 1 configuration for players
-Version: 0.1
+Version: 0.2
 Made By: Edgar RP
 """
 from otree.api import *
@@ -30,6 +30,13 @@ class Player(BasePlayer):
 
 # PAGES
 class O001_instrucciones(Page):
-    pass
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento
+
+class O002_revision(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento
 
 page_sequence = [O001_instrucciones]
