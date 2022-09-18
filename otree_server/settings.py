@@ -1,5 +1,5 @@
 """File containing the general settings for the oTree app
-Version: 0.4
+Version: 0.5
 Made By: Edgar RP
 """
 from os import environ
@@ -9,7 +9,8 @@ SESSION_CONFIGS = [
         name='Precios_Maximos',
         app_sequence=['consentimiento', 'informacion', 'seccion_1'],
         num_demo_participants=4,
-        treatment_FMI=True
+        treatment_FMI=True,
+        time_per_trading_period=20
     ),
 ]
 
