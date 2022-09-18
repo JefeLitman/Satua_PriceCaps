@@ -1,28 +1,27 @@
-fade = (element, time, direction) => {
-    if (direction === "in"){
-        element.style.opacity = 0;
-        element.classList.remove("d-none");
-    }
-    else{
-        element.style.opacity = 1;
-    }
+// Version 1.1
+sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-    let last = +Date.now();
-    let tick = function() {
-        let delta = direction === "in" ? (Date.now() - last) : -(Date.now() - last);
-        element.style.opacity = +element.style.opacity + (delta / time);
-        last = +Date.now();
+fade_in = async (element) => {
+    element.classList.add("fade");
+    await sleep(300);
+    element.classList.remove("d-none");
+    element.classList.add("show");
+}
 
-        let comparison = direction === "in" ? +element.style.opacity < 1 : +element.style.opacity > 0;
-        if (comparison) {
-            (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-        }
-        else{
-            if (direction === "out"){
-                element.classList.add("d-none");
-            }
-        }
-    };
+fade_out = async (element) => {
+    element.classList.add("fade");
+    await sleep(300);
+    element.classList.add("d-none");
+}
 
-    tick();
+fade = async (out_element, in_element) => {    
+    out_element.classList.add("fade");
+    in_element.classList.add("fade");
+    await sleep(300); // Time required for bootstrap to make fade animation is 150 so we use the double
+    out_element.classList.add("d-none");
+    in_element.classList.remove("d-none");
+    await sleep(300);
+    in_element.classList.add("show");
 }
