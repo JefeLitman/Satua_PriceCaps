@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.2 -->
+    <!-- Version 1.3 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -55,10 +55,9 @@
         document.getElementById("next").onclick = () => {
             let prev = document.getElementById("slide"+idx)
             let next = document.getElementById("slide"+(idx+1))
-            fade(prev, 600, "out");
-            fade(next, 600, "in");
+            fade(prev, next);
             if (idx == 3){
-                document.getElementById("fake_button").classList.add("d-none");
+                fade_out(document.getElementById("fake_button"));
             }
             idx++;
         };
