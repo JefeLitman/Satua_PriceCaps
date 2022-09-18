@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.0 -->
+    <!-- Version 1.1 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -150,8 +150,7 @@
             }
             let prev = document.getElementById("slide"+idx)
             let next = document.getElementById("slide"+(idx+1))
-            fade(prev, 600, "out");
-            fade(next, 600, "in");
+            fade(prev, next);
             idx++;
         };
     </script>
