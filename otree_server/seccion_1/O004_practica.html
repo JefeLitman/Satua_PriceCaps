@@ -1,0 +1,64 @@
+{{ block content }}
+    <!-- Version 0.1 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-primary" role="alert">
+                    <h2 class="text-capitalize">Seccion 1 - períodos de práctica</h2>
+                </div>
+            </div>
+            <div id="error_msg" class="row d-none">
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    Porfavor, lea nuevamente la pregunta y responda la respuesta mas acorde al enunciado.
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Ahora participará en 6 períodos de "práctica" no remunerados. Debe tomar estos períodos con seriedad porque obtendrá una experiencia valiosa para los períodos "reales" en los que puede ganar dinero. Una vez que finalice el último período de práctica no remunerado tendrá la oportunidad de hacer cualquier pregunta que usted pueda tener.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="fake_button" class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script>
+        let idx = 1;
+        move_forward = () => {
+            if (idx == 5){
+                document.getElementById("submit").click();
+            }
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, next);
+            if (idx == 1){
+                fade_out(document.getElementById("fake_button"));
+            }
+            idx++;
+        };
+
+        document.getElementById("next").onclick = move_forward;
+        for (let i=1; i<=4; i++){
+            for (let j=1; j<=4; j++){
+                document.getElementById("Q"+i+"_B"+j).onclick = () => {
+                    let err_msg = document.getElementById("error_msg")
+                    fade_in(err_msg);
+                    setTimeout(() => fade_out(err_msg), 3000);
+                }
+            }
+        }
+        document.getElementById("Q1_B2").onclick = move_forward;
+        document.getElementById("Q2_B3").onclick = move_forward;
+        document.getElementById("Q3_B4").onclick = move_forward;
+        document.getElementById("Q4_B2").onclick = move_forward;
+    </script>
+{{ endblock }}
