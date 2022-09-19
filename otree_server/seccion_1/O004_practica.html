@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 0.1 -->
+    <!-- Version 1.0 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -8,57 +8,93 @@
                     <h2 class="text-capitalize">Seccion 1 - períodos de práctica</h2>
                 </div>
             </div>
-            <div id="error_msg" class="row d-none">
-                <div class="alert alert-danger d-flex align-items-center" role="alert">
-                    Porfavor, lea nuevamente la pregunta y responda la respuesta mas acorde al enunciado.
-                </div>
-            </div>
-            <div id="slide1" class="row my-3">
-                <div class="card">
-                    <div class="card-body">
-                        <p>Ahora participará en 6 períodos de "práctica" no remunerados. Debe tomar estos períodos con seriedad porque obtendrá una experiencia valiosa para los períodos "reales" en los que puede ganar dinero. Una vez que finalice el último período de práctica no remunerado tendrá la oportunidad de hacer cualquier pregunta que usted pueda tener.</p>
+            <div class="row">
+                <div class="container-fluid">
+                    <div class="row text-center">
+                        <p>Tu grupo es: <b>{{grupo}}</b></p>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>Periodo actual: <b>{{periodo}}</b></p>
+                        </div>
+                        <div class="col text-end">
+                            <p>Tiempo restante: <b id="timer"></b></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>Número total de periodos: <b>{{total_periodos}}</b></p>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <p>Su valor: <b>{{valor}}</b></p>
+                                </div>
+                                <div class="row">
+                                    <p>Su oferta: <b id="player_bid"></b></p>
+                                </div>
+                                <div class="row">
+                                    <p>¿Aceptada?: <b id="player_result"></b></p>
+                                </div>
+                                <div class="row">
+                                    <p>Precio: <b id="player_price"></b></p>
+                                </div>
+                                <div class="row">
+                                    <p>Ganancias: <b id="player_earnings"></b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8 border border-secondary text-center align-self-center">
+                            <div class="row">
+                                <b>Seleccione un boton para realizar una oferta</b>
+                            </div>
+                            <div class="row">
+                                <div id="bids" class="col-12"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="fake_button" class="row justify-content-center">
-                <div class="col-2">
-                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
-                </div>
-            </div>
             <div class="row d-none">
-                <button id="submit">Siguiente</button>
+                <input type="number" name="bid_value" id="player_ask"/>
             </div>
         </div>
     </div>
-    <script src="{{ static 'global/animation.js' }}"></script>
     <script>
-        let idx = 1;
-        move_forward = () => {
-            if (idx == 5){
-                document.getElementById("submit").click();
-            }
-            let prev = document.getElementById("slide"+idx)
-            let next = document.getElementById("slide"+(idx+1))
-            fade(prev, next);
-            if (idx == 1){
-                fade_out(document.getElementById("fake_button"));
-            }
-            idx++;
-        };
-
-        document.getElementById("next").onclick = move_forward;
-        for (let i=1; i<=4; i++){
-            for (let j=1; j<=4; j++){
-                document.getElementById("Q"+i+"_B"+j).onclick = () => {
-                    let err_msg = document.getElementById("error_msg")
-                    fade_in(err_msg);
-                    setTimeout(() => fade_out(err_msg), 3000);
-                }
-            }
+        setInterval(() => {
+            document.getElementById("timer").innerHTML = document.getElementsByClassName("otree-timer__time-left")[0].innerHTML;
+        }, 500);
+        function liveRecv(data) {
+            document.getElementById("player_bid").innerHTML = data["bid"]
+            document.getElementById("player_result").innerHTML = data["accepted"] ? "Si" : "No";
+            document.getElementById("player_price").innerHTML = data["price"];
+            document.getElementById("player_earnings").innerHTML = data["accepted"] ? js_vars.max_value - parseInt(data["price"], 10) : 0;
         }
-        document.getElementById("Q1_B2").onclick = move_forward;
-        document.getElementById("Q2_B3").onclick = move_forward;
-        document.getElementById("Q3_B4").onclick = move_forward;
-        document.getElementById("Q4_B2").onclick = move_forward;
+        function sendBid() {
+            for (let i=1; i <= js_vars.max_value; i++){
+                let button = document.getElementById("B"+i);
+                button.classList.remove("btn-outline-primary");
+                button.classList.add("btn-outline-secondary");
+                button.disabled = true;
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.classList.remove("btn-outline-secondary");
+                    button.classList.add("btn-outline-primary");
+                }, 1000)
+            }
+            document.getElementById("player_ask").value = this.value;
+            liveSend({'value': this.value});
+        }
+
+        for (let i=1; i <= js_vars.max_value; i++){
+            let button = document.createElement("button");
+            button.type = "button";
+            button.classList.add("btn","btn-outline-primary", "m-2");
+            button.id = "B"+i;
+            button.value = i;
+            button.onclick = sendBid;
+            button.innerHTML = i;
+            document.getElementById("bids").appendChild(button);
+        }
     </script>
 {{ endblock }}
