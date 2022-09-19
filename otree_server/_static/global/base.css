@@ -1,4 +1,8 @@
-/* Version 1.0 */
+/* Version 1.1 */
 #_otree-title {
+    display: none;
+}
+
+.otree-timer {
     display: none;
 }
