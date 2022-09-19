@@ -1,0 +1,100 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-primary" role="alert">
+                    <h2 class="text-capitalize">Seccion 1 - períodos reales</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container-fluid">
+                    <div class="row text-center">
+                        <p>Tu grupo es: <b>{{grupo}}</b></p>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>Periodo actual: <b>{{periodo}}</b></p>
+                        </div>
+                        <div class="col text-end">
+                            <p>Tiempo restante: <b id="timer"></b></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>Número total de periodos: <b>{{total_periodos}}</b></p>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <p>Su valor: <b>{{valor}}</b></p>
+                                </div>
+                                <div class="row">
+                                    <p>Su oferta: <b id="player_bid"></b></p>
+                                </div>
+                                <div class="row">
+                                    <p>¿Aceptada?: <b id="player_result"></b></p>
+                                </div>
+                                <div class="row">
+                                    <p>Precio: <b id="player_price"></b></p>
+                                </div>
+                                <div class="row">
+                                    <p>Ganancias: <b id="player_earnings"></b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8 border border-secondary text-center align-self-center">
+                            <div class="row">
+                                <b>Seleccione un boton para realizar una oferta</b>
+                            </div>
+                            <div class="row">
+                                <div id="bids" class="col-12"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-none">
+                <input type="number" name="bid_value" id="player_ask"/>
+            </div>
+        </div>
+    </div>
+    <script>
+        setInterval(() => {
+            document.getElementById("timer").innerHTML = document.getElementsByClassName("otree-timer__time-left")[0].innerHTML;
+        }, 500);
+        function liveRecv(data) {
+            document.getElementById("player_bid").innerHTML = data["bid"]
+            document.getElementById("player_result").innerHTML = data["accepted"] ? "Si" : "No";
+            document.getElementById("player_price").innerHTML = data["price"];
+            document.getElementById("player_earnings").innerHTML = data["accepted"] ? js_vars.max_value - parseInt(data["price"], 10) : 0;
+        }
+        function sendBid() {
+            for (let i=1; i <= js_vars.max_value; i++){
+                let button = document.getElementById("B"+i);
+                button.classList.remove("btn-outline-primary");
+                button.classList.add("btn-outline-secondary");
+                button.disabled = true;
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.classList.remove("btn-outline-secondary");
+                    button.classList.add("btn-outline-primary");
+                }, 1000)
+            }
+            document.getElementById("player_ask").value = this.value;
+            liveSend({'value': this.value});
+        }
+
+        for (let i=1; i <= js_vars.max_value; i++){
+            let button = document.createElement("button");
+            button.type = "button";
+            button.classList.add("btn","btn-outline-primary", "m-2");
+            button.id = "B"+i;
+            button.value = i;
+            button.onclick = sendBid;
+            button.innerHTML = i;
+            document.getElementById("bids").appendChild(button);
+        }
+    </script>
+{{ endblock }}
