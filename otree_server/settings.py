@@ -1,5 +1,5 @@
 """File containing the general settings for the oTree app
-Version: 0.6
+Version: 0.7
 Made By: Edgar RP
 """
 from os import environ
@@ -31,7 +31,11 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=15000, doc=""
 )
 
-PARTICIPANT_FIELDS = ["consentimiento"]
+PARTICIPANT_FIELDS = [
+    "consentimiento", 
+    "winner_section",
+    "winner_round"
+]
 SESSION_FIELDS = []
 
 # ISO-639 code
