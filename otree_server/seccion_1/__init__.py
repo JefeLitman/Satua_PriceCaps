@@ -1,8 +1,8 @@
 """File containing the section 1 configuration for players
-Version: 0.5
+Version: 1.0
 Made By: Edgar RP
 """
-from ..utils import *
+from utils import *
 from otree.api import *
 
 doc = """
@@ -101,7 +101,7 @@ class O004_practica(Page):
     def live_method(player, data):
         value = data["value"]
         add_history_value(player, value)
-        bid_result = player_bid(player, value)
+        bid_result = player_bid(player, value, 1)
         return {player.id_in_group: bid_result}
 
 class O005_cambio(Page):
@@ -140,7 +140,7 @@ class O006_trading(Page):
     def live_method(player, data):
         value = data["value"]
         add_history_value(player, value)
-        bid_result = player_bid(player, value)
+        bid_result = player_bid(player, value, 1)
         return {player.id_in_group: bid_result}
 
 class O007_expectativa(Page):
@@ -156,6 +156,15 @@ class O007_expectativa(Page):
     @staticmethod
     def is_displayed(player):
         return player.participant.consentimiento and player.round_number == 46
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        for p in player.in_previous_rounds():
+            p.expectation_0_units = player.expectation_0_units
+            p.expectation_1_units = player.expectation_1_units
+            p.expectation_2_units = player.expectation_2_units
+            p.expectation_3_units = player.expectation_3_units
+            p.expectation_4_units = player.expectation_4_units
 
 page_sequence = [
     wait_for_all,
