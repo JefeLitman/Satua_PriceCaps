@@ -1,5 +1,5 @@
-"""File containing utilities functions for every section in the whole app
-Version: 1.0
+"""File containing utilities functions for every section with bid in the whole app
+Version: 1.1
 Made By: Edgar RP
 """
 
@@ -60,11 +60,12 @@ def set_player_values(player):
         player.bid_value = random.randint(1, player.max_value)
         player.bid_history = "Bot Player"
 
-def player_bid(player, value):
+def player_bid(player, value, section):
     player.bid_value = int(value)
     price = get_price(player.group)
     accepted = int(value) >= price
-    player.payoff = player.max_value - price if accepted else 0
+    if section == player.participant.winner_section and player.round_number == player.participant.winner_round:
+        player.payoff = player.max_value - price if accepted else 0
     return {
         "bid": value, 
         "accepted": accepted,
