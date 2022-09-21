@@ -1,11 +1,11 @@
 {{ block content }}
-    <!-- Version 0.1 -->
+    <!-- Version 1.0 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
             <div class="row text-center mt-5">
                 <div class="alert alert-primary" role="alert">
-                    <h2 class="text-capitalize">Seccion 1 - Expectativa</h2>
+                    <h2 class="text-capitalize">Seccion 1 - Expectativas</h2>
                 </div>
             </div>
             <div class="row mb-3">
@@ -85,43 +85,48 @@
             <div class="row mt-3">
                 Tenga en cuenta que la suma de los números que usted proporcione debe ser 40 porque este es el número total de períodos en la Sección 1. Si infringe esta regla los valores invalidos seran resaltados en rojo pidiendo que los corrija.
             </div>
+            <div class="row my-3 text-center">
+                <div class="alert alert-info" role="alert">
+                    Suma de todos los periodos: <b id="quantity">0</b>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
         </div>
     </div>
+    <script src="{{ static 'global/expectations.js' }}"></script>
     <script>
         setInterval(() => {
-            document.getElementById("timer").innerHTML = document.getElementsByClassName("otree-timer__time-left")[0].innerHTML;
+            document.getElementById("quantity").innerHTML = get_suma(5);
         }, 500);
-        function liveRecv(data) {
-            document.getElementById("player_bid").innerHTML = data["bid"]
-            document.getElementById("player_result").innerHTML = data["accepted"] ? "Si" : "No";
-            document.getElementById("player_price").innerHTML = data["price"];
-            document.getElementById("player_earnings").innerHTML = data["accepted"] ? js_vars.max_value - parseInt(data["price"], 10) : 0;
-        }
-        function sendBid() {
-            for (let i=1; i <= js_vars.max_value; i++){
-                let button = document.getElementById("B"+i);
-                button.classList.remove("btn-outline-primary");
-                button.classList.add("btn-outline-secondary");
-                button.disabled = true;
-                setTimeout(() => {
-                    button.disabled = false;
-                    button.classList.remove("btn-outline-secondary");
-                    button.classList.add("btn-outline-primary");
-                }, 1000)
-            }
-            document.getElementById("player_ask").value = this.value;
-            liveSend({'value': this.value});
-        }
 
-        for (let i=1; i <= js_vars.max_value; i++){
-            let button = document.createElement("button");
-            button.type = "button";
-            button.classList.add("btn","btn-outline-primary", "m-2");
-            button.id = "B"+i;
-            button.value = i;
-            button.onclick = sendBid;
-            button.innerHTML = i;
-            document.getElementById("bids").appendChild(button);
-        }
+        document.getElementById("next").onclick = () => {
+            suma = 0;
+            for (let i=1; i<=5; i++){
+                let field = document.getElementById("field"+i);
+                if (field.value != ""){
+                    value = parseInt(field.value, 10);
+                    if (value >= 0 && value <= 40 && suma + value <= 40){
+                        set_valid(field);
+                    }
+                    else{
+                        set_invalid(field);
+                    }
+                    suma += value;
+                }
+                else{
+                    set_invalid(field);
+                }
+            }
+            if (suma == 40){
+                document.getElementById("submit").click();
+            }
+        };
     </script>
 {{ endblock }}
