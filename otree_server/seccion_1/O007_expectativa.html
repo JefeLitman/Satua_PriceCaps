@@ -1,0 +1,127 @@
+{{ block content }}
+    <!-- Version 0.1 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-primary" role="alert">
+                    <h2 class="text-capitalize">Seccion 1 - Expectativa</h2>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <p class="fw-bold">Ahora responda las siguientes preguntas sobre los 40 períodos de intercambio en los que acaba de participar:</p>
+                <p>En la Sección 1, ¿en cuántos períodos cree que su grupo compró</p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><b>*</b>0 unidades en total?</p>
+                </div>
+                <div class="col">
+                    <input type="number" name="expectation_0_units" id="field1" min="0" max="40" class="form-control">
+                    <div class="valid-feedback">
+                        ¡Perfecto, muchas gracias!
+                    </div>
+                    <div class="invalid-feedback">
+                        Porfavor corriga este campo.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><b>*</b>1 unidad en total?</p>
+                </div>
+                <div class="col">
+                    <input type="number" name="expectation_1_units" id="field2" min="0" max="40" class="form-control">
+                    <div class="valid-feedback">
+                        ¡Perfecto, muchas gracias!
+                    </div>
+                    <div class="invalid-feedback">
+                        Porfavor corriga este campo.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><b>*</b>2 unidades en total?</p>
+                </div>
+                <div class="col">
+                    <input type="number" name="expectation_2_units" id="field3" min="0" max="40" class="form-control">
+                    <div class="valid-feedback">
+                        ¡Perfecto, muchas gracias!
+                    </div>
+                    <div class="invalid-feedback">
+                        Porfavor corriga este campo.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><b>*</b>3 unidades en total?</p>
+                </div>
+                <div class="col">
+                    <input type="number" name="expectation_3_units" id="field4" min="0" max="40" class="form-control">
+                    <div class="valid-feedback">
+                        ¡Perfecto, muchas gracias!
+                    </div>
+                    <div class="invalid-feedback">
+                        Porfavor corriga este campo.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><b>*</b>4 unidades en total?</p>
+                </div>
+                <div class="col">
+                    <input type="number" name="expectation_4_units" id="field5" min="0" max="40" class="form-control">
+                    <div class="valid-feedback">
+                        ¡Perfecto, muchas gracias!
+                    </div>
+                    <div class="invalid-feedback">
+                        Porfavor corriga este campo.
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                Tenga en cuenta que la suma de los números que usted proporcione debe ser 40 porque este es el número total de períodos en la Sección 1. Si infringe esta regla los valores invalidos seran resaltados en rojo pidiendo que los corrija.
+            </div>
+        </div>
+    </div>
+    <script>
+        setInterval(() => {
+            document.getElementById("timer").innerHTML = document.getElementsByClassName("otree-timer__time-left")[0].innerHTML;
+        }, 500);
+        function liveRecv(data) {
+            document.getElementById("player_bid").innerHTML = data["bid"]
+            document.getElementById("player_result").innerHTML = data["accepted"] ? "Si" : "No";
+            document.getElementById("player_price").innerHTML = data["price"];
+            document.getElementById("player_earnings").innerHTML = data["accepted"] ? js_vars.max_value - parseInt(data["price"], 10) : 0;
+        }
+        function sendBid() {
+            for (let i=1; i <= js_vars.max_value; i++){
+                let button = document.getElementById("B"+i);
+                button.classList.remove("btn-outline-primary");
+                button.classList.add("btn-outline-secondary");
+                button.disabled = true;
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.classList.remove("btn-outline-secondary");
+                    button.classList.add("btn-outline-primary");
+                }, 1000)
+            }
+            document.getElementById("player_ask").value = this.value;
+            liveSend({'value': this.value});
+        }
+
+        for (let i=1; i <= js_vars.max_value; i++){
+            let button = document.createElement("button");
+            button.type = "button";
+            button.classList.add("btn","btn-outline-primary", "m-2");
+            button.id = "B"+i;
+            button.value = i;
+            button.onclick = sendBid;
+            button.innerHTML = i;
+            document.getElementById("bids").appendChild(button);
+        }
+    </script>
+{{ endblock }}
