@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.0 -->
+    <!-- Version 1.1 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -80,7 +80,7 @@
                     button.disabled = false;
                     button.classList.remove("btn-outline-secondary");
                     button.classList.add("btn-outline-primary");
-                }, 1000)
+                }, 500)
             }
             document.getElementById("player_ask").value = this.value;
             liveSend({'value': this.value});
