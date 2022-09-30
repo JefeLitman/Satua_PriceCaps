@@ -1,5 +1,5 @@
 """File containing the general and payments information for players
-Version: 1.0
+Version: 1.1
 Made By: Edgar RP
 """
 from otree.api import *
@@ -43,6 +43,8 @@ class O002_pago(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            points_4_cash = int(player.session.config["real_world_currency_per_point"]),
+            fee = int(player.session.config["participation_fee"]),
             fmi=player.session.config["treatment_FMI"]
         )
 
