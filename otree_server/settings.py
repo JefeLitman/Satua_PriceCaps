@@ -1,12 +1,12 @@
 """File containing the general settings for the oTree app
-Version: 0.7
+Version: 0.8
 Made By: Edgar RP
 """
 from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='Precios_Maximos',
+        name='Precios_Maximos_Full',
         app_sequence=['consentimiento', 'informacion', 'seccion_1'],
         num_demo_participants=4,
         treatment_FMI=True,
@@ -19,6 +19,17 @@ SESSION_CONFIGS = [
         max_value = 11,
         increase_ask_by = 1,
         decrease_ask_by = 1,
+    ),
+    dict(
+        name='Precios_Maximos_Simple',
+        app_sequence=['consentimiento', 'informacion', 'seccion_1'],
+        num_demo_participants=4,
+        treatment_FMI=True,
+        time_per_practice_period=30,
+        time_per_trading_period=20,
+        seed = 8128,
+        seller_asks = "2,2,8,9,9",
+        players_max_bids = "11,11,12,12"
     ),
 ]
 
