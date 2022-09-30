@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.2 -->
+    <!-- Version 1.3 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -11,7 +11,7 @@
             <div id="slide1" class="row my-3">
                 <div class="card">
                     <div class="card-body">
-                        <p>Usted recibirá <b>15.000 COP</b> por asistir si permanece durante toda la sesión. <b>También tendrá la oportunidad de ganar dinero adicional.</b> Estas ganancias adicionales dependen de lo que usted y otros participantes de su grupo hagan durante la sesión. Lo explicaremos en detalle más adelante.</p>
+                        <p>Usted recibirá <b>{{fee}} COP</b> por asistir si permanece durante toda la sesión. <b>También tendrá la oportunidad de ganar dinero adicional.</b> Estas ganancias adicionales dependen de lo que usted y otros participantes de su grupo hagan durante la sesión. Lo explicaremos en detalle más adelante.</p>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-body">
                         <p>Durante la sesión no hablaremos de COP sino de puntos. Por lo tanto, sus ganancias se calcularán primero en puntos. Los puntos que gane durante la sesión se convertirán a COP al final de la sesión. Aplicaremos la siguiente tasa de conversión:</p>
-                        <p class="text-center"><b>X puntos = Y COP</b></p>
+                        <p class="text-center"><b>1 punto = {{points_4_cash}} COP</b></p>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                             {{ else }}
                                 6
                             {{ endif }}
-                            secciones será seleccionada al azar, y le pagaremos las ganancias que haya obtenido en esa sección. Todas las secciones tienen la misma probabilidad de ser seleccionadas. Sus ganancias en la sección seleccionada se sumarán a su pago inicial de 15.000 COP. Le recordamos que los pagos se harán de manera digital únicamente a cuentas bancarias autorizadas por la universidad. Los pagos se verán reflejados en las próximas 48 horas una vez usted haya diligenciado y enviado el formulario para pagos que le compartiremos al final de la sesión.
+                            secciones será seleccionada al azar, y le pagaremos las ganancias que haya obtenido en esa sección. Todas las secciones tienen la misma probabilidad de ser seleccionadas. Sus ganancias en la sección seleccionada se sumarán a su pago inicial de {{fee}} COP. Le recordamos que los pagos se harán de manera digital únicamente a cuentas bancarias autorizadas por la universidad. Los pagos se verán reflejados en las próximas 48 horas una vez usted haya diligenciado y enviado el formulario para pagos que le compartiremos al final de la sesión.
                         </b></p>
                     </div>
                 </div>
