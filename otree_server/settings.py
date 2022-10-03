@@ -1,5 +1,5 @@
 """File containing the general settings for the oTree app
-Version: 0.8
+Version: 0.9
 Made By: Edgar RP
 """
 from os import environ
@@ -22,7 +22,7 @@ SESSION_CONFIGS = [
     ),
     dict(
         name='Precios_Maximos_Simple',
-        app_sequence=['consentimiento', 'informacion', 'seccion_1'],
+        app_sequence=['consentimiento', 'informacion', 'seccion_1_simple'],
         num_demo_participants=4,
         treatment_FMI=True,
         time_per_practice_period=30,
@@ -39,7 +39,7 @@ SESSION_CONFIGS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=15000, doc=""
+    real_world_currency_per_point=1000, participation_fee=15000, doc=""
 )
 
 PARTICIPANT_FIELDS = [
