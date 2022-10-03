@@ -1,5 +1,5 @@
 """File containing the section 1 for simple version configuration of players
-Version: 0.1
+Version: 0.2
 Made By: Edgar RP
 """
 from utils_simple import *
@@ -40,9 +40,7 @@ class wait_for_all(WaitPage):
     def after_all_players_arrive(subsession):
         subsession.group_randomly()
         for g in subsession.get_groups():
-            set_group_asks(g, subsession.round_number)
-        for p in subsession.get_players():
-            set_player_values(p)
+            set_group_asks_bids(g)
     
     @staticmethod
     def is_displayed(player):
@@ -75,7 +73,7 @@ class O004_practica(Page):
 
     @staticmethod
     def is_displayed(player):
-        return player.participant.consentimiento and player.round_number <= 6
+        return player.participant.consentimiento and player.round_number <= 2
 
     @staticmethod
     def get_timeout_seconds(player):
@@ -86,20 +84,13 @@ class O004_practica(Page):
         return dict(
             grupo = player.group_id,
             periodo = player.round_number,
-            total_periodos = C.NUM_ROUNDS - 40,
-            valor=player.max_value,
-        )
-    
-    @staticmethod
-    def js_vars(player):
-        return dict(
-            max_value=player.max_value
+            total_periodos = C.NUM_ROUNDS - 8,
+            valor=player.bid_value,
         )
 
     @staticmethod
     def live_method(player, data):
         value = data["value"]
-        add_history_value(player, value)
         bid_result = player_bid(player, value, 1)
         return {player.id_in_group: bid_result}
 
