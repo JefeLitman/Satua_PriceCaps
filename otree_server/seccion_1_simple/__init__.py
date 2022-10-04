@@ -1,5 +1,5 @@
 """File containing the section 1 for simple version configuration of players
-Version: 0.3
+Version: 1.0
 Made By: Edgar RP
 """
 from utils_simple import *
@@ -67,7 +67,17 @@ class O003_chequeo(Page):
     def is_displayed(player):
         return player.participant.consentimiento and player.round_number == 1
 
-class O004_practica(Page):
+class O004_info_practica(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento and player.round_number == 1
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            pce = not player.session.config["treatment_FMI"]
+        )
+class O005_practica(Page):
     form_model = 'player'
     form_fields = ['enter_bid']
 
@@ -98,75 +108,79 @@ class O004_practica(Page):
     def before_next_page(player, timeout_happened):
         player_bid(player, player.enter_bid, 1)
 
-# class O005_cambio(Page):
-#     @staticmethod
-#     def is_displayed(player):
-#         return player.participant.consentimiento and player.round_number == 6
+class O006_informacion(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento and player.round_number == 2
 
-# class O006_trading(Page):
-#     form_model = 'player'
-#     form_fields = ['bid_value']
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            pce = not player.session.config["treatment_FMI"]
+        )
 
-#     @staticmethod
-#     def is_displayed(player):
-#         return player.participant.consentimiento and player.round_number > 6
+class O007_mercado(Page):
+    form_model = 'player'
+    form_fields = ['enter_bid']
 
-#     @staticmethod
-#     def get_timeout_seconds(player):
-#         return player.session.config["time_per_trading_period"]
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento and player.round_number > 2
 
-#     @staticmethod
-#     def vars_for_template(player):
-#         return dict(
-#             grupo = player.group_id,
-#             periodo = player.round_number - 6,
-#             total_periodos = C.NUM_ROUNDS - 6,
-#             valor=player.max_value,
-#         )
-    
-#     @staticmethod
-#     def js_vars(player):
-#         return dict(
-#             max_value=player.max_value
-#         )
+    @staticmethod
+    def get_timeout_seconds(player):
+        return player.session.config["time_per_trading_period"]
 
-#     @staticmethod
-#     def live_method(player, data):
-#         value = data["value"]
-#         add_history_value(player, value)
-#         bid_result = player_bid(player, value, 1)
-#         return {player.id_in_group: bid_result}
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            grupo = player.group_id,
+            periodo = player.round_number - 2,
+            total_periodos = C.NUM_ROUNDS - 2,
+            valor=player.bid_value,
+        )
 
-# class O007_expectativa(Page):
-#     form_model = 'player'
-#     form_fields = [
-#         'expectation_0_units',
-#         'expectation_1_units',
-#         'expectation_2_units',
-#         'expectation_3_units',
-#         'expectation_4_units'
-#     ]
+    @staticmethod
+    def live_method(player, data):
+        entered = data["enter_bid"]
+        bid_result = player_bid(player, entered, 1)
+        return {player.id_in_group: bid_result}
 
-#     @staticmethod
-#     def is_displayed(player):
-#         return player.participant.consentimiento and player.round_number == 46
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        player_bid(player, player.enter_bid, 1)
 
-#     @staticmethod
-#     def before_next_page(player, timeout_happened):
-#         for p in player.in_previous_rounds():
-#             p.expectation_0_units = player.expectation_0_units
-#             p.expectation_1_units = player.expectation_1_units
-#             p.expectation_2_units = player.expectation_2_units
-#             p.expectation_3_units = player.expectation_3_units
-#             p.expectation_4_units = player.expectation_4_units
+class O008_expectativa(Page):
+    form_model = 'player'
+    form_fields = [
+        'expectation_0_units',
+        'expectation_1_units',
+        'expectation_2_units',
+        'expectation_3_units',
+        'expectation_4_units'
+    ]
+
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento and player.round_number == C.NUM_ROUNDS
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        for p in player.in_previous_rounds():
+            p.expectation_0_units = player.expectation_0_units
+            p.expectation_1_units = player.expectation_1_units
+            p.expectation_2_units = player.expectation_2_units
+            p.expectation_3_units = player.expectation_3_units
+            p.expectation_4_units = player.expectation_4_units
 
 page_sequence = [
     wait_for_all,
     O001_instrucciones, 
     O002_revision, 
     O003_chequeo,
-    O004_practica,
-    # O005_cambio,
-    # O006_trading,
-    # O007_expectativa
+    O004_info_practica,
+    O005_practica,
+    O006_informacion,
+    O007_mercado,
+    O008_expectativa
 ]
