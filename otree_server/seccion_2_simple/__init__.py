@@ -1,5 +1,5 @@
 """File containing the section 2 for simple version configuration of players
-Version: 1.0
+Version: 1.1
 Made By: Edgar RP
 """
 from utils_simple import *
@@ -25,6 +25,9 @@ class Group(BaseGroup):
     seller_5_ask = models.IntegerField()
 
 class Player(BasePlayer):
+    winner_round = models.StringField()
+    winner_section = models.StringField()
+    treatment = models.StringField()
     bid_value = models.IntegerField()
     enter_bid = models.BooleanField()
     chosen_player = models.BooleanField()
@@ -132,12 +135,12 @@ class O004_mercado(Page):
     @staticmethod
     def live_method(player, data):
         entered = data["enter_bid"]
-        bid_result = player_bid(player, entered, 1)
+        bid_result = player_bid(player, entered, 2)
         return {player.id_in_group: bid_result}
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        player_bid(player, player.enter_bid, 1)
+        player_bid(player, player.enter_bid, 2)
 
 class O005_postexpectativa(Page):
     form_model = 'player'
@@ -161,8 +164,13 @@ class O005_postexpectativa(Page):
     
     @staticmethod
     def before_next_page(player, timeout_happened):
+        set_experiment_params(player)
         player.chosen_player = player.in_round(1).chosen_player
         player.section_3_setting = player.in_round(1).section_3_setting
+        if player.chosen_player:
+            player.participant.section_3_setting = player.section_3_setting
+            for p in player.get_others_in_group():
+                p.participant.section_3_setting = player.section_3_setting
         for i in range(5):
             attr = "expectation_{}_before".format(i)
             value = getattr(player.in_round(1), attr)
@@ -177,6 +185,7 @@ class O005_postexpectativa(Page):
                 setattr(p, attr, value)
             p.chosen_player = player.in_round(1).chosen_player
             p.section_3_setting = player.in_round(1).section_3_setting
+            set_experiment_params(p)
 
 page_sequence = [
     wait_for_all_grouping,
