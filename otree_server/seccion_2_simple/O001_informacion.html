@@ -1,0 +1,67 @@
+{{ block content }}
+    <!-- Version 0.1 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-primary" role="alert">
+                    <h2 class="text-capitalize">Seccion 2 - Preparación</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Ahora comenzaremos la Sección 2 de la sesión. Por razones que explicaremos en un momento, uno de los compradores de su grupo será seleccionado al azar (por un programa del computador principal del laboratorio). En su pantalla verá si usted ha sido seleccionado.</p>
+                        {{ if fmi }}
+                            <p>En la Sección 2 le pediremos que imagine una situación <b>hipotética</b>, es decir, una situación que no ocurrirá. Imagine que participa en 8 periodos de intercambio adicionales con su grupo.</p>
+                            <p>Suponga que la estructura y las reglas de estos períodos son las mismas que en la Sección 1 excepto por una diferencia:</p>
+                            <p class="text-center"><b>En la Sección 2, a los vendedores automatizados NO se les permite sugerir un precio de venta por encima de 7. Esto garantiza que el precio de mercado NO superará 7.</b></p>
+                            <p>En un momento usted nos dirá lo que cree que podría suceder en estos períodos hipotéticos. Antes de eso, el comprador que fue seleccionado al azar en su grupo elegirá las reglas de intercambio para la Sección 3, donde nuevamente habrá 8 períodos reales.</p>
+                        {{ else }}
+                            <p>En la Sección 2, usted participará en 8 períodos de intercambio adicionales con su grupo. Si se selecciona la Sección 2 como la sección que cuenta para el pago, seleccionaremos al azar uno de los períodos y usted recibirá las ganancias de ese período. Todos los períodos tienen la misma probabilidad de ser seleccionados.</p>
+                            <p>La estructura y las reglas de estos períodos serán las mismas que en la Sección 1 excepto por una diferencia:</p>
+                            <p class="text-center"><b>En la Sección 2, a los vendedores automatizados se les permite sugerir cualquier precio de venta por encima de su costo, incluidos los precios superiores a 7.</b></p>
+                            <p>Antes de comenzar los períodos de la Sección 2, el comprador que fue seleccionado al azar en su grupo elegirá las reglas de intercambio para la Sección 3, donde nuevamente habrá 8 períodos.</p>
+                        {{ endif }}
+                    </div>
+                </div>
+            </div>
+            <div id="slide2" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>La elección que haga el comprador seleccionado se revelará una vez que lleguemos a la Sección 3.</p>
+                        <p>Incluso si usted no fue seleccionado para determinar las reglas de intercambio, nos gustaría conocer su preferencia, así que le pediremos que nos indique qué opción prefiere.</p>
+                        {{ if fmi }}
+                            <p>Antes de elegir las reglas de intercambio para la <b>Sección 3</b>, nos gustaría conocer sus expectativas sobre los períodos hipotéticos de la <b>Sección 2.</b></p>
+                            <p><b>Recuerde que en la Sección 2 a los vendedores automatizados NO se les permite sugerir un precio de venta por encima de 7</b></p>
+                        {{ else }}
+                            <p>Antes de elegir las reglas de intercambio para la <b>Sección 3</b>, nos gustaría conocer sus expectativas sobre los próximos períodos de la <b>Sección 2.</b></p>
+                            <p><b>Recuerde que en la Sección 2 a los vendedores automatizados se les permite sugerir cualquier precio de venta por encima de su costo</b></p>
+                        {{ endif }}
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script>
+        let idx = 1;
+        document.getElementById("next").onclick = () => {
+            if (idx == 2){
+                document.getElementById("submit").click();
+            }
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, next);
+            idx++;
+        };
+    </script>
+{{ endblock }}
