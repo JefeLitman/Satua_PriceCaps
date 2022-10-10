@@ -1,0 +1,61 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-primary" role="alert">
+                    <h2 class="text-capitalize">Seccion 6</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Ahora usted completará la Sección 6, la última sección, que consiste en una tarea corta.</p>
+                        <p>Recuerde que es miembro del grupo <b>{{ my_group }}</b>. Considere el grupo <b>{{ other_group }}</b> de esta misma sesión.</p>
+                        <p>Si la Sección 6 es seleccionada como la sección que cuenta, un miembro de <b>su grupo</b> será seleccionado al azar y la elección de asignación de esta persona se implementará en el grupo <b>{{ other_group }}</b>. De manera similar, un miembro del grupo <b>{{ other_group }}</b> será seleccionado al azar y la elección de asignación de esa persona se implementará en el grupo al que usted pertenece.</p>
+                        <p>Le pedimos que elija a continuacion una de dos posibles asignaciones de dinero entre los miembros del grupo <b>{{ other_group }}</b>. Las dos asignaciones posibles son:</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide2" class="row my-3 d-none">
+                <div class="col-6 p-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Asignación 1</h5>
+                            <p class="card-text">Dos miembros elegidos al azar del grupo {{ other_group }} reciben <b>3 puntos</b> y los otros dos reciben <b>2 puntos.</b></p>
+                            <button name="payment_asignation" value="1" class="btn btn-success">Escogo esta asignación</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 p-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Asignación 2</h5>
+                            <p class="card-text">Dos miembros elegidos al azar del grupo {{ other_group }} reciben <b>5 puntos</b> y los otros dos reciben <b>0 puntos.</b></p>
+                            <button name="payment_asignation" value="2" class="btn btn-success">Escogo esta asignación</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="fake_button" class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script>
+        let idx = 1;
+        document.getElementById("next").onclick = () => {
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, next);
+            if (idx == 2){
+                fade_out(document.getElementById("fake_button"));
+            }
+            idx++;
+        };
+    </script>
+{{ endblock }}
