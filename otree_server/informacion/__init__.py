@@ -1,9 +1,9 @@
 """File containing the general and payments information for players
-Version: 1.1
+Version: 1.2
 Made By: Edgar RP
 """
 from otree.api import *
-
+from utils_simple import set_experiment_params
 
 doc = """
 Your app description
@@ -25,7 +25,9 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    winner_round = models.StringField()
+    winner_section = models.StringField()
+    treatment = models.StringField()
 
 
 # PAGES
@@ -47,6 +49,10 @@ class O002_pago(Page):
             fee = int(player.session.config["participation_fee"]),
             fmi=player.session.config["treatment_FMI"]
         )
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        set_experiment_params(player)
 
 
 page_sequence = [O001_general, O002_pago]
