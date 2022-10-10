@@ -1,5 +1,5 @@
 """File containing the section 1 for simple version configuration of players
-Version: 1.0
+Version: 1.1
 Made By: Edgar RP
 """
 from utils_simple import *
@@ -34,17 +34,15 @@ class Player(BasePlayer):
     expectation_4_units = models.IntegerField()
 
 # PAGES
-class wait_for_all(WaitPage):
+class wait_for_all_grouping(WaitPage):
     wait_for_all_groups = True
     @staticmethod
     def after_all_players_arrive(subsession):
         subsession.group_randomly()
-        for g in subsession.get_groups():
-            set_group_asks_bids(g)
     
     @staticmethod
     def is_displayed(player):
-        return player.participant.consentimiento
+        return player.participant.consentimiento and player.round_number == 1
 
 class O001_instrucciones(Page):
     @staticmethod
@@ -77,6 +75,16 @@ class O004_info_practica(Page):
         return dict(
             pce = not player.session.config["treatment_FMI"]
         )
+
+class wait_for_members(WaitPage):
+    @staticmethod
+    def after_all_players_arrive(group):
+        set_group_asks_bids(group)
+
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento
+
 class O005_practica(Page):
     form_model = 'player'
     form_fields = ['enter_bid']
@@ -111,7 +119,7 @@ class O005_practica(Page):
 class O006_informacion(Page):
     @staticmethod
     def is_displayed(player):
-        return player.participant.consentimiento and player.round_number == 2
+        return player.participant.consentimiento and player.round_number == 3
 
     @staticmethod
     def vars_for_template(player):
@@ -125,7 +133,7 @@ class O007_mercado(Page):
 
     @staticmethod
     def is_displayed(player):
-        return player.participant.consentimiento and player.round_number > 2
+        return player.participant.consentimiento and player.round_number >= 3
 
     @staticmethod
     def get_timeout_seconds(player):
@@ -174,13 +182,14 @@ class O008_expectativa(Page):
             p.expectation_4_units = player.expectation_4_units
 
 page_sequence = [
-    wait_for_all,
+    wait_for_all_grouping,
     O001_instrucciones, 
     O002_revision, 
     O003_chequeo,
     O004_info_practica,
-    O005_practica,
     O006_informacion,
+    wait_for_members,
+    O005_practica,
     O007_mercado,
     O008_expectativa
 ]
