@@ -1,8 +1,9 @@
 """File containing the consent pages for the players
-Version: 1.3
+Version: 1.4
 Made By: Edgar RP
 """
 import random
+from utils_simple import set_experiment_params
 from otree.api import *
 
 doc = """
@@ -26,6 +27,9 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     accepted = models.BooleanField()
+    winner_round = models.StringField()
+    winner_section = models.StringField()
+    treatment = models.StringField()
 
 # PAGES
 class O001_consent(Page):
@@ -45,5 +49,6 @@ class O001_consent(Page):
         else:
             player.participant.winner_round = random.choice(range(1, 9))
         player.participant.winner_section = random.choice(sections)
+        set_experiment_params(player)
 
 page_sequence = [O001_consent]
