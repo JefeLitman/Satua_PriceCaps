@@ -1,9 +1,17 @@
 """File containing utilities functions for every simple section in the whole app
-Version: 1.0
+Version: 1.1
 Made By: Edgar RP
 """
 
 import random
+
+def set_experiment_params(player):
+    player.winner_section = str(player.participant.winner_section)
+    if player.winner_section in ["5", "6"]:
+        player.winner_round = "1"
+    else:
+        player.winner_round = str(player.participant.winner_round)
+    player.treatment = "FMI" if player.session.config["treatment_FMI"] else "PCE"
 
 def set_chosen_player(group):
     players = group.get_players()
