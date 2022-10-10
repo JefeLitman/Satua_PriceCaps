@@ -1,0 +1,30 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-primary" role="alert">
+                    <h2 class="text-capitalize">Seccion 4 - Preparación</h2>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Ahora comenzaremos la Sección 4 de la sesión. Recuerde que participará en 8 periodos de intercambio con su grupo. El comprador seleccionado de su grupo decidió que:</p>
+                        {{ if decision }}
+                            <h5>los vendedores automatizados pueden sugerir cualquier precio de venta por encima de su costo pueden sugerir un precio de venta por encima de 7.</h5>
+                        {{ else }}
+                            <h5>los vendedores automatizados NO pueden sugerir cualquier precio de venta por encima de su costo pueden sugerir un precio de venta por encima de 7.</h5>
+                        {{ endif }}
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{ endblock }}
