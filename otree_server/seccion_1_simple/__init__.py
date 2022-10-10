@@ -1,5 +1,5 @@
 """File containing the section 1 for simple version configuration of players
-Version: 1.1
+Version: 1.2
 Made By: Edgar RP
 """
 from utils_simple import *
@@ -27,11 +27,11 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     bid_value = models.IntegerField()
     enter_bid = models.BooleanField()
-    expectation_0_units = models.IntegerField()
-    expectation_1_units = models.IntegerField()
-    expectation_2_units = models.IntegerField()
-    expectation_3_units = models.IntegerField()
-    expectation_4_units = models.IntegerField()
+    expectation_0_after = models.IntegerField()
+    expectation_1_after = models.IntegerField()
+    expectation_2_after = models.IntegerField()
+    expectation_3_after = models.IntegerField()
+    expectation_4_after = models.IntegerField()
 
 # PAGES
 class wait_for_all_grouping(WaitPage):
@@ -161,11 +161,11 @@ class O007_mercado(Page):
 class O008_expectativa(Page):
     form_model = 'player'
     form_fields = [
-        'expectation_0_units',
-        'expectation_1_units',
-        'expectation_2_units',
-        'expectation_3_units',
-        'expectation_4_units'
+        'expectation_0_after',
+        'expectation_1_after',
+        'expectation_2_after',
+        'expectation_3_after',
+        'expectation_4_after'
     ]
 
     @staticmethod
@@ -175,11 +175,11 @@ class O008_expectativa(Page):
     @staticmethod
     def before_next_page(player, timeout_happened):
         for p in player.in_previous_rounds():
-            p.expectation_0_units = player.expectation_0_units
-            p.expectation_1_units = player.expectation_1_units
-            p.expectation_2_units = player.expectation_2_units
-            p.expectation_3_units = player.expectation_3_units
-            p.expectation_4_units = player.expectation_4_units
+            p.expectation_0_after = player.expectation_0_after
+            p.expectation_1_after = player.expectation_1_after
+            p.expectation_2_after = player.expectation_2_after
+            p.expectation_3_after = player.expectation_3_after
+            p.expectation_4_after = player.expectation_4_after
 
 page_sequence = [
     wait_for_all_grouping,
