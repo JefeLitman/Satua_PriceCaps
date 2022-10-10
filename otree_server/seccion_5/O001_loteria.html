@@ -1,0 +1,62 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-primary" role="alert">
+                    <h2 class="text-capitalize">Seccion 5 - Loteria</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>La sección 5 consiste en una tarea breve. Ahora el computador le asignará aleatoriamente un boleto rojo o azul. La mitad de los participantes recibirán un boleto rojo y la otra mitad recibirá un boleto azul. Usará el boleto para participar en una lotería que describiré en un momento.</p>
+                        <p>Se le va mostrar una urna de plástico contiene <b>5 bolas rojas y 5 bolas azules.</b></p>
+                        <p>Si la Sección 5 es seleccionada como la sección que cuenta para el pago, uno de los instructores sacará al azar una bola de la urna y se la mostrará a todos.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide2" class="row my-3 d-none">
+                <div class="col-6 p-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Lotería 1</h5>
+                            <p class="card-text">Si el color de la bola extraída coincide con el color de su boleto, recibe <b>3 puntos.</b></p>
+                            <p class="card-text">Si los colores son diferentes, recibe <b>2 puntos.</b></p>
+                            <button name="lotery_selection" value="1" class="btn btn-success">Escogo esta loteria</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 p-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Lotería 2</h5>
+                            <p class="card-text">Si el color de la bola extraída coincide con el color de su boleto, recibe <b>5 puntos.</b></p>
+                            <p class="card-text">Si los colores son diferentes, recibe <b>0 puntos.</b></p>
+                            <button name="lotery_selection" value="2" class="btn btn-success">Escogo esta loteria</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="fake_button" class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script>
+        let idx = 1;
+        document.getElementById("next").onclick = () => {
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, next);
+            if (idx == 2){
+                fade_out(document.getElementById("fake_button"));
+            }
+            idx++;
+        };
+    </script>
+{{ endblock }}
