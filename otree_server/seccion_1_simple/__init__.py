@@ -1,5 +1,5 @@
 """File containing the section 1 for simple version configuration of players
-Version: 1.2
+Version: 1.3
 Made By: Edgar RP
 """
 from utils_simple import *
@@ -32,6 +32,9 @@ class Player(BasePlayer):
     expectation_2_after = models.IntegerField()
     expectation_3_after = models.IntegerField()
     expectation_4_after = models.IntegerField()
+    winner_round = models.StringField()
+    winner_section = models.StringField()
+    treatment = models.StringField()
 
 # PAGES
 class wait_for_all_grouping(WaitPage):
@@ -174,12 +177,13 @@ class O008_expectativa(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
+        set_experiment_params(player)
         for p in player.in_previous_rounds():
-            p.expectation_0_after = player.expectation_0_after
-            p.expectation_1_after = player.expectation_1_after
-            p.expectation_2_after = player.expectation_2_after
-            p.expectation_3_after = player.expectation_3_after
-            p.expectation_4_after = player.expectation_4_after
+            for i in range(5):
+                attr = "expectation_{}_after".format(i)
+                value = getattr(player, attr)
+                setattr(p, attr, value)
+            set_experiment_params(p)
 
 page_sequence = [
     wait_for_all_grouping,
