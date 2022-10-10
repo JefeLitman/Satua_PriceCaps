@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 0.1 -->
+    <!-- Version 1.0 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -13,43 +13,33 @@
                     <div class="row">
                         {{ if chosen_one }}
                             <h5 class="text-center">Usted ha sido seleccionado</h5>
-                            <p>Eliga <b>una</b> de las dos opciones siguientes:</p>
                         {{ else }}
                             <h5 class="text-center">Usted no ha sido seleccionado</h5>
                         {{ endif }}
+                        <p>Eliga <b>una</b> de las dos opciones siguientes:</p>
                     </div>
-                    {{ if chosen_one }}
-                        <div class="row border border-secondary">
-                            <div class="col-6">
-                                {{ if fmi }}
-                                    <p>En la <b>Sección 3</b>, a los vendedores automatizados se les permitirá sugerir cualquier precio de venta por encima de su costo (como en la Sección 1).</p>
-                                    <button name="section_3_setting" value="True" class="btn btn-success">Escogo esta opcion</button>
-                                {{ else }}
-                                    <p>En la <b>Sección 3</b>, a los vendedores automatizados NO se les permitirá sugerir un precio de venta por encima de 7, lo que garantiza que el precio de mercado NO excederá 7 (como en la Sección 1).</p>
-                                    <button name="section_3_setting" value="False" class="btn btn-success">Escogo esta opcion</button>
-                                {{ endif }}
-                            </div>
-                            <div class="col-6">
-                                {{ if fmi }}
-                                    <p>En la <b>Sección 3</b>, a los vendedores automatizados NO se les permitirá sugerir un precio de venta por encima de 7, lo que garantiza que el precio de mercado NO superará 7 (como en la Sección 2).</p>
-                                    <button name="section_3_setting" value="False" class="btn btn-success">Escogo esta opcion</button>
-                                {{ else }}
-                                    <p>En la <b>Sección 3</b>, a los vendedores automatizados se les permitirá sugerir cualquier precio de venta por encima de su costo (como en la Sección 2).</p>
-                                    <button name="section_3_setting" value="True" class="btn btn-success">Escogo esta opcion</button>
-                                {{ endif }}
-                            </div>
+                    <div class="row">
+                        <div class="col-6 border border-secondary text-center p-3">
+                            {{ if fmi }}
+                                <p>En la <b>Sección 3</b>, a los vendedores automatizados se les permitirá sugerir cualquier precio de venta por encima de su costo (como en la Sección 1).</p>
+                                <button name="section_3_setting" value="True" class="btn btn-success">Escogo esta opcion</button>
+                            {{ else }}
+                                <p>En la <b>Sección 3</b>, a los vendedores automatizados NO se les permitirá sugerir un precio de venta por encima de 7, lo que garantiza que el precio de mercado NO excederá 7 (como en la Sección 1).</p>
+                                <button name="section_3_setting" value="False" class="btn btn-success">Escogo esta opcion</button>
+                            {{ endif }}
                         </div>
-                    {{ endif }}
+                        <div class="col-6 border border-secondary text-center p-3">
+                            {{ if fmi }}
+                                <p>En la <b>Sección 3</b>, a los vendedores automatizados NO se les permitirá sugerir un precio de venta por encima de 7, lo que garantiza que el precio de mercado NO superará 7 (como en la Sección 2).</p>
+                                <button name="section_3_setting" value="False" class="btn btn-success">Escogo esta opcion</button>
+                            {{ else }}
+                                <p>En la <b>Sección 3</b>, a los vendedores automatizados se les permitirá sugerir cualquier precio de venta por encima de su costo (como en la Sección 2).</p>
+                                <button name="section_3_setting" value="True" class="btn btn-success">Escogo esta opcion</button>
+                            {{ endif }}
+                        </div>
+                    </div>
                 </div>
             </div>
-            {{ if not_chosen }}
-                <div class="row justify-content-center">
-                    <div class="col-2">
-                        <button class="btn btn-primary">Siguiente</button>
-                        <input class="d-none" type="text" name="section_3_setting" value="False"/>
-                    </div>
-                </div>
-            {{ endif }}
         </div>
     </div>
 {{ endblock }}
