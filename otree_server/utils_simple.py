@@ -1,9 +1,16 @@
 """File containing utilities functions for every simple section in the whole app
-Version: 0.2
+Version: 1.0
 Made By: Edgar RP
 """
 
 import random
+
+def set_chosen_player(group):
+    players = group.get_players()
+    randomized = random.sample(players, len(players))
+    randomized[0].chosen_player = True
+    for p in randomized[1:]:
+        p.chosen_player = False
 
 def set_group_asks_bids(group):
     asks = [int(i) for i in group.session.config["seller_asks"].split(",")]
