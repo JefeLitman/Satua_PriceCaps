@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 0.1 -->
+    <!-- Version 1.0 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -10,24 +10,21 @@
             </div>
             <div id="error_msg" class="row d-none">
                 <div class="alert alert-danger d-flex align-items-center" role="alert">
-                    Porfavor, arrastre los puntos hasta que sumen un total de 8 indicando cuantos compradores en cuantas rondas pudieron realizar la compra.
+                    Porfavor, arrastre los puntos hasta que sumen un total de 8 indicando cuantos compradores en cuantas rondas podran realizar una compra.
                 </div>
             </div>
             <div class="row mb-3">
-                <p class="fw-bold">Ahora responda la siguiente pregunta sobre los 8 períodos de intercambio en los que acaba de participar:</p>
+                <p class="fw-bold">Por favor, conteste la siguiente pregunta:</p>
                 {{ if fmi }}
-                <p>En la <b>Sección 2</b>, ¿en cuántos períodos cree que el número de compradores de su grupo podran realizar una compra?</p>
+                    <p>En la <b>Sección 2</b>, ¿en cuántos períodos cree que el número de compradores de su grupo podran que hara una compra es?</p>
                 {{ else }}
-                    <p>En la <b>Sección 2</b>, ¿en cuántos períodos cree que el número de compradores de su grupo podran realizar una compra?</p>
+                    <p>En la <b>Sección 2</b>, ¿en cuántos períodos cree que el número de compradores de su grupo haria una compra es?</p>
                 {{ endif }}
             </div>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
                     <canvas id="beliefs" width="400" height="400"></canvas>
                 </div>
-            </div>
-            <div class="row mt-3">
-                Tenga en cuenta que la suma de los números que usted proporcione debe ser 8 porque este es el número total de períodos en la Sección 1. Si infringe esta regla no podra avanzar a la siguiente pagina.
             </div>
             <div class="row my-3 text-center">
                 <div class="alert alert-info" role="alert">
@@ -40,11 +37,11 @@
                 </div>
             </div>
             <div class="row d-none">
-                <input type="number" id="field0" name="expectation_0_units" value="0"/>
-                <input type="number" id="field1" name="expectation_1_units" value="0"/>
-                <input type="number" id="field2" name="expectation_2_units" value="0"/>
-                <input type="number" id="field3" name="expectation_3_units" value="0"/>
-                <input type="number" id="field4" name="expectation_4_units" value="0"/>
+                <input type="number" id="field0" name="expectation_0_before" value="0"/>
+                <input type="number" id="field1" name="expectation_1_before" value="0"/>
+                <input type="number" id="field2" name="expectation_2_before" value="0"/>
+                <input type="number" id="field3" name="expectation_3_before" value="0"/>
+                <input type="number" id="field4" name="expectation_4_before" value="0"/>
             </div>
             <div class="row d-none">
                 <button id="submit">Siguiente</button>
