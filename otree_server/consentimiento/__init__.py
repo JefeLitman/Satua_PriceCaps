@@ -1,5 +1,5 @@
 """File containing the consent pages for the players
-Version: 1.4
+Version: 1.5
 Made By: Edgar RP
 """
 import random
@@ -13,7 +13,7 @@ Your app description
 
 class C(BaseConstants):
     NAME_IN_URL = 'consentimiento'
-    PLAYERS_PER_GROUP = None
+    PLAYERS_PER_GROUP = 8
     NUM_ROUNDS = 1
 
 
