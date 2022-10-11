@@ -1,9 +1,9 @@
 """File containing the section 1 for simple version configuration of players
-Version: 1.3
+Version: 1.4
 Made By: Edgar RP
 """
-from utils_simple import *
 from otree.api import *
+from utils_simple import creating_session, player_bid
 
 doc = """
 Your app description
@@ -37,16 +37,6 @@ class Player(BasePlayer):
     treatment = models.StringField()
 
 # PAGES
-class wait_for_all_grouping(WaitPage):
-    wait_for_all_groups = True
-    @staticmethod
-    def after_all_players_arrive(subsession):
-        subsession.group_randomly()
-    
-    @staticmethod
-    def is_displayed(player):
-        return player.participant.consentimiento and player.round_number == 1
-
 class O001_instrucciones(Page):
     @staticmethod
     def is_displayed(player):
@@ -80,10 +70,6 @@ class O004_info_practica(Page):
         )
 
 class wait_for_members(WaitPage):
-    @staticmethod
-    def after_all_players_arrive(group):
-        set_group_asks_bids(group)
-
     @staticmethod
     def is_displayed(player):
         return player.participant.consentimiento
@@ -177,16 +163,13 @@ class O008_expectativa(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        set_experiment_params(player)
         for p in player.in_previous_rounds():
             for i in range(5):
                 attr = "expectation_{}_after".format(i)
                 value = getattr(player, attr)
                 setattr(p, attr, value)
-            set_experiment_params(p)
 
 page_sequence = [
-    wait_for_all_grouping,
     O001_instrucciones, 
     O002_revision, 
     O003_chequeo,
