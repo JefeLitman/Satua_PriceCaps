@@ -1,9 +1,9 @@
 """File containing the section 3 for simple version configuration of players
-Version: 1.0
+Version: 1.1
 Made By: Edgar RP
 """
-from utils_simple import *
 from otree.api import *
+from utils_simple import creating_session, player_bid
 
 doc = """
 Your app description
@@ -34,18 +34,6 @@ class Player(BasePlayer):
     section_4_setting = models.BooleanField()
 
 # PAGES
-class wait_for_all_grouping(WaitPage):
-    wait_for_all_groups = True
-    @staticmethod
-    def after_all_players_arrive(subsession):
-        subsession.group_randomly()
-        for g in subsession.get_groups():
-            set_chosen_player(g)
-    
-    @staticmethod
-    def is_displayed(player):
-        return player.participant.consentimiento and player.round_number == 1
-
 class O001_informacion(Page):
     @staticmethod
     def is_displayed(player):
@@ -78,10 +66,6 @@ class O003_aviso(Page):
         )
 
 class wait_for_members(WaitPage):
-    @staticmethod
-    def after_all_players_arrive(group):
-        set_group_asks_bids(group)
-
     @staticmethod
     def is_displayed(player):
         return player.participant.consentimiento
@@ -116,9 +100,7 @@ class O004_mercado(Page):
     @staticmethod
     def before_next_page(player, timeout_happened):
         player_bid(player, player.enter_bid, 3)
-        set_experiment_params(player)
         if player.round_number > 1:
-            player.chosen_player = player.in_round(1).chosen_player
             player.section_4_setting = player.in_round(1).section_4_setting
         else:
             if player.chosen_player:
@@ -127,7 +109,6 @@ class O004_mercado(Page):
                     p.participant.section_4_setting = player.section_4_setting
 
 page_sequence = [
-    wait_for_all_grouping,
     O001_informacion, 
     O002_decision,
     O003_aviso,
