@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.0 -->
+    <!-- Version 1.1 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -52,7 +52,7 @@
             let prev = document.getElementById("slide"+idx)
             let next = document.getElementById("slide"+(idx+1))
             fade(prev, next);
-            if (idx == 2){
+            if (idx == 1){
                 fade_out(document.getElementById("fake_button"));
             }
             idx++;
