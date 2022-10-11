@@ -1,5 +1,5 @@
 """File containing the section 5 configuration of players
-Version: 1.0
+Version: 1.1
 Made By: Edgar RP
 """
 from otree.api import *
@@ -28,25 +28,18 @@ class Player(BasePlayer):
     ticket_color = models.StringField()
     lotery_selection = models.IntegerField()
 
-# PAGES
-class wait_for_all_grouping(WaitPage):
-    wait_for_all_groups = True
-    @staticmethod
-    def after_all_players_arrive(subsession):
-        players = subsession.get_players()
-        n_players = len(players)
-        randomized_players = random.sample(players, n_players)
-        for i, p in enumerate(randomized_players):
-            if i < n_players // 2:
-                p.ticket_color = "Roja"
-            else:
-                p.ticket_color = "Azul"
-            set_experiment_params(p)
-    
-    @staticmethod
-    def is_displayed(player):
-        return player.participant.consentimiento
+def creating_session(subsession):
+    players = subsession.get_players()
+    n_players = len(players)
+    randomized_players = random.sample(players, n_players)
+    for i, p in enumerate(randomized_players):
+        if i < n_players // 2:
+            p.ticket_color = "Roja"
+        else:
+            p.ticket_color = "Azul"
+        set_experiment_params(p)
 
+# PAGES
 class O001_loteria(Page):
     form_model = 'player'
     form_fields = ['lotery_selection']
@@ -55,7 +48,37 @@ class O001_loteria(Page):
     def is_displayed(player):
         return player.participant.consentimiento
 
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            roja = player.ticket_color.lower() == "roja"
+        )
+
+class O002_espera(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            roja = player.ticket_color.lower() == "roja",
+            loteria_1 = player.lotery_selection == 1
+        )
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        if player.session.winner_section == 5:
+            if player.lotery_selection == 1:
+                if player.session.comment.lower() == player.ticket_color.lower():
+                    player.payoff = 3
+                else:
+                    player.payoff = 2
+            else:
+                if player.session.comment.lower() == player.ticket_color.lower():
+                    player.payoff = 5
+
 page_sequence = [
-    wait_for_all_grouping,
-    O001_loteria
+    O001_loteria,
+    O002_espera
 ]
