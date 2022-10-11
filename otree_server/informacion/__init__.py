@@ -1,5 +1,5 @@
 """File containing the general and payments information for players
-Version: 1.3
+Version: 1.2
 Made By: Edgar RP
 """
 from otree.api import *
@@ -12,7 +12,7 @@ Your app description
 
 class C(BaseConstants):
     NAME_IN_URL = 'informacion'
-    PLAYERS_PER_GROUP = 8
+    PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
 
