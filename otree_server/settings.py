@@ -1,5 +1,5 @@
 """File containing the general settings for the oTree app
-Version: 1.1
+Version: 1.2
 Made By: Edgar RP
 """
 from os import environ
@@ -33,7 +33,7 @@ SESSION_CONFIGS = [
             'seccion_6',
             "gracias"
         ],
-        num_demo_participants=4,
+        num_demo_participants=8,
         treatment_FMI=True,
         time_per_practice_period=30,
         time_per_trading_period=20,
@@ -54,12 +54,13 @@ SESSION_CONFIG_DEFAULTS = dict(
 
 PARTICIPANT_FIELDS = [
     "consentimiento", 
-    "winner_section",
-    "winner_round",
     "section_3_setting",
     "section_4_setting"
 ]
-SESSION_FIELDS = []
+SESSION_FIELDS = [
+    "winner_section",
+    "winner_round"
+]
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
