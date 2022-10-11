@@ -1,16 +1,13 @@
 """File containing utilities functions for every simple section in the whole app
-Version: 1.1
+Version: 1.2
 Made By: Edgar RP
 """
 
 import random
 
 def set_experiment_params(player):
-    player.winner_section = str(player.participant.winner_section)
-    if player.winner_section in ["5", "6"]:
-        player.winner_round = "1"
-    else:
-        player.winner_round = str(player.participant.winner_round)
+    player.winner_section = str(player.session.winner_section)
+    player.winner_round = str(player.session.winner_round)
     player.treatment = "FMI" if player.session.config["treatment_FMI"] else "PCE"
 
 def set_chosen_player(group):
@@ -53,7 +50,7 @@ def player_bid(player, entered, section):
                 if traded and s_ask <= price:
                     accepted = "Si"
                     earnings = p_bid - price
-                    if section == player.participant.winner_section and player.round_number == player.participant.winner_round:
+                    if section == player.session.winner_section and player.round_number == player.session.winner_round:
                         player.payoff = p_bid - price 
                 else:
                     accepted = "No"
@@ -67,3 +64,27 @@ def player_bid(player, entered, section):
         "price": price,
         "earnings": earnings
     }
+
+def creating_session(subsession):
+    if subsession.round_number == 1:
+        subsession.group_randomly()
+        for g in subsession.get_groups():
+            p = g.get_players()[0]
+            try:
+                if p.field_maybe_none("chosen_player") == None:
+                    set_chosen_player(g)
+            except AttributeError:
+                pass
+    else:
+        subsession.group_like_round(1)
+        for p in subsession.get_players():
+            try:
+                if p.field_maybe_none("chosen_player") == None:
+                    p.chosen_player = p.in_round(1).chosen_player
+            except AttributeError:
+                pass
+            
+    for g in subsession.get_groups():
+        set_group_asks_bids(g)
+        for p in g.get_players():
+            set_experiment_params(p)
