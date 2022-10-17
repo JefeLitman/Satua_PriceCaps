@@ -1,0 +1,78 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 1 - Expectativas</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Ahora le pediremos que responda la siguiente pregunta sobre los 8 períodos en los que acaba de participar:</p>
+                        <p class="fw-bold text-center">En cada período, el número de compradores de su grupo que lograron comprar fue 0, 1, 2, 3 ó 4. Por favor, indique en cuántos períodos cree que el número de compradores que lograron comprar fue 0, en cuántos fue 1, en cuántos fue 2, en cuántos fue 3 y en cuántos fue 4.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="slide2" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Para responder esta pregunta deberá utilizar la figura que encuentra abajo. En esta figura usted está observando una cuadrícula y, en la parte inferior, cinco círculos azules. En la posición inicial de los círculos sólo está viendo la mitad de cada uno de ellos, pero, una vez que los seleccione y los desplace hacia arriba, los podrá ver completos. Para mover cada círculo sólo tendrá que ubicar el cursor del ratón encima del círculo y moverlo hacia arriba. Podrá soltarlo cuando esté en la posición que usted desea. No es necesario que mueva todos los círculos, sólo deberá mover aquellos que necesite para dar su respuesta. Tenga en cuenta que la suma de los números que usted proporcione debe ser ocho (8) porque este es el número total de períodos en la Sección 1. Si infringe esta regla no podrá avanzar a la siguiente página.</p>
+                    </div>
+                    <img src="{{ static 'market/expectations_initial.png' }}" class="card-img-bottom img-fluid border border-primary">
+                </div>
+            </div>
+            <div id="slide3" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Veamos cómo funciona con un ejemplo. Supongamos que usted cree que todos los compradores lograron comprar en los ocho (8) períodos. Usted, entonces, tendría que mover el último círculo (4 compradores) hasta la parte más alta de la cuadrícula (8 períodos). Al final la figura debería verse en su pantalla así:</p>
+                    </div>
+                    <img src="{{ static 'market/expectations_all.png' }}" class="card-img-bottom img-fluid border border-primary">
+                </div>
+            </div>
+            <div id="slide4" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Miremos un ejemplo más. Ahora imagine que usted cree que en cuatro (4) períodos ningún comprador logró comprar, que en tres (3) períodos sólo un comprador logró comprar y que en un (1) período sólo dos compradores lograron comprar (4+3+1=8). Usted, entonces, tendría que mover el primer círculo (0 compradores) hasta la posición que indica 4 períodos, el segundo círculo (1 comprador) hasta la posición que indica 3 períodos y el tercer círculo (2 compradores) hasta la posición que indica 1 período. Al final la figura debería verse en su pantalla así:</p>
+                    </div>
+                    <img src="{{ static 'market/expectations_final.png' }}" class="card-img-bottom img-fluid border border-primary">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2 me-3">
+                    <button type="button" id="back" class="btn btn-primary">Retroceder</button>
+                </div>
+                <div class="col-2 ms-3">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script>
+        let idx = 1;
+        document.getElementById("back").onclick = () => {
+            if (idx != 1){
+                let prev = document.getElementById("slide"+idx)
+                let next = document.getElementById("slide"+(idx-1))
+                fade(prev, next);
+                idx--;
+            }
+        };
+        document.getElementById("next").onclick = () => {
+            if (idx == 4){
+                document.getElementById("submit").click();
+                return null;
+            }
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, next);
+            idx++;
+        };
+    </script>
+{{ endblock }}
