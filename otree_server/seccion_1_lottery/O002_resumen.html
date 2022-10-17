@@ -1,0 +1,75 @@
+{{ block content }}
+    <!-- Version 1.2 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 1 - Resumen</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Revisemos el ejemplo anterior para que usted vea cómo se presentará todo en la pantalla de su computador.</h5>
+                    </div>
+                </div>
+            </div>
+            <div id="slide2" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>En cada período verá la pantalla de compra.</p>
+                        <p>En el área superior, primero verá a la izquierda el número de su grupo (en este ejemplo: 1). Luego verá el número del período actual (en este ejemplo: 1) y el número total de períodos en la Sección 1 (8).</p>
+                        <p>Debajo verá su valor.</p>
+                        <p>En el lado derecho de la pantalla, hay un botón que dice <b>"Enviar solicitud de compra".</b> Para enviar la solicitud, simplemente dé clic en el botón.</p>
+                        <p>Una vez que todas las solicitudes de compra y precios sugeridos fueron recopilados y ordenados, usted podrá ver (1) si su solicitud ha sido aceptada y (2) el precio de mercado.</p>
+                        <p>En el ejemplo, su valor es 10, su solicitud ha sido aceptada y el precio de mercado es 6. Por lo tanto, sus ganancias en este período son 10 - 6 = 4.</p>
+                        <p>Recuerde que la Sección 1 incluye 8 períodos. Una vez que termine el último período, aparecerá la siguiente pantalla.</p>
+                    </div>
+                    <img src="{{ static 'market/solicitud.png' }}" class="card-img-bottom img-fluid border border-primary">
+                </div>
+            </div>
+            <div id="slide3" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Aquí observa un resumen de los 8 períodos. Primero ve el precio de mercado más frecuente (en este ejemplo: 6). En segundo lugar ve la cantidad de períodos en los que usted logró comprar (en este ejemplo: 5).</p>
+                    </div>
+                    <img src="{{ static 'market/historial.png' }}" class="card-img-bottom img-fluid border border-primary">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2 me-3">
+                    <button type="button" id="back" class="btn btn-primary">Retroceder</button>
+                </div>
+                <div class="col-2 ms-3">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script>
+        let idx = 1;
+        document.getElementById("back").onclick = () => {
+            if (idx != 1){
+                let prev = document.getElementById("slide"+idx)
+                let next = document.getElementById("slide"+(idx-1))
+                fade(prev, next);
+                idx--;
+            }
+        };
+        document.getElementById("next").onclick = () => {
+            if (idx == 3){
+                document.getElementById("submit").click();
+                return null;
+            }
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, next);
+            idx++;
+        };
+    </script>
+{{ endblock }}
