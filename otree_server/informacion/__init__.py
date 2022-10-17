@@ -1,9 +1,9 @@
 """File containing the general and payments information for players
-Version: 1.2
+Version: 1.3
 Made By: Edgar RP
 """
 from otree.api import *
-from utils_simple import set_experiment_params
+from utils import set_experiment_params
 
 doc = """
 Your app description
