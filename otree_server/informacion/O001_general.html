@@ -1,55 +1,27 @@
 {{ block content }}
-    <!-- Version 1.2 -->
+    <!-- Version 1.3 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
             <div class="row text-center mt-5">
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-info" role="alert">
                     <h2 class="text-capitalize">Instrucciones generales</h2>
                 </div>
             </div>
             <div id="slide1" class="row my-3">
                 <div class="card">
                     <div class="card-body">
-                        <p>Bienvenido a esta sesión. A continuación participará en un estudio sobre toma de decisiones. Esta sesión durará X minutos. Todas las interacciones en la sesión serán a través del computador. Por lo tanto, todas sus decisiones serán anónimas y su identidad se mantendrá privada.</p>
-                    </div>
-                </div>
-            </div>
-            <div id="slide2" class="row my-3 d-none">
-                <div class="card">
-                    <div class="card-body">
-                        <p>Los participantes han sido divididos al azar en grupos de 4. Esto significa que usted fue asignado al azar a un grupo con otros tres participantes. Su grupo estará conformado por los mismos participantes durante toda la sesión. Sin embargo, no sabrá quiénes son estos participantes, ni ellos sabrán quién es usted.</p>
-                    </div>
-                </div>
-            </div>
-            <div id="slide3" class="row my-3 d-none">
-                <div class="card">
-                    <div class="card-body">
-                        <p>Antes de comenzar, le pedimos que no hable con otros participantes durante la sesión. Si tiene alguna pregunta, levante la mano y nos acercaremos a su puesto. Con gusto atenderemos sus consultas en privado. Si no cumple con esta regla, nos veremos obligados a excluirlo de la sesión. Apreciamos su cooperación.</p>
+                        <p>Bienvenido a esta sesión de aproximadamente X minutos. Participará en un estudio sobre toma de decisiones. Todas las interacciones en la sesión serán anónimas y se harán a través del computador.</p>
+                        <p>Los participantes han sido divididos en <b>grupos de 4.</b> Su grupo estará conformado por los mismos participantes durante toda la sesión. Sin embargo, no sabrá quiénes son estos participantes, ni ellos sabrán quién es usted.</p>
+                        <p>Antes de comenzar, le pedimos que no hable con otros participantes durante la sesión. Si tiene alguna pregunta, levante la mano y con gusto atenderemos su consulta en privado. Si no cumple con esta regla, nos veremos obligados a excluirlo de la sesión. Apreciamos su cooperación.</p>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-2">
-                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                    <button class="btn btn-primary">Siguiente</button>
                 </div>
-            </div>
-            <div class="row d-none">
-                <button id="submit">Siguiente</button>
             </div>
         </div>
     </div>
-    <script src="{{ static 'global/animation.js' }}"></script>
-    <script>
-        let idx = 1;
-        document.getElementById("next").onclick = () => {
-            if (idx == 3){
-                document.getElementById("submit").click();
-            }
-            let prev = document.getElementById("slide"+idx)
-            let next = document.getElementById("slide"+(idx+1))
-            fade(prev, next);
-            idx++;
-        };
-    </script>
 {{ endblock }}
