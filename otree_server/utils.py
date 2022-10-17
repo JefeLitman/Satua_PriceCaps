@@ -1,82 +1,79 @@
-"""File containing utilities functions for every section with bid in the whole app
-Version: 1.1
+"""File containing utilities functions for every market section in the whole app
+Version: 1.3
 Made By: Edgar RP
 """
 
 import random
 
-def get_ask_generator(subsession):
-    min_ask = subsession.session.config["min_ask"]
-    if subsession.session.config["treatment_FMI"]:
-        max_ask = subsession.session.config["max_ask"]
+def set_experiment_params(player):
+    player.winner_section = str(player.session.winner_section)
+    player.winner_round = str(player.session.winner_round)
+    if player.session.config["treatment_FME"]:
+        player.treatment = "FME"    
+    elif player.session.config["treatment_FMI"]:
+        player.treatment = "FMI"
     else:
-        max_ask = 7
-    generator = lambda: random.randint(min_ask, max_ask)
-    return generator
+        player.treatment = "PCE"
 
-def set_group_asks(group, round_number):
-    sellers = range(1,6)
-    if round_number in [1, 7]:
-        gen = get_ask_generator(group.subsession)
-        values = [gen() for _ in sellers]
-    else:
-        if round_number < 7:
-            values = [getattr(group.in_round(1), "seller_{}_ask".format(j)) for j in sellers]
+def set_chosen_player(group):
+    players = group.get_players()
+    randomized = random.sample(players, len(players))
+    randomized[0].chosen_player = True
+    for p in randomized[1:]:
+        p.chosen_player = False
+
+def set_group_asks_bids(group):
+    asks = [int(i) for i in group.session.config["seller_asks"].split(",")]
+    for j in range(1, 5):
+        setattr(group, "seller_{}_ask".format(j), asks[j-1])
+    bids = [int(i) for i in group.session.config["players_bids"].split(",")]
+    bids_randomized = random.sample(bids, k=len(bids))
+    for i, p in enumerate(group.get_players()):
+        p.bid_value = bids_randomized[i]
+
+def get_price(player):
+    asks = [int(i) for i in player.session.config["seller_asks"].split(",")]
+    if player.participant.section_setting != None:
+        if player.participant.section_setting:
+            return max(asks)
         else:
-            values = [getattr(group.in_round(7), "seller_{}_ask".format(j)) for j in sellers]
-    # Add a random probability of 25% to increase/decrease the asks by sellers
-    p = random.random()
-    if p < 0.25: # Decrease
-        sufix = -group.session.config["decrease_ask_by"]
-    elif p > 0.75:
-        sufix = group.session.config["increase_ask_by"]
+            return player.session.config["max_price"]
     else:
-        sufix = 0
-    for j in sellers:
-        final_value = values[j-1] + sufix
-        if not group.session.config["treatment_FMI"] and final_value > 7:
-            final_value = 7
-        setattr(group, "seller_{}_ask".format(j), final_value)
+        if player.session.config["treatment_PCE"]:
+            return player.session.config["max_price"]
+        else:
+            return max(asks)
 
-def get_price(group):
-    sellers = range(1,6)
-    buyers = group.get_players()
-    asks = sorted([getattr(group, "seller_{}_ask".format(i)) for i in sellers])
-    bids = []
-    for player in buyers:
-        value = player.field_maybe_none("bid_value")
-        if value == None:
-            value = 0
-        bids.append(value)
-    bids = sorted(bids, reverse=True)
-    for i in range(len(buyers) - 1, -1, -1):
-        if bids[i] >= asks[i]:
-            return asks[i]
-    return asks[-1]
+def set_players_results(group, section, round_number):
+    asks = sorted([int(i) for i in group.session.config["seller_asks"].split(",")], reverse=True)
+    bids = sorted(group.get_players(), key=lambda p: p.bid_value)
+    for i, p in enumerate(bids):
+        price = get_price(p)
+        p.bid_accepted = p.bid_value >= asks[i] and asks[i] <= price
+        if section == p.session.winner_section and round_number == p.session.winner_round:
+            if p.bid_accepted:
+                p.payoff = p.bid_value - price
 
-def set_player_values(player):
-    player.max_value = random.randint(player.session.config["min_value"], player.session.config["max_value"])
-    if not player.participant.consentimiento:
-        player.bid_value = random.randint(1, player.max_value)
-        player.bid_history = "Bot Player"
-
-def player_bid(player, value, section):
-    player.bid_value = int(value)
-    price = get_price(player.group)
-    accepted = int(value) >= price
-    if section == player.participant.winner_section and player.round_number == player.participant.winner_round:
-        player.payoff = player.max_value - price if accepted else 0
-    return {
-        "bid": value, 
-        "accepted": accepted,
-        "price": price
-    }
-
-def add_history_value(player, value):
-    history = player.field_maybe_none("bid_history")
-    if history == None:
-        values = []
+def creating_session(subsession):
+    if subsession.round_number == 1:
+        #subsession.group_randomly()
+        for g in subsession.get_groups():
+            p = g.get_players()[0]
+            try:
+                if p.field_maybe_none("chosen_player") == None:
+                    set_chosen_player(g)
+            except AttributeError:
+                pass
     else:
-        values = history.split("-")
-    values.append(value)
-    player.bid_history = "-".join([str(i) for i in values])
+        subsession.group_like_round(1)
+        for p in subsession.get_players():
+            try:
+                if p.field_maybe_none("chosen_player") == None:
+                    p.chosen_player = p.in_round(1).chosen_player
+            except AttributeError:
+                pass
+            
+    for g in subsession.get_groups():
+        set_group_asks_bids(g)
+        for p in g.get_players():
+            set_experiment_params(p)
