@@ -1,0 +1,27 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 1 - Resultados</h2>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">En la Sección {{ seccion }}:</h5>
+                        <p class="card-text">1. El <b>precio de mercado</b> en la mayoría de los períodos fue: {{ precio }}</p>
+                        <p class="card-text">2. Usted hizo una <b>compra</b> en {{ compras }} de los {{ total_periodos }} períodos.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{ endblock }}
