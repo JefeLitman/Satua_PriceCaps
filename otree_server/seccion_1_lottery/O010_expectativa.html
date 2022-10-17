@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.4 -->
+    <!-- Version 1.5 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -65,10 +65,8 @@
                 document.getElementById("submit").click();
             }
             else{
-                let err_msg = document.getElementById("error_msg")
+                let err_msg = document.getElementById("error_msg");
                 await fade_in(err_msg);
-                await sleep(3000);
-                await fade_out(err_msg);
             }
         };
     </script>
