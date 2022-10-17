@@ -1,5 +1,5 @@
 """File containing the section 1 (market) configuration param of players
-Version: 1.5
+Version: 1.6
 Made By: Edgar RP
 """
 from otree.api import *
@@ -63,6 +63,18 @@ class O004_info_practica(Page):
             max_price = player.session.config["max_price"]
         )
 
+class O005_informacion(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.participant.consentimiento and player.round_number == 3
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            pce = player.session.config["treatment_PCE"],
+            max_price = player.session.config["max_price"]
+        )
+
 class wait_for_members(WaitPage):
     @staticmethod
     def is_displayed(player):
@@ -75,87 +87,59 @@ class wait_for_members(WaitPage):
         else:
             set_players_results(group, 1, 0)
 
-class O005_practica(Page):
+class O006_mercado(Page):
     @staticmethod
     def is_displayed(player):
-        return player.participant.consentimiento and player.round_number <= 2
+        return player.participant.consentimiento
 
     @staticmethod
     def vars_for_template(player):
+        if player.round_number >= 3:
+            head = "períodos reales"
+            total = C.NUM_ROUNDS - 8
+            current_round = player.round_number - 2
+        else:
+            head = "períodos de práctica"
+            total = C.NUM_ROUNDS - 8
+            current_round = player.round_number
         return dict(
+            header = head,
             grupo = player.group_id,
             seccion = 1,
-            periodo = player.round_number,
-            total_periodos = C.NUM_ROUNDS - 8,
+            periodo = current_round,
+            total_periodos = total,
             valor=player.bid_value,
         )
 
-class O006_resul_practica(Page):
+class O007_resultado(Page):
     @staticmethod
     def is_displayed(player):
-        return player.participant.consentimiento and player.round_number <= 2
+        return player.participant.consentimiento
 
     @staticmethod
     def vars_for_template(player):
         price = get_price(player)
+        if player.round_number >= 3:
+            head = "períodos reales"
+            total = C.NUM_ROUNDS - 8
+            current_round = player.round_number - 2
+        else:
+            head = "períodos de práctica"
+            total = C.NUM_ROUNDS - 8
+            current_round = player.round_number
         return dict(
+            header = head,
             grupo = player.group_id,
             seccion = 1,
-            periodo = player.round_number,
-            total_periodos = C.NUM_ROUNDS - 8,
+            periodo = current_round,
+            total_periodos = total,
             valor = player.bid_value,
             aceptada = "Si" if player.bid_accepted else "No",
             precio = price,
             ganancia = player.bid_value - price if player.bid_accepted else 0
         )
 
-class O007_informacion(Page):
-    @staticmethod
-    def is_displayed(player):
-        return player.participant.consentimiento and player.round_number == 3
-
-    @staticmethod
-    def vars_for_template(player):
-        return dict(
-            pce = player.session.config["treatment_PCE"],
-            max_price = player.session.config["max_price"]
-        )
-
-class O008_mercado(Page):
-    @staticmethod
-    def is_displayed(player):
-        return player.participant.consentimiento and player.round_number >= 3
-
-    @staticmethod
-    def vars_for_template(player):
-        return dict(
-            grupo = player.group_id,
-            seccion = 1,
-            periodo = player.round_number - 2,
-            total_periodos = C.NUM_ROUNDS - 2,
-            valor=player.bid_value,
-        )
-
-class O009_resultado(Page):
-    @staticmethod
-    def is_displayed(player):
-        return player.participant.consentimiento and player.round_number >= 3
-
-    @staticmethod
-    def vars_for_template(player):
-        price = get_price(player)
-        return dict(
-            grupo = player.group_id,
-            seccion = 1,
-            periodo = player.round_number - 2,
-            total_periodos = C.NUM_ROUNDS - 2,
-            valor = player.bid_value,
-            aceptada = "Si" if player.bid_accepted else "No",
-            precio = price,
-            ganancia = player.bid_value - price if player.bid_accepted else 0
-        )
-
-class O010_historial(Page):
+class O008_historial(Page):
     @staticmethod
     def is_displayed(player):
         return player.participant.consentimiento and player.round_number in [2, C.NUM_ROUNDS]
@@ -176,12 +160,12 @@ class O010_historial(Page):
             compras = compras
         )
 
-class O011_instr_expectativas(Page):
+class O009_instr_expectativas(Page):
     @staticmethod
     def is_displayed(player):
         return player.participant.consentimiento and player.round_number == C.NUM_ROUNDS
 
-class O012_expectativa(Page):
+class O010_expectativa(Page):
     form_model = 'player'
     form_fields = [
         'expectation_0_after',
@@ -209,13 +193,11 @@ page_sequence = [
     O002_resumen, 
     O003_chequeo,
     O004_info_practica,
-    O007_informacion,
+    O005_informacion,
     wait_for_members,
-    O005_practica,
-    O006_resul_practica,
-    O008_mercado,
-    O009_resultado,
-    O010_historial,
-    O011_instr_expectativas,
-    O012_expectativa
+    O006_mercado,
+    O007_resultado,
+    O008_historial,
+    O009_instr_expectativas,
+    O010_expectativa
 ]
