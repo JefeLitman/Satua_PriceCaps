@@ -1,0 +1,29 @@
+{{ block content }}
+    <!-- Version 1.1 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 1 - Preparación</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Períodos de Práctica</h5>
+                        <p class="card-text">Ahora participará en 2 períodos de práctica no remunerados. Luego tendrá la oportunidad de hacer preguntas.</p>
+                        {{ if pce }}
+                            <p class="card-text fw-bold">A los vendedores automatizados NO se les permite sugerir un precio por encima de {{ max_price }}. Esto garantiza que el precio de mercado NO superará {{ max_price }}.</p>
+                        {{ endif }}
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{ endblock }}
