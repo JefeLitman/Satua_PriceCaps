@@ -1,0 +1,30 @@
+{{ block content }}
+    <!-- Version 1.1 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 1 - Preparación</h2>
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Períodos Reales</h5>
+                        <p class="card-text">Una vez que comience el primer período "real", no habrá más preguntas hasta que finalice el último período de la Sección 1, así que levante la mano ahora si tiene alguna pregunta.</p>
+                        <p class="card-text">Si se selecciona la Sección 1 como la sección que cuenta para el pago, seleccionaremos al azar uno de los períodos y usted recibirá las ganancias de ese período. Todos los períodos tienen la misma probabilidad de ser seleccionados.</p>
+                        {{ if pce }}
+                            <p class="card-text fw-bold">Recuerde que en los períodos de práctica a los vendedores automatizados NO se les permitió sugerir un precio de venta por encima de {{ max_price }}, lo que garantizó que el precio de mercado NO superará  {{ max_price }}. Esta regla también se aplicará a los próximos períodos.</p>
+                        {{ endif }}
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{ endblock }}
