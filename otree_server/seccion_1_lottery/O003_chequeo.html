@@ -1,0 +1,130 @@
+{{ block content }}
+    <!-- Version 1.2 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 1 - Chequeo de Comprensión</h2>
+                </div>
+            </div>
+            <div id="error_msg" class="row d-none">
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    Porfavor, lea nuevamente la pregunta y responda la respuesta mas acorde al enunciado.
+                </div>
+            </div>
+            <div id="success_msg" class="row d-none">
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                    ¡Correcto!
+                </div>
+            </div>
+            <div id="slide1" class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Ahora le pedimos que conteste unas preguntas para verificar que ha comprendido las instrucciones. Luego haremos una pequeña práctica.</h5>
+                    </div>
+                </div>
+            </div>
+            <div id="slide2" class="row my-3 d-none">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <p class="card-text">Basado en el ejemplo que aparece abajo: De las 4 unidades, ¿cuántas se venderán?</p>
+                        <button type="button" id="Q1_B1" class="btn btn-outline-secondary mx-5 px-5">3</button>
+                        <button type="button" id="Q1_B2" class="btn btn-outline-secondary mx-5 px-5">2</button>
+                        <button type="button" id="Q1_B3" class="btn btn-outline-secondary mx-5 px-5">4</button>
+                        <button type="button" id="Q1_B4" class="btn btn-outline-secondary mx-5 px-5">0</button>
+                    </div>
+                    <img src="{{ static 'market/chequeo_1.png' }}" class="card-img-bottom img-fluid border border-primary">
+                </div>
+            </div>
+            <div id="slide3" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Basado en el ejemplo que aparece abajo: ¿Cuál será el precio de mercado?</p>
+                        <button type="button" id="Q2_B1" class="btn btn-outline-secondary mx-5 px-5">4</button>
+                        <button type="button" id="Q2_B2" class="btn btn-outline-secondary mx-5 px-5">8</button>
+                        <button type="button" id="Q2_B3" class="btn btn-outline-secondary mx-5 px-5">7</button>
+                        <button type="button" id="Q2_B4" class="btn btn-outline-secondary mx-5 px-5">5</button>
+                    </div>
+                    <img src="{{ static 'market/chequeo_1.png' }}" class="card-img-bottom img-fluid border border-primary">
+                </div>
+            </div>
+            <div id="slide4" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Basado en el ejemplo que aparece abajo: sus ganancias en este período serán...</p>
+                        <button type="button" id="Q3_B1" class="btn btn-outline-secondary mx-5 px-5">3</button>
+                        <button type="button" id="Q3_B2" class="btn btn-outline-secondary mx-5 px-5">1</button>
+                        <button type="button" id="Q3_B3" class="btn btn-outline-secondary mx-5 px-5">0</button>
+                        <button type="button" id="Q3_B4" class="btn btn-outline-secondary mx-5 px-5">2</button>
+                    </div>
+                    <img src="{{ static 'market/chequeo_2.png' }}" class="card-img-bottom img-fluid border border-primary">
+                </div>
+            </div>
+            <div id="slide5" class="row my-3 d-none">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Basado en el ejemplo que aparece abajo: sus ganancias en este período serán...</p>
+                        <button type="button" id="Q4_B1" class="btn btn-outline-secondary mx-5 px-5">1</button>
+                        <button type="button" id="Q4_B2" class="btn btn-outline-secondary mx-5 px-5">0</button>
+                        <button type="button" id="Q4_B3" class="btn btn-outline-secondary mx-5 px-5">3</button>
+                        <button type="button" id="Q4_B4" class="btn btn-outline-secondary mx-5 px-5">2</button>
+                    </div>
+                    <img src="{{ static 'market/chequeo_3.png' }}" class="card-img-bottom img-fluid border border-primary">
+                </div>
+            </div>
+            <div id="fake_button" class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script>
+        let idx = 1;
+        document.getElementById("next").onclick = () => {
+            let prev = document.getElementById("slide"+idx)
+            let next = document.getElementById("slide"+(idx+1))
+            fade(prev, next);
+            if (idx == 1){
+                fade_out(document.getElementById("fake_button"));
+            }
+            idx++;
+        };
+
+        correct_answer = async () => {
+            if (idx == 5){
+                document.getElementById("submit").click();
+                return null;
+            }
+            let prev = document.getElementById("slide"+idx);
+            let next = document.getElementById("slide"+(idx+1));
+            let good_msg = document.getElementById("success_msg");
+            await fade(prev, good_msg);
+            await sleep(1000);
+            await fade(good_msg, next);
+            idx++;
+        };
+
+        wrong_answer = async () => {
+            let err_msg = document.getElementById("error_msg");
+            await fade_in(err_msg);
+            await sleep(3000);
+            await fade_out(err_msg);
+        }
+
+        for (let i=1; i<=4; i++){
+            for (let j=1; j<=4; j++){
+                document.getElementById("Q"+i+"_B"+j).onclick = wrong_answer;
+            }
+        }
+        document.getElementById("Q1_B1").onclick = correct_answer;
+        document.getElementById("Q2_B3").onclick = correct_answer;
+        document.getElementById("Q3_B4").onclick = correct_answer;
+        document.getElementById("Q4_B2").onclick = correct_answer;
+    </script>
+{{ endblock }}
