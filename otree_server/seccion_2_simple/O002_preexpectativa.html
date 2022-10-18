@@ -1,34 +1,34 @@
 {{ block content }}
-    <!-- Version 1.0 -->
+    <!-- Version 1.0.1 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
             <div class="row text-center mt-5">
-                <div class="alert alert-primary" role="alert">
+                <div class="alert alert-info" role="alert">
                     <h2 class="text-capitalize">Seccion 2 - Expectativas</h2>
                 </div>
             </div>
-            <div id="error_msg" class="row d-none">
-                <div class="alert alert-danger d-flex align-items-center" role="alert">
-                    Porfavor, arrastre los puntos hasta que sumen un total de 8 indicando cuantos compradores en cuantas rondas podran realizar una compra.
-                </div>
-            </div>
             <div class="row mb-3">
-                <p class="fw-bold">Por favor, conteste la siguiente pregunta:</p>
-                {{ if fmi }}
-                    <p>En la <b>Sección 2</b>, ¿en cuántos períodos cree que el número de compradores de su grupo podran que hara una compra es?</p>
-                {{ else }}
-                    <p>En la <b>Sección 2</b>, ¿en cuántos períodos cree que el número de compradores de su grupo haria una compra es?</p>
-                {{ endif }}
+                <p class="fw-bold text-center">
+                    En cada período de la <b>Sección 2</b>, el número de compradores de su grupo que lograrán
+                    En cada período, el número de compradores de su grupo que lograron comprar fue 0, 1, 2, 3 ó 4. Por favor, indique en cuántos períodos cree que el número de compradores que lograron comprar fue 0, en cuántos fue 1, en cuántos fue 2, en cuántos fue 3 y en cuántos fue 4.</p>
             </div>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
                     <canvas id="beliefs" width="400" height="400"></canvas>
                 </div>
             </div>
+            <div class="row mt-3">
+                Tenga en cuenta que la suma de los números que usted proporcione debe ser 8 porque este es el número total de períodos en la Sección 1. Si infringe esta regla no podra avanzar a la siguiente pagina.
+            </div>
             <div class="row my-3 text-center">
-                <div class="alert alert-info" role="alert">
+                <div class="alert alert-warning" role="alert">
                     Suma de todos los periodos: <b id="quantity">0</b>
+                </div>
+            </div>
+            <div id="error_msg" class="row d-none">
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    Porfavor, arrastre los puntos hasta que sumen un total de 8 indicando cuantos compradores en cuantas rondas pudieron realizar la compra.
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -37,11 +37,11 @@
                 </div>
             </div>
             <div class="row d-none">
-                <input type="number" id="field0" name="expectation_0_before" value="0"/>
-                <input type="number" id="field1" name="expectation_1_before" value="0"/>
-                <input type="number" id="field2" name="expectation_2_before" value="0"/>
-                <input type="number" id="field3" name="expectation_3_before" value="0"/>
-                <input type="number" id="field4" name="expectation_4_before" value="0"/>
+                <input type="number" id="field0" name="expectation_0_after" value="0"/>
+                <input type="number" id="field1" name="expectation_1_after" value="0"/>
+                <input type="number" id="field2" name="expectation_2_after" value="0"/>
+                <input type="number" id="field3" name="expectation_3_after" value="0"/>
+                <input type="number" id="field4" name="expectation_4_after" value="0"/>
             </div>
             <div class="row d-none">
                 <button id="submit">Siguiente</button>
@@ -57,7 +57,7 @@
             document.getElementById("quantity").innerHTML = get_suma();
         }, 500);
 
-        document.getElementById("next").onclick = () => {
+        document.getElementById("next").onclick = async () => {
             suma = get_suma();
             data_array = config["data"]["datasets"][0]["data"]
             for (i in data_array){
@@ -67,9 +67,8 @@
                 document.getElementById("submit").click();
             }
             else{
-                let err_msg = document.getElementById("error_msg")
-                fade_in(err_msg);
-                setTimeout(() => fade_out(err_msg), 3000);
+                let err_msg = document.getElementById("error_msg");
+                await fade_in(err_msg);
             }
         };
     </script>
