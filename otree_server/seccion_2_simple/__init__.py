@@ -1,16 +1,16 @@
 """File containing the section 2 for simple version configuration of players
-Version: 1.2
+Version: 1.2.1
 Made By: Edgar RP
 """
 from otree.api import *
-from utils_simple import creating_session, player_bid
+from utils import creating_session, set_players_results, get_price
 
 doc = """
 Your app description
 """
 
 class C(BaseConstants):
-    NAME_IN_URL = 'seccion_2_simple'
+    NAME_IN_URL = 'seccion_1_market'
     PLAYERS_PER_GROUP = 4
     NUM_ROUNDS = 8
 
@@ -22,14 +22,13 @@ class Group(BaseGroup):
     seller_2_ask = models.IntegerField()
     seller_3_ask = models.IntegerField()
     seller_4_ask = models.IntegerField()
-    seller_5_ask = models.IntegerField()
 
 class Player(BasePlayer):
     winner_round = models.StringField()
     winner_section = models.StringField()
     treatment = models.StringField()
     bid_value = models.IntegerField()
-    enter_bid = models.BooleanField()
+    bid_accepted = models.BooleanField()
     chosen_player = models.BooleanField()
     section_3_setting = models.BooleanField()
     expectation_0_before = models.IntegerField()
@@ -52,7 +51,10 @@ class O001_informacion(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
-            fmi = player.session.config["treatment_FMI"]
+            fmi = player.session.config["treatment_FMI"],
+            pce = player.session.config["treatment_PCE"],
+            chosen_one = player.chosen_player,
+            max_price = player.session.config["max_price"]
         )
 
 class O002_preexpectativa(Page):
