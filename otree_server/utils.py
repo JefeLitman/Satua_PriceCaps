@@ -1,5 +1,5 @@
 """File containing utilities functions for every market section in the whole app
-Version: 1.3
+Version: 1.4
 Made By: Edgar RP
 """
 
@@ -58,12 +58,16 @@ def creating_session(subsession):
     if subsession.round_number == 1:
         #subsession.group_randomly()
         for g in subsession.get_groups():
-            p = g.get_players()[0]
-            try:
-                if p.field_maybe_none("chosen_player") == None:
-                    set_chosen_player(g)
-            except AttributeError:
-                pass
+            for p in g.get_players():
+                try:
+                    if p.field_maybe_none("chosen_player") == None:
+                        if p.participant.chosen_player != None:
+                            p.chosen_player = p.participant.chosen_player
+                        else:
+                            set_chosen_player(g)
+                            break
+                except AttributeError:
+                    pass
     else:
         subsession.group_like_round(1)
         for p in subsession.get_players():

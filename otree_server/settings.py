@@ -1,5 +1,5 @@
 """File containing the general settings for the oTree app
-Version: 1.2
+Version: 1.3
 Made By: Edgar RP
 """
 from os import environ
@@ -25,21 +25,22 @@ SESSION_CONFIGS = [
         app_sequence=[
             'consentimiento', 
             'informacion', 
-            'seccion_1_simple', 
-            'seccion_2_simple',
-            'seccion_3_simple', 
-            'seccion_4_simple',
-            'seccion_5',
-            'seccion_6',
+            'seccion_1_lottery', 
+            # 'seccion_2_simple',
+            # 'seccion_3_simple', 
+            # 'seccion_4_simple',
+            # 'seccion_5',
+            # 'seccion_6',
             "gracias"
         ],
         num_demo_participants=8,
-        treatment_FMI=True,
-        time_per_practice_period=30,
-        time_per_trading_period=20,
+        treatment_FME=True,
+        treatment_FMI=False,
+        treatment_PCE=False,
         seed = 8128,
-        seller_asks = "2,2,8,9,9",
-        players_max_bids = "11,11,12,12"
+        max_price = 7,
+        seller_asks = "2,2,8,9",
+        players_bids = "11,11,12,12"
     ),
 ]
 
@@ -49,13 +50,13 @@ SESSION_CONFIGS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1000, participation_fee=15000, doc=""
+    real_world_currency_per_point=12000, participation_fee=20000, doc=""
 )
 
 PARTICIPANT_FIELDS = [
     "consentimiento", 
-    "section_3_setting",
-    "section_4_setting"
+    "section_setting",
+    "chosen_player"
 ]
 SESSION_FIELDS = [
     "winner_section",

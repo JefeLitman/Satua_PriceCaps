@@ -1,5 +1,5 @@
 """File containing the consent pages for the players
-Version: 1.7
+Version: 1.8
 Made By: Edgar RP
 """
 import random
@@ -59,6 +59,7 @@ class O001_consent(Page):
     def before_next_page(player, timeout_happened):
         player.participant.consentimiento = player.accepted
         player.participant.section_setting = None
+        player.participant.chosen_player = None
         set_experiment_params(player)
 
 page_sequence = [O001_consent]
