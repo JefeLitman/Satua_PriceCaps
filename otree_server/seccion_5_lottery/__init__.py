@@ -1,17 +1,17 @@
-"""File containing the section 5 configuration of players
-Version: 1.1
+"""File containing the section 5 (lottery) configuration param of players
+Version: 1.2
 Made By: Edgar RP
 """
 from otree.api import *
 import random
-from utils_simple import set_experiment_params
+from utils import set_experiment_params
 
 doc = """
 Your app description
 """
 
 class C(BaseConstants):
-    NAME_IN_URL = 'seccion_5'
+    NAME_IN_URL = 'seccion_5_lottery'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 

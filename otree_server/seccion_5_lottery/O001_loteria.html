@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.1 -->
+    <!-- Version 1.2 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -11,9 +11,9 @@
             <div id="slide1" class="row my-3">
                 <div class="card">
                     <div class="card-body">
-                        <p>La sección 5 consiste en una tarea breve. Ahora el computador le asignará aleatoriamente un boleto rojo o azul. La mitad de los participantes recibirán un boleto rojo y la otra mitad recibirá un boleto azul. Usará el boleto para participar en una lotería que describiré en un momento.</p>
-                        <p>Se le va mostrar una urna de plástico contiene <b>5 bolas rojas y 5 bolas azules.</b></p>
-                        <p>Si la Sección 5 es seleccionada como la sección que cuenta para el pago, uno de los instructores sacará al azar una bola de la urna y se la mostrará a todos.</p>
+                        <p>La sección 5 consiste en una tarea breve. Ahora el computador le asignará aleatoriamente un boleto rojo o azul. La mitad de los participantes recibirán un boleto rojo y la otra mitad recibirá un boleto azul. Usará el boleto para participar en una lotería que describiremos en un momento.</p>
+                        <p>Utilizaremos una urna de plástico que contiene <b>5 bolas rojas y 5 bolas azules.</b></p>
+                        <p>Tiene la oportunidad de elegir entre dos loterías con pagos reales:</p>
                     </div>
                 </div>
             </div>
@@ -32,22 +32,30 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-6 p-3">
-                            <div class="card text-center">
+                            <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Lotería 1</h5>
-                                    <p class="card-text">Si el color de la bola extraída coincide con el color de su boleto, recibe <b>3 puntos.</b></p>
-                                    <p class="card-text">Si los colores son diferentes, recibe <b>2 puntos.</b></p>
-                                    <button name="lotery_selection" value="1" class="btn btn-success">Escogo esta loteria</button>
+                                    <h5 class="card-title text-center fw-bold">Lotería 1</h5>
+                                    <ul>
+                                        <li>Si el color de la bola extraída coincide con el color de su boleto, recibe <b>3 puntos.</b></li>
+                                        <li>Si los colores son diferentes, recibe <b>2 puntos.</b></li>
+                                    </ul>
+                                    <p class="card-text text-center">
+                                        <button name="lotery_selection" value="1" class="btn btn-success">Escogo esta loteria</button>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-6 p-3">
-                            <div class="card text-center">
+                            <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Lotería 2</h5>
-                                    <p class="card-text">Si el color de la bola extraída coincide con el color de su boleto, recibe <b>5 puntos.</b></p>
-                                    <p class="card-text">Si los colores son diferentes, recibe <b>0 puntos.</b></p>
-                                    <button name="lotery_selection" value="2" class="btn btn-success">Escogo esta loteria</button>
+                                    <h5 class="card-title text-center fw-bold">Lotería 2</h5>
+                                    <ul>
+                                        <li>Si el color de la bola extraída coincide con el color de su boleto, recibe <b>5 puntos.</b></li>
+                                        <li>Si los colores son diferentes, recibe <b>0 puntos.</b></li>
+                                    </ul>
+                                    <p class="card-text text-center">
+                                        <button name="lotery_selection" value="2" class="btn btn-success">Escogo esta loteria</button>
+                                    </p>
                                 </div>
                             </div>
                         </div>

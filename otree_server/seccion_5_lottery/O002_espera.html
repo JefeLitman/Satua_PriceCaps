@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.0 -->
+    <!-- Version 1.1 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -20,23 +20,23 @@
                 {{ endif }}
             </div>
             <div class="row mb-3">
-                {{ if loteria_1 }}
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">Escogio la lotería 1</h5>
-                            <p class="card-text">Si el color de la bola extraída coincide con el color de su boleto, recibe <b>3 puntos.</b></p>
-                            <p class="card-text">Si los colores son diferentes, recibe <b>2 puntos.</b></p>
-                        </div>
+                <div class="card">
+                    <div class="card-body">
+                        {{ if loteria_1 }}
+                            <h5 class="card-title text-center fw-bold">Lotería 1</h5>
+                            <ul>
+                                <li>Si el color de la bola extraída coincide con el color de su boleto, recibe <b>3 puntos.</b></li>
+                                <li>Si los colores son diferentes, recibe <b>2 puntos.</b></li>
+                            </ul>
+                        {{ else }}
+                            <h5 class="card-title text-center fw-bold">Lotería 2</h5>
+                            <ul>
+                                <li>Si el color de la bola extraída coincide con el color de su boleto, recibe <b>5 puntos.</b></li>
+                                <li>Si los colores son diferentes, recibe <b>0 puntos.</b></li>
+                            </ul>
+                        {{ endif }}
                     </div>
-                {{ else }}
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">Escogio la lotería 2</h5>
-                            <p class="card-text">Si el color de la bola extraída coincide con el color de su boleto, recibe <b>5 puntos.</b></p>
-                            <p class="card-text">Si los colores son diferentes, recibe <b>0 puntos.</b></p>
-                        </div>
-                    </div>
-                {{ endif }}
+                </div>
             </div>
             <div class="row">
                 <div class="card">
