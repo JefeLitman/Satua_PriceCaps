@@ -1,5 +1,5 @@
 """File containing the gracias pages for the players
-Version: 1.0
+Version: 1.1
 Made By: Edgar RP
 """
 from otree.api import *
@@ -28,6 +28,16 @@ class Player(BasePlayer):
 
 # PAGES
 class O001_gracias(Page):
-    pass
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            p_id = "SAMPLE_ID",
+            aplica_ronda = player.session.winner_section not in [5, 6],
+            seccion = player.session.winner_section,
+            ronda = player.session.winner_round,
+            fee = int(player.session.config["participation_fee"]),
+            ganancias = int(player.participant.payoff - player.session.config["participation_fee"]),
+            ganancias_totales = int(player.participant.payoff)
+        )
 
 page_sequence = [O001_gracias]
