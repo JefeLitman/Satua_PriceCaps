@@ -1,0 +1,103 @@
+{{ block content }}
+    <!-- Version 1.1 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 2 - Expectativas</h2>
+                </div>
+            </div>
+            {{ if fmi }}
+                <div class="row my-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>Resulta que un grupo de compradores en una sesión diferente participó en la situación que a usted le pedimos que imaginara; es decir, participaron en 8 períodos en los que a los vendedores automatizados no se les permitió sugerir un precio de venta por encima de {{ max_price }}. La experiencia de estos compradores en esa situación fue la siguiente:</p>
+                        </div>
+                        <img src="{{ static 'market/expectations_fmi.png' }}" class="card-img-bottom img-fluid border border-primary">
+                    </div>
+                </div>
+            {{ endif }}
+            <div class="row mb-3">
+                <p>
+                    {{ if fmi }}
+                        Ahora responda la siguiente pregunta sobre los 8 períodos hipotéticos.
+                    {{ else }}
+                        Ahora responda la siguiente pregunta sobre los 8 períodos en los que acaba de participar.
+                    {{ endif }}
+                </p>
+                <p class="fw-bold text-center">
+                    En cada período, el número de compradores de su grupo que 
+                    {{ if fmi }}
+                        habrían logrado comprar es 0, 1, 2, 3 ó 4. 
+                    {{ else }}
+                        lograron comprar fue 0, 1, 2, 3 ó 4. 
+                    {{ endif }}
+                    Por favor, indique en cuántos períodos cree que el número de compradores que 
+                    {{ if fmi }}
+                        habrían logrado comprar es 0, en cuántos es 1, en cuántos es 2, en cuántos es 3 y en cuántos es 4.
+                    {{ else }}
+                        lograron comprar fue 0, en cuántos fue 1, en cuántos fue 2, en cuántos fue 3 y en cuántos fue 4.
+                    {{ endif }}
+                </p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-6">
+                    <canvas id="beliefs" width="400" height="400"></canvas>
+                </div>
+            </div>
+            <div class="row mt-3">
+                Tenga en cuenta que la suma de los números que usted proporcione debe ser 8 porque este es el número total de períodos en la Sección 2. Si infringe esta regla no podra avanzar a la siguiente pagina.
+            </div>
+            <div class="row my-3 text-center">
+                <div class="alert alert-warning" role="alert">
+                    Suma de todos los periodos: <b id="quantity">0</b>
+                </div>
+            </div>
+            <div id="error_msg" class="row d-none">
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    Porfavor, arrastre los puntos hasta que sumen un total de 8 indicando cuantos compradores en cuantas rondas pudieron realizar la compra.
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <input type="number" id="field0" name="expectation_0_after" value="0"/>
+                <input type="number" id="field1" name="expectation_1_after" value="0"/>
+                <input type="number" id="field2" name="expectation_2_after" value="0"/>
+                <input type="number" id="field3" name="expectation_3_after" value="0"/>
+                <input type="number" id="field4" name="expectation_4_after" value="0"/>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" integrity="sha256-+8RZJua0aEWg+QVVKg4LEzEEm/8RFez5Tb4JBNiV5xA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@2.2.4/dist/chartjs-plugin-dragdata.min.js" integrity="sha256-5z6B9mXkOw8GWHtX67T5+Lt1l7lP4cwRQey0w6xKMtw=" crossorigin="anonymous"></script>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script src="{{ static 'global/expectations.js' }}"></script>
+    <script>
+        setInterval(() => {
+            document.getElementById("quantity").innerHTML = get_suma();
+        }, 500);
+
+        document.getElementById("next").onclick = async () => {
+            suma = get_suma();
+            data_array = config["data"]["datasets"][0]["data"]
+            for (i in data_array){
+                document.getElementById("field"+i).value = data_array[i];
+            }
+            if (suma == 8){
+                document.getElementById("submit").click();
+            }
+            else{
+                let err_msg = document.getElementById("error_msg");
+                await fade_in(err_msg);
+            }
+        };
+    </script>
+{{ endblock }}

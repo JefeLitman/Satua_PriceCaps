@@ -1,0 +1,86 @@
+{{ block content }}
+    <!-- Version 1.1 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 2 - Expectativas</h2>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <p class="fw-bold text-center">
+                    En cada período de la <b>Sección 2</b>, el número de compradores de su grupo que 
+                    {{ if pce }}
+                        lograrían comprar sería 0, 1, 2, 3 ó 4. 
+                    {{ else }}
+                        lograrán comprar será 0, 1, 2, 3 ó 4. 
+                    {{ endif }}
+                    Por favor, indique en cuántos períodos cree que el número de compradores que 
+                    {{ if pce }}
+                        lograrían comprar sería 0, en cuántos sería 1, en cuántos sería 2, en cuántos sería 3 y en cuántos sería 4.
+                    {{ else }}
+                        lograrán comprar será 0, en cuántos será 1, en cuántos será 2, en cuántos será 3 y en cuántos será 4.
+                    {{ endif }}
+                </p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-6">
+                    <canvas id="beliefs" width="400" height="400"></canvas>
+                </div>
+            </div>
+            <div class="row mt-3">
+                Tenga en cuenta que la suma de los números que usted proporcione debe ser 8 porque este es el número total de períodos en la Sección 2. Si infringe esta regla no podra avanzar a la siguiente pagina.
+            </div>
+            <div class="row my-3 text-center">
+                <div class="alert alert-warning" role="alert">
+                    Suma de todos los periodos: <b id="quantity">0</b>
+                </div>
+            </div>
+            <div id="error_msg" class="row d-none">
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    Porfavor, arrastre los puntos hasta que sumen un total de 8 indicando cuantos compradores en cuantas rondas pudieron realizar la compra.
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button type="button" id="next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <input type="number" id="field0" name="expectation_0_before" value="0"/>
+                <input type="number" id="field1" name="expectation_1_before" value="0"/>
+                <input type="number" id="field2" name="expectation_2_before" value="0"/>
+                <input type="number" id="field3" name="expectation_3_before" value="0"/>
+                <input type="number" id="field4" name="expectation_4_before" value="0"/>
+            </div>
+            <div class="row d-none">
+                <button id="submit">Siguiente</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" integrity="sha256-+8RZJua0aEWg+QVVKg4LEzEEm/8RFez5Tb4JBNiV5xA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@2.2.4/dist/chartjs-plugin-dragdata.min.js" integrity="sha256-5z6B9mXkOw8GWHtX67T5+Lt1l7lP4cwRQey0w6xKMtw=" crossorigin="anonymous"></script>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script src="{{ static 'global/expectations.js' }}"></script>
+    <script>
+        setInterval(() => {
+            document.getElementById("quantity").innerHTML = get_suma();
+        }, 500);
+
+        document.getElementById("next").onclick = async () => {
+            suma = get_suma();
+            data_array = config["data"]["datasets"][0]["data"]
+            for (i in data_array){
+                document.getElementById("field"+i).value = data_array[i];
+            }
+            if (suma == 8){
+                document.getElementById("submit").click();
+            }
+            else{
+                let err_msg = document.getElementById("error_msg");
+                await fade_in(err_msg);
+            }
+        };
+    </script>
+{{ endblock }}
