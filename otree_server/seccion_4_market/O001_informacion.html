@@ -1,0 +1,30 @@
+{{ block content }}
+    <!-- Version 1.1 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 4 - Preparación</h2>
+                </div>
+            </div>
+            <div class="row my-3">
+                <p>Recuerde que en esta sección usted participará nuevamente en 8 períodos de mercado con su grupo.</p>
+                {{ if decision }}
+                    <div class="alert alert-warning" role="alert">
+                        <h2 class="fw-bold">El comprador seleccionado de su grupo decidió que los vendedores automatizados pueden sugerir cualquier precio por encima de su costo</h2>
+                    </div>
+                {{ else }}
+                    <div class="alert alert-warning" role="alert">
+                        <h2 class="fw-bold">El comprador seleccionado de su grupo decidió que los vendedores automatizados NO pueden sugerir un precio por encima de {{ max_price }}</h2>
+                    </div>
+                {{ endif }}
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{ endblock }}
