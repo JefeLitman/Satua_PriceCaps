@@ -23,14 +23,13 @@ SESSION_CONFIGS = [
     dict(
         name='Precios_Maximos_Simple',
         app_sequence=[
-            'consentimiento', 
             'informacion', 
-            'seccion_1_lottery', 
-            # 'seccion_2_simple',
-            # 'seccion_3_simple', 
-            # 'seccion_4_simple',
-            # 'seccion_5',
-            # 'seccion_6',
+            'seccion_1_market', 
+            'seccion_2_market',
+            'seccion_3_market', 
+            'seccion_4_market',
+            'seccion_5_lottery',
+            'seccion_6_assignation',
             "gracias"
         ],
         num_demo_participants=8,
