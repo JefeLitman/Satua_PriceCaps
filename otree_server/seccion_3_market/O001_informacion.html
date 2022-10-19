@@ -1,0 +1,48 @@
+{{ block content }}
+    <!-- Version 1.1 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 3 - Información</h2>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Recuerde que en esta sección usted participará nuevamente en 8 períodos de mercado con su grupo. En un momento revelaremos las reglas del mercado que fueron elegidas anteriormente por el comprador seleccionado al azar en su grupo.</p>
+                        <p>Antes de comenzar los períodos de la Sección 3, el comprador seleccionado en su grupo elegirá las reglas del mercado para la <b>Sección 4</b>, donde nuevamente habrá 8 períodos. Si se selecciona la Sección 4 como la sección que cuenta, seleccionaremos al azar uno de los períodos y usted recibirá las ganancias de ese período.</p>
+                        <p>Ahora, el comprador seleccionado elegirá una de las dos opciones siguientes:</p>
+                        {{ if pce }}
+                            <ul>
+                                <li>
+                                    En la <b>Sección 4</b>, a los vendedores automatizados NO se les permitirá sugerir un precio por encima de {{ max_price }}, lo que garantiza que el precio de mercado NO superará {{ max_price }} (como en la Sección 1).
+                                </li>
+                                <li>
+                                    En la <b>Sección 4</b>, a los vendedores automatizados se les permitirá sugerir cualquier precio por encima de su costo (como en la Sección 2).
+                                </li>
+                            </ul>
+                        {{ else }}
+                            <ul>
+                                <li>
+                                    En la <b>Sección 4</b>, a los vendedores automatizados se les permitirá sugerir cualquier precio por encima de su costo (como en la Sección 1).
+                                </li>
+                                <li>
+                                    En la <b>Sección 4</b>, a los vendedores automatizados NO se les permitirá sugerir un precio por encima de {{ max_price }}, lo que garantiza que el precio de mercado NO superará {{ max_price }} (como en la Sección 2).
+                                </li>
+                            </ul>
+                        {{ endif }}
+                        <p>La elección que haga el comprador seleccionado se revelará una vez que lleguemos a la Sección 4.</p>
+                        <p>Como antes, incluso si usted no fue seleccionado para determinar las reglas de intercambio, nos gustaría conocer su preferencia.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{ endblock }}

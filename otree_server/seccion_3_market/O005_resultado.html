@@ -1,0 +1,55 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">Seccion 3 - Mercado</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container-fluid">
+                    <div class="row">
+                        <p class="fs-5">Tu grupo es: <b>{{grupo}}</b></p>
+                    </div>
+                    <div class="row">
+                        <p class="fs-5">Sección: <b>{{seccion}}</b></p>
+                    </div>
+                    <div class="row">
+                        <p class="fs-5">Periodo actual: <b>{{periodo}}</b></p>
+                    </div>
+                    <div class="row">
+                        <p class="fs-5">Número de períodos en la Sección {{seccion}}: <b>{{total_periodos}}</b></p>
+                    </div>
+                    <div class="row border border-2 border-secondary p-3">
+                        <div class="col-6">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <p class="fs-5">Su valor: <b>{{valor}}</b></p>
+                                </div>
+                                <div class="row">
+                                    <p class="fs-5">¿Solicitud aceptada?: <b>{{aceptada}}</b></p>
+                                </div>
+                                <div class="row">
+                                    <p class="fs-5">Precio de mercado: <b>{{precio}}</b></p>
+                                </div>
+                                <div class="row">
+                                    <p class="fs-5">Sus ganancias: <b>{{ganancia}}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center align-self-center mt-3">
+                            <button type="button" class="btn btn-success btn-lg" disabled>Enviar solicitud de compra</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3">
+                <div class="col-2">
+                    <button class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{ endblock }}
