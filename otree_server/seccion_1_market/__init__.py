@@ -1,5 +1,5 @@
 """File containing the section 1 (market) configuration param of players
-Version: 1.6
+Version: 1.7
 Made By: Edgar RP
 """
 from otree.api import *
@@ -13,6 +13,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'seccion_1_market'
     PLAYERS_PER_GROUP = 4
     NUM_ROUNDS = 10
+    practice_rounds = 2
 
 class Subsession(BaseSubsession):
     pass
@@ -83,7 +84,7 @@ class wait_for_members(WaitPage):
     @staticmethod
     def after_all_players_arrive(group):
         if group.round_number > 2:
-            set_players_results(group, 1, group.round_number - 2)
+            set_players_results(group, 1, group.round_number - C.practice_rounds)
         else:
             set_players_results(group, 1, 0)
 
@@ -97,7 +98,7 @@ class O006_mercado(Page):
         if player.round_number >= 3:
             head = "períodos reales"
             total = C.NUM_ROUNDS - 8
-            current_round = player.round_number - 2
+            current_round = player.round_number - C.practice_rounds
         else:
             head = "períodos de práctica"
             total = C.NUM_ROUNDS - 8
@@ -122,7 +123,7 @@ class O007_resultado(Page):
         if player.round_number >= 3:
             head = "períodos reales"
             total = C.NUM_ROUNDS - 8
-            current_round = player.round_number - 2
+            current_round = player.round_number - C.practice_rounds
         else:
             head = "períodos de práctica"
             total = C.NUM_ROUNDS - 8
@@ -148,7 +149,7 @@ class O008_historial(Page):
     def vars_for_template(player):
         price = get_price(player)
         if player.round_number >= 3:
-            total = C.NUM_ROUNDS - 2
+            total = C.NUM_ROUNDS - C.practice_rounds
             compras = sum([p.bid_accepted for p in player.in_rounds(3,10)])
         else:
             total = C.NUM_ROUNDS - 8
