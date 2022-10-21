@@ -1,5 +1,5 @@
 """File containing the section 1 (market) configuration param of players
-Version: 1.7
+Version: 1.8
 Made By: Edgar RP
 """
 from otree.api import *
@@ -97,11 +97,11 @@ class O006_mercado(Page):
     def vars_for_template(player):
         if player.round_number >= 3:
             head = "períodos reales"
-            total = C.NUM_ROUNDS - 8
+            total = C.NUM_ROUNDS - C.practice_rounds
             current_round = player.round_number - C.practice_rounds
         else:
             head = "períodos de práctica"
-            total = C.NUM_ROUNDS - 8
+            total = C.practice_rounds
             current_round = player.round_number
         return dict(
             header = head,
@@ -122,11 +122,11 @@ class O007_resultado(Page):
         price = get_price(player)
         if player.round_number >= 3:
             head = "períodos reales"
-            total = C.NUM_ROUNDS - 8
+            total = C.NUM_ROUNDS - C.practice_rounds
             current_round = player.round_number - C.practice_rounds
         else:
             head = "períodos de práctica"
-            total = C.NUM_ROUNDS - 8
+            total = C.practice_rounds
             current_round = player.round_number
         return dict(
             header = head,
@@ -135,7 +135,7 @@ class O007_resultado(Page):
             periodo = current_round,
             total_periodos = total,
             valor = player.bid_value,
-            aceptada = "Si" if player.bid_accepted else "No",
+            aceptada = "Sí" if player.bid_accepted else "No",
             precio = price,
             ganancia = player.bid_value - price if player.bid_accepted else 0
         )

@@ -1,11 +1,11 @@
 {{ block content }}
-    <!-- Version 1.4 -->
+    <!-- Version 1.5 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
             <div class="row text-center mt-5">
                 <div class="alert alert-info" role="alert">
-                    <h2 class="text-capitalize">Seccion 1 - Instrucciones</h2>
+                    <h2 class="text-capitalize">Sección 1 - Instrucciones</h2>
                 </div>
             </div>
             <div id="slide1" class="row my-3">
@@ -21,6 +21,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title text-center">¿Cómo puede ganar dinero?</h5>
+                        <br/>
+                        <br/>
                         <p class="card-text">El producto tiene un valor para usted que será asignado por el computador. A este valor  lo llamaremos <b>"su valor"</b>.</p>
                         <p class="card-text">En cada período usted puede ganar dinero si compra 1 unidad del producto a un precio de mercado inferior a su valor.</p>
                         <p class="card-text">Este valor puede cambiar a lo largo de los períodos y puede diferir entre los compradores. En cada período, usted sólo conocerá su valor; no sabrá los valores de otros compradores ni otros compradores sabrán su valor.</p>
@@ -31,11 +33,13 @@
             <div id="slide3" class="row my-3 d-none">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title text-center">¿Cómo puede ganar dinero?</h5>
+                        <h5 class="card-title text-center">¿Cómo puede ganar dinero? Ejemplo</h5>
+                        <br/>
+                        <br/>
                         <p class="card-text">La primera fila (debajo del área superior) muestra su valor. En este ejemplo, su valor es de 10 puntos.</p>
                         <p class="card-text">Si compra el producto en un período, usted debe pagar el precio de mercado (pronto le explicaremos cómo se determina).</p>
                         <p class="card-text">En cada período, sus ganancias se calculan restando el precio pagado de su valor, es decir:</p>
-                        <p class="card-text text-center"><b>Ganancias = Valor - Precio de mercado</b></p>
+                        <p class="card-text text-center"><b>Ganancias = Su valor - Precio del mercado</b></p>
                         <p class="card-text">Si no compra el producto en un período, su valor caduca. Por otro lado, en ese caso, usted no paga un precio. Por lo tanto, sus ganancias en ese período son cero.</p>
                     </div>
                     <img src="{{ static 'market/solicitud.png' }}" class="card-img-bottom img-fluid border border-primary">
@@ -45,6 +49,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title text-center">¿Cómo puede realizar una compra?</h5>
+                        <br/>
+                        <br/>
                         <p class="card-text">En cada período, usted enviará una <b>solicitud de compra</b> a los vendedores indicando su valor (pronto verá cómo hacerlo).</p>
                         <p class="card-text"><b>Sin observar las solicitudes de compra</b>, cada vendedor automatizado deberá hacer dos cosas: (1) decidirá si desea vender y (2) en caso de que decida vender, propondrá un precio de venta, al cual llamaremos <b>"precio sugerido".</b></p>
                         <p class="card-text">A los vendedores automatizados no se les permite sugerir un precio de venta por debajo de su costo. Los costos pueden diferir entre los vendedores. Ni usted ni los demás compradores en su grupo sabrán el costo de ninguno de los vendedores. Los vendedores pueden ganar dinero vendiendo a un precio superior a su costo.</p>
@@ -56,6 +62,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title text-center">¿Cómo se organizan las solicitudes y los precios sugeridos?</h5>
+                        <br/>
+                        <br/>
                         <p class="card-text">Las <b>solicitudes de compra</b> se ordenan de <b>mayor a menor</b> según su valor y los <b>precios sugeridos</b> se ordenan de <b>menor a mayor.</b> Las solicitudes más altas se emparejan con los precios sugeridos más bajos. <b>Las unidades para las que la solicitud es mayor o igual que el precio sugerido se venden.</b> El resto de las unidades no se venden.</p>
                         <p class="card-text">Veamos el siguiente ejemplo.</p>
                     </div>
@@ -64,7 +72,9 @@
             <div id="slide6" class="row my-3 d-none">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title text-center">¿Cómo se organizan las solicitudes y los precios sugeridos?</h5>
+                        <h5 class="card-title text-center">¿Cómo se organizan las solicitudes y los precios sugeridos? Ejemplo</h5>
+                        <br/>
+                        <br/>
                         <p class="card-text">La primera columna muestra las cuatro solicitudes ordenadas de mayor a menor. La segunda columna muestra los cuatro precios sugeridos ordenados de menor a mayor.</p>
                         <p class="card-text">Las primeras 2 solicitudes están por encima de los precios sugeridos por los vendedores automatizados, por lo tanto, como se muestra en la tercera columna, estas solicitudes son aceptadas y las unidades se venden a los compradores que realizaron las solicitudes. Como las últimas 2 solicitudes están por debajo de los precios sugeridos, estas solicitudes son rechazadas.</p>
                     </div>
@@ -75,6 +85,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title text-center">¿Cómo se determina el precio de mercado?</h5>
+                        <br/>
+                        <br/>
                         <p class="card-text">En cada período, el <b>precio de mercado</b> es igual al <b>precio sugerido para la última unidad vendida.</b></p>
                         <p class="card-text">Continuando con el ejemplo anterior.</b></p>
                     </div>
@@ -83,7 +95,9 @@
             <div id="slide8" class="row my-3 d-none">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title text-center">¿Cómo se determina el precio de mercado?</h5>
+                        <h5 class="card-title text-center">¿Cómo se determina el precio de mercado? Ejemplo</h5>
+                        <br/>
+                        <br/>
                         <p class="card-text">Como acabamos de ver, las primeras 2 unidades se venden porque las solicitudes están por encima de los precios sugeridos por los vendedores automatizados.</p>
                         <p class="card-text">El precio sugerido para la última unidad vendida (la segunda) es 6, por lo que el precio de mercado se fija en 6. Este precio aparece en la cuarta columna.</p>
                         <p class="card-text">Note que, al precio de mercado, los primeros 2 compradores efectivamente están dispuestos a comprar (ya que su valor es mayor que 6) y los primeros 2 vendedores automatizados efectivamente están dispuestos a vender (ya que el precio de mercado es mayor o igual que los precios que sugirieron).</p>
