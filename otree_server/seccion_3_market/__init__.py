@@ -1,5 +1,5 @@
 """File containing the section 3 (market) configuration param of players
-Version: 1.2
+Version: 1.3
 Made By: Edgar RP
 """
 from otree.api import *
@@ -111,7 +111,7 @@ class O005_resultado(Page):
             periodo = player.round_number,
             total_periodos = C.NUM_ROUNDS,
             valor = player.bid_value,
-            aceptada = "Si" if player.bid_accepted else "No",
+            aceptada = "Sí" if player.bid_accepted else "No",
             precio = price,
             ganancia = player.bid_value - price if player.bid_accepted else 0
         )
