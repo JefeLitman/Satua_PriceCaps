@@ -1,5 +1,5 @@
 """File containing utilities functions for every market section in the whole app
-Version: 1.5
+Version: 1.6
 Made By: Edgar RP
 """
 
@@ -22,14 +22,25 @@ def set_chosen_player(group):
     for p in randomized[1:]:
         p.chosen_player = False
 
-def set_group_asks_bids(group):
+def set_group_asks(group):
     asks = [int(i) for i in group.session.config["seller_asks"].split(",")]
     for j in range(1, 5):
         setattr(group, "seller_{}_ask".format(j), asks[j-1])
-    bids = [int(i) for i in group.session.config["players_bids"].split(",")]
-    bids_randomized = random.sample(bids, k=len(bids))
-    for i, p in enumerate(group.get_players()):
-        p.bid_value = bids_randomized[i]
+
+def set_players_bids(group, total_rounds):
+    players = group.get_players()
+    bids = [int(i) for i in group.session.config["players_bids"].split(",")]*(total_rounds // len(players))
+    bids_matrix = []
+    for i in range(total_rounds):
+        start_index = i % len(players)
+        end_index = start_index + len(players)
+        bids_matrix.append(bids[start_index : end_index])
+    bids_matrix = random.sample(bids_matrix, total_rounds)
+
+    for r in range(1, total_rounds+1):
+        for i, p in enumerate(players):
+            p.in_round(r).bid_value = bids_matrix[r-1][i]
+
 
 def get_price(player):
     asks = [int(i) for i in player.session.config["seller_asks"].split(",")]
@@ -58,7 +69,8 @@ def creating_session(subsession):
     if subsession.round_number == 1:
         #subsession.group_randomly()
         for g in subsession.get_groups():
-            p = g.get_players()[0]
+            for p in g.get_players():
+                set_experiment_params(p)
             try:
                 if p.field_maybe_none("chosen_player") == None:
                     set_chosen_player(g)
@@ -67,13 +79,15 @@ def creating_session(subsession):
     else:
         subsession.group_like_round(1)
         for p in subsession.get_players():
+            set_experiment_params(p)
             try:
                 if p.field_maybe_none("chosen_player") == None:
                     p.chosen_player = p.in_round(1).chosen_player
             except AttributeError:
                 pass
-            
-    for g in subsession.get_groups():
-        set_group_asks_bids(g)
-        for p in g.get_players():
-            set_experiment_params(p)
+        for g in subsession.get_groups():
+            set_group_asks(g)
+            if subsession.round_number == 10:
+                set_players_bids(g, 10)
+            elif subsession.round_number == 8:
+                set_players_bids(g, 8)
