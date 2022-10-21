@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.2 -->
+    <!-- Version 1.3 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -10,7 +10,7 @@
             </div>
             <div id="error_msg" class="row d-none">
                 <div class="alert alert-danger d-flex align-items-center" role="alert">
-                    Porfavor, lea nuevamente la pregunta y responda la respuesta mas acorde al enunciado.
+                    Respuesta incorrecta. Por favor, inténtelo de nuevo
                 </div>
             </div>
             <div id="success_msg" class="row d-none">
@@ -97,15 +97,15 @@
         };
 
         correct_answer = async () => {
-            if (idx == 5){
-                document.getElementById("submit").click();
-                return null;
-            }
             let prev = document.getElementById("slide"+idx);
             let next = document.getElementById("slide"+(idx+1));
             let good_msg = document.getElementById("success_msg");
             await fade(prev, good_msg);
             await sleep(1000);
+            if (idx == 5){
+                document.getElementById("submit").click();
+                return null;
+            }
             await fade(good_msg, next);
             idx++;
         };
