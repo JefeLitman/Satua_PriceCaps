@@ -1,5 +1,5 @@
 """File containing utilities functions for every market section in the whole app
-Version: 1.6
+Version: 1.7
 Made By: Edgar RP
 """
 
@@ -31,15 +31,19 @@ def set_players_bids(group, total_rounds):
     players = group.get_players()
     bids = [int(i) for i in group.session.config["players_bids"].split(",")]*(total_rounds // len(players))
     bids_matrix = []
-    for i in range(total_rounds):
+    start = 0 if total_rounds == 8 else 2
+    for i in range(start, total_rounds):
         start_index = i % len(players)
         end_index = start_index + len(players)
         bids_matrix.append(bids[start_index : end_index])
-    bids_matrix = random.sample(bids_matrix, total_rounds)
+    bids_matrix = random.sample(bids_matrix, len(bids_matrix))
 
     for r in range(1, total_rounds+1):
         for i, p in enumerate(players):
-            p.in_round(r).bid_value = bids_matrix[r-1][i]
+            if total_rounds == 10 and r <= 2:
+                p.in_round(r).bid_value = bids[i]
+            else:
+                p.in_round(r).bid_value = bids_matrix[r-1-start][i]
 
 
 def get_price(player):
@@ -69,6 +73,7 @@ def creating_session(subsession):
     if subsession.round_number == 1:
         #subsession.group_randomly()
         for g in subsession.get_groups():
+            set_group_asks(g)
             for p in g.get_players():
                 set_experiment_params(p)
             try:
@@ -87,7 +92,5 @@ def creating_session(subsession):
                 pass
         for g in subsession.get_groups():
             set_group_asks(g)
-            if subsession.round_number == 10:
-                set_players_bids(g, 10)
-            elif subsession.round_number == 8:
-                set_players_bids(g, 8)
+            if subsession.round_number in [8, 10]:
+                set_players_bids(g, subsession.round_number)
