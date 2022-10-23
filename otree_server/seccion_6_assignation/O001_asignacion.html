@@ -11,8 +11,11 @@
             <div id="slide1" class="row my-3">
                 <div class="card">
                     <div class="card-body">
-                        <p>La última sección consiste en una tarea breve.</p>
+                        <p>Esta sección consiste en una tarea breve.</p>
                         <p>Recuerde que es miembro del grupo <b>{{ my_group }}</b>. Considere el grupo <b>{{ other_group }} de esta misma sesión.</b></p>
+                        <p>Le pedimos que elija una de las dos posibles asignaciones de dinero entre los miembros del grupo <b>{{ other_group }}</b>. Las dos asignaciones posibles son:</p>
+                        <p><b>Asignación 1:</b> dos miembros elegidos al azar del grupo <b>{{ other_group }}</b> reciben <b>3 puntos</b> y los otros dos reciben <b>2 puntos</b>.</p>
+                        <p><b>Asignación 2:</b> dos miembros elegidos al azar del grupo <b>{{ other_group }}</b> reciben <b>5 puntos</b> y los otros dos reciben <b>0 puntos</b>.</p>
                         <p>Si la Sección 6 es seleccionada como la sección que cuenta, un miembro de <b>su grupo</b> será seleccionado al azar y la elección de asignación de esta persona se implementará en el grupo <b>{{ other_group }}</b>. De manera similar, un miembro del grupo <b>{{ other_group }}</b> será seleccionado al azar y la elección de asignación de esa persona se implementará en el grupo al que usted pertenece.</p>
                         <p>Le pedimos que elija una de dos posibles asignaciones de dinero entre los miembros del grupo <b>{{ other_group }}</b>. Las dos asignaciones posibles son:</p>
                     </div>
@@ -25,7 +28,7 @@
                             <h5 class="card-title text-center">Asignación 1</h5>
                             <p class="card-text">Dos miembros elegidos al azar del grupo <b>{{ other_group }}</b> reciben <b>3 puntos</b> y los otros dos reciben <b>2 puntos.</b></p>
                             <p class="card-text text-center">
-                                <button name="payment_asignation" value="1" class="btn btn-success">Escogo esta asignación</button>
+                                <button name="payment_asignation" value="1" class="btn btn-success">Escojo esta asignación</button>
                             </p>
                         </div>
                     </div>
@@ -36,7 +39,7 @@
                             <h5 class="card-title text-center">Asignación 2</h5>
                             <p class="card-text">Dos miembros elegidos al azar del grupo <b>{{ other_group }}</b> reciben <b>5 puntos</b> y los otros dos reciben <b>0 puntos.</b></p>
                             <p class="card-text text-center">
-                                <button name="payment_asignation" value="2" class="btn btn-success">Escogo esta asignación</button>
+                                <button name="payment_asignation" value="2" class="btn btn-success">Escojo esta asignación</button>
                             </p>
                         </div>
                     </div>
