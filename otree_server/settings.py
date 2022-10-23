@@ -1,25 +1,15 @@
 """File containing the general settings for the oTree app
-Version: 1.3
+Version: 1.4
 Made By: Edgar RP
 """
 from os import environ
 
 SESSION_CONFIGS = [
-    # dict(
-    #     name='Precios_Maximos_Full',
-    #     app_sequence=['consentimiento', 'informacion', 'seccion_1'],
-    #     num_demo_participants=4,
-    #     treatment_FMI=True,
-    #     time_per_practice_period=60,
-    #     time_per_trading_period=20,
-    #     seed = 8128,
-    #     min_ask = 4,
-    #     max_ask = 10,
-    #     min_value = 5,
-    #     max_value = 11,
-    #     increase_ask_by = 1,
-    #     decrease_ask_by = 1,
-    # ),
+    dict(
+        name='Codigo_Participante',
+        app_sequence=['welcome'],
+        num_demo_participants=1,
+    ),
     dict(
         name='Precios_Maximos_Simple',
         app_sequence=[
