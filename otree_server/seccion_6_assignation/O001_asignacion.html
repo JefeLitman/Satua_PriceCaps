@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.3 -->
+    <!-- Version 1.4 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -28,7 +28,7 @@
                             <h5 class="card-title text-center">Asignación 1</h5>
                             <p class="card-text">Dos miembros elegidos al azar del grupo <b>{{ other_group }}</b> reciben <b>3 puntos</b> y los otros dos reciben <b>2 puntos.</b></p>
                             <p class="card-text text-center">
-                                <button name="payment_asignation" value="1" class="btn btn-success">Escojo esta asignación</button>
+                                <button name="chosen_allocation" value="1" class="btn btn-success">Escojo esta asignación</button>
                             </p>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                             <h5 class="card-title text-center">Asignación 2</h5>
                             <p class="card-text">Dos miembros elegidos al azar del grupo <b>{{ other_group }}</b> reciben <b>5 puntos</b> y los otros dos reciben <b>0 puntos.</b></p>
                             <p class="card-text text-center">
-                                <button name="payment_asignation" value="2" class="btn btn-success">Escojo esta asignación</button>
+                                <button name="chosen_allocation" value="2" class="btn btn-success">Escojo esta asignación</button>
                             </p>
                         </div>
                     </div>
