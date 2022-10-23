@@ -1,5 +1,5 @@
 """File containing the section 5 (lottery) configuration param of players
-Version: 1.2
+Version: 1.3
 Made By: Edgar RP
 """
 from otree.api import *
@@ -26,7 +26,7 @@ class Player(BasePlayer):
     winner_section = models.StringField()
     treatment = models.StringField()
     ticket_color = models.StringField()
-    lotery_selection = models.IntegerField()
+    lottery_selection = models.IntegerField()
 
 def creating_session(subsession):
     players = subsession.get_players()
@@ -42,7 +42,7 @@ def creating_session(subsession):
 # PAGES
 class O001_loteria(Page):
     form_model = 'player'
-    form_fields = ['lotery_selection']
+    form_fields = ['lottery_selection']
 
     @staticmethod
     def is_displayed(player):
@@ -63,13 +63,13 @@ class O002_espera(Page):
     def vars_for_template(player):
         return dict(
             roja = player.ticket_color.lower() == "roja",
-            loteria_1 = player.lotery_selection == 1
+            loteria_1 = player.lottery_selection == 1
         )
 
     @staticmethod
     def before_next_page(player, timeout_happened):
         if player.session.winner_section == 5:
-            if player.lotery_selection == 1:
+            if player.lottery_selection == 1:
                 if player.session.comment.lower() == player.ticket_color.lower():
                     player.payoff = 3
                 else:
