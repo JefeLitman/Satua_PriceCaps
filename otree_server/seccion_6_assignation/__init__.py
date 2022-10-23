@@ -1,5 +1,5 @@
 """File containing the section 6 (assignation) configuration param of players
-Version: 1.1
+Version: 1.2
 Made By: Edgar RP
 """
 from otree.api import *
@@ -27,7 +27,7 @@ class Player(BasePlayer):
     treatment = models.StringField()
     group_designed = models.StringField()
     chosen_player = models.BooleanField()
-    payment_asignation = models.IntegerField()
+    chosen_allocation = models.IntegerField()
     payment_received = models.IntegerField()
 
 def creating_session(subsession):
@@ -52,7 +52,7 @@ def creating_session(subsession):
 # PAGES
 class O001_asignacion(Page):
     form_model = 'player'
-    form_fields = ['payment_asignation']
+    form_fields = ['chosen_allocation']
 
     @staticmethod
     def is_displayed(player):
@@ -76,7 +76,7 @@ class wait_for_all_groups(WaitPage):
                     if p.group_designed == str(g_id):
                         players = g.get_players()
                         randomized_players = random.sample(players, len(players))
-                        if p.payment_asignation == 1:
+                        if p.chosen_allocation == 1:
                             for i, o_p in enumerate(randomized_players):
                                 if i < len(players) / 2:
                                     o_p.payment_received = 3
