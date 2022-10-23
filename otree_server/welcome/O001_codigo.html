@@ -1,0 +1,59 @@
+{{ block content }}
+    <!-- Version 1.0 -->
+    <link rel="stylesheet" href="{{ static 'global/base.css' }}">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row text-center mt-5">
+                <div class="alert alert-info" role="alert">
+                    <h2 class="text-capitalize">¡Bienvenido!</h2>
+                </div>
+            </div>
+            <div id="error_msg" class="row d-none">
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    Codigo Invalido
+                </div>
+            </div>
+            <div class="row my-3 justify-content-center text-center">
+                <label for="player_code" class="form-label">Ingrese su codigo de participante:</label>
+                <input type="text" class="form-control" id="player_code" placeholder="EXAMPLECODE">
+            </div>
+            <div class="row my-3 justify-content-center">
+                <div class="col-2">
+                    <button id="next" type="button" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+            <div class="row d-none">
+                <a id="submit" href="/room/espera?participant_label=" target="_blank">Link de Espera</a>
+                <button id="submit_button"></button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ static 'global/animation.js' }}"></script>
+    <script>
+        show_error = async () =>{
+            let err_msg = document.getElementById("error_msg");
+            await fade_in(err_msg);
+            await sleep(3000);
+            await fade_out(err_msg);
+        }
+        function liveRecv(data) {
+            let player_code = document.getElementById("player_code");
+            if (data == 1){
+                let link = document.getElementById("submit");
+                link.href += player_code.value.toUpperCase();
+                link.click();
+                document.getElementById("submit_button").click();
+                window.close();
+            }
+            else{
+                show_error();
+                player_code.value = "";
+            }
+        }
+
+        function sendValue() {
+            liveSend(document.getElementById("player_code").value);
+        }
+        document.getElementById("next").onclick = sendValue;
+    </script>
+{{ endblock }}
