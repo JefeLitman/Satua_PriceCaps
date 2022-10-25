@@ -1,5 +1,5 @@
 """File containing utilities functions for every market section in the whole app
-Version: 1.9
+Version: 2.0
 Made By: Edgar RP
 """
 
@@ -85,14 +85,16 @@ def set_groups(subsession):
     if groups.shape[1] != 2:
         raise AssertionError("The groups csv file is wrong, it must have only two columns")
     group_dict = {i:[] for i in np.unique(groups["group_id"])}
-    for p in subsession.get_players():
-        search = groups.loc[groups["participant_id"] == str(p.participant.label).upper()].values
-        if search.shape[0] != 1: 
-            raise AssertionError("An invalid player code tried to enter the session or the groups csv file doesn't contain that player. Player ID: {}".format(p.participant.label))
-        group_dict[search[0,1]].append(p)
+    players = subsession.get_players()
+    if groups.shape[0] != len(players):
+        raise AssertionError("You tried to create a session with different player quantities in group csv and number of participants at the moment of creating a session")
+
+    for p, (label, group_id) in zip(players, groups.values):
+        p.participant.label = label
+        group_dict[group_id].append(p)
     subsession.set_group_matrix([group_dict[i] for i in group_dict])
     for i, g in enumerate(subsession.get_groups()):
-        g.group_id = list(group_dict.keys())[i]
+        g.group_id = int(list(group_dict.keys())[i])
 
 def creating_session(subsession):
     set_groups(subsession)
