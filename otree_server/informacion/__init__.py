@@ -1,5 +1,5 @@
 """File containing the general and payments information for players
-Version: 1.4
+Version: 1.5
 Made By: Edgar RP
 """
 
@@ -32,8 +32,6 @@ class Player(BasePlayer):
     treatment = models.StringField()
 
 def creating_session(subsession):
-    if (len(subsession.get_players()) / 4) % 2 != 0:
-        raise AssertionError("The quantity of players must have an even number of groups with 4 player per group.")
     treatments = (subsession.session.config["treatment_FME"], subsession.session.config["treatment_FMI"], subsession.session.config["treatment_PCE"])
     if sum(treatments) != 1:
         raise AssertionError("You need to chose only one treatment for the session to start.")

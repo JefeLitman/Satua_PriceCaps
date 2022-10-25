@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.1 -->
+    <!-- Version 1.2 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -14,6 +14,7 @@
                         <h5 class="card-title text-center fs-3 mb-5">En la Sección {{ seccion }}:</h5>
                         <p class="card-text fs-4">1. El <b>precio de mercado</b> en la mayoría de los períodos fue: {{ precio }}</p>
                         <p class="card-text fs-4">2. Usted logró <b>comprar</b> en {{ compras }} de los {{ total_periodos }} períodos.</p>
+                        <p class="card-text fs-4">3. En <b>{{ quantity_1 }} período{{if quantity_1 != 1}}s{{endif}}</b>, sus ganancias fueron <b>{{ earnings_1 }}</b>, y en los restantes <b>{{ quantity_2 }} período{{if quantity_2 != 1}}s{{endif}}</b>, sus ganancias fueron <b>{{ earnings_2 }}</b>.</p>
                     </div>
                 </div>
             </div>

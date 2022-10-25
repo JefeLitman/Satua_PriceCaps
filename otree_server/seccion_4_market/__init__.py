@@ -1,7 +1,8 @@
 """File containing the section 4 (market) configuration param of players
-Version: 1.4
+Version: 1.5
 Made By: Edgar RP
 """
+import numpy as np
 from otree.api import *
 from utils import creating_session, set_players_results, get_price
 
@@ -18,6 +19,7 @@ class Subsession(BaseSubsession):
     pass
 
 class Group(BaseGroup):
+    group_id = models.IntegerField()
     seller_1_ask = models.IntegerField()
     seller_2_ask = models.IntegerField()
     seller_3_ask = models.IntegerField()
@@ -96,11 +98,16 @@ class O004_historial(Page):
     def vars_for_template(player):
         price = get_price(player)
         compras = sum([p.bid_accepted for p in player.in_all_rounds()])
+        (earnings_1, earnings_2), (quantity_1, quantity_2) = np.unique([p.earnings for p in player.in_all_rounds()], return_counts=1)
         return dict(
             seccion = 4,
             total_periodos = C.NUM_ROUNDS,
             precio = price,
-            compras = compras
+            compras = compras,
+            earnings_1 = earnings_1,
+            earnings_2 = earnings_2,
+            quantity_1 = quantity_1,
+            quantity_2 = quantity_2
         )
 
 page_sequence = [

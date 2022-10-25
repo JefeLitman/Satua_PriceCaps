@@ -1,9 +1,12 @@
 """File containing utilities functions for every market section in the whole app
-Version: 1.8
+Version: 1.9
 Made By: Edgar RP
 """
 
+import os
 import random
+import numpy as np
+import pandas as pd
 
 def set_experiment_params(player):
     player.winner_section = str(player.session.winner_section)
@@ -74,9 +77,26 @@ def set_players_results(group, section, round_number):
             if p.bid_accepted:
                 p.payoff = p.earnings
 
+def set_groups(subsession):
+    groups_file = os.path.join("./participants_data", subsession.session.config["groups_folder"], "groups.csv")
+    if not os.path.isfile(groups_file):
+        raise AssertionError("The groups_folder that you specified doesn't exist or the name is wrong")
+    groups = pd.read_csv(groups_file)
+    if groups.shape[1] != 2:
+        raise AssertionError("The groups csv file is wrong, it must have only two columns")
+    group_dict = {i:[] for i in np.unique(groups["group_id"])}
+    for p in subsession.get_players():
+        search = groups.loc[groups["participant_id"] == str(p.participant.label).upper()].values
+        if search.shape[0] != 1: 
+            raise AssertionError("An invalid player code tried to enter the session or the groups csv file doesn't contain that player. Player ID: {}".format(p.participant.label))
+        group_dict[search[0,1]].append(p)
+    subsession.set_group_matrix([group_dict[i] for i in group_dict])
+    for i, g in enumerate(subsession.get_groups()):
+        g.group_id = list(group_dict.keys())[i]
+
 def creating_session(subsession):
+    set_groups(subsession)
     if subsession.round_number == 1:
-        #subsession.group_randomly()
         for g in subsession.get_groups():
             set_group_asks(g)
             for p in g.get_players():
@@ -87,7 +107,6 @@ def creating_session(subsession):
             except AttributeError:
                 pass
     else:
-        subsession.group_like_round(1)
         for p in subsession.get_players():
             set_experiment_params(p)
             try:

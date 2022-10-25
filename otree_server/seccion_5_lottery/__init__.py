@@ -1,5 +1,5 @@
 """File containing the section 5 (lottery) configuration param of players
-Version: 1.3
+Version: 1.4
 Made By: Edgar RP
 """
 from otree.api import *
@@ -22,6 +22,7 @@ class Group(BaseGroup):
     pass
 
 class Player(BasePlayer):
+    earnings = models.CurrencyField()
     winner_round = models.StringField()
     winner_section = models.StringField()
     treatment = models.StringField()
@@ -68,15 +69,18 @@ class O002_espera(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        if player.session.winner_section == 5:
-            if player.lottery_selection == 1:
-                if player.session.comment.lower() == player.ticket_color.lower():
-                    player.payoff = 3
-                else:
-                    player.payoff = 2
+        if player.lottery_selection == 1:
+            if player.session.comment.lower() == player.ticket_color.lower():
+                player.earnings = 3
             else:
-                if player.session.comment.lower() == player.ticket_color.lower():
-                    player.payoff = 5
+                player.earnings = 2
+        else:
+            if player.session.comment.lower() == player.ticket_color.lower():
+                player.earnings = 5
+            else:
+                player.earnings = 0
+        if player.session.winner_section == 5:
+            player.payoff = player.earnings
 
 page_sequence = [
     O001_loteria,

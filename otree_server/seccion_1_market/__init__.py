@@ -1,7 +1,8 @@
 """File containing the section 1 (market) configuration param of players
-Version: 1.9
+Version: 2.0
 Made By: Edgar RP
 """
+import numpy as np
 from otree.api import *
 from utils import creating_session, set_players_results, get_price
 
@@ -19,6 +20,7 @@ class Subsession(BaseSubsession):
     pass
 
 class Group(BaseGroup):
+    group_id = models.IntegerField()
     seller_1_ask = models.IntegerField()
     seller_2_ask = models.IntegerField()
     seller_3_ask = models.IntegerField()
@@ -150,21 +152,27 @@ class O008_historial(Page):
     def vars_for_template(player):
         price = get_price(player)
         if player.round_number >= 3:
-            head = "1",
-            section = "1",
+            head = "1"
+            section = "1"
             total = C.NUM_ROUNDS - C.practice_rounds
             compras = sum([p.bid_accepted for p in player.in_rounds(3,10)])
+            (earnings_1, earnings_2), (quantity_1, quantity_2) = np.unique([p.earnings for p in player.in_rounds(3,10)], return_counts=1)
         else:
-            head = "de práctica",
-            section = "de práctica",
+            head = "de práctica"
+            section = "de práctica"
             total = C.NUM_ROUNDS - 8
             compras = sum([p.bid_accepted for p in player.in_rounds(1,2)])
+            (earnings_1, earnings_2), (quantity_1, quantity_2) = np.unique([p.earnings for p in player.in_rounds(1,2)], return_counts=1)
         return dict(
             header = head,
             seccion = section,
             total_periodos = total,
             precio = price,
-            compras = compras
+            compras = compras,
+            earnings_1 = earnings_1,
+            earnings_2 = earnings_2,
+            quantity_1 = quantity_1,
+            quantity_2 = quantity_2
         )
 
 class O009_instr_expectativas(Page):

@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.0 -->
+    <!-- Version 1.1 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -43,7 +43,6 @@
                 link.href += player_code.value.toUpperCase();
                 link.click();
                 document.getElementById("submit_button").click();
-                window.close();
             }
             else{
                 show_error();

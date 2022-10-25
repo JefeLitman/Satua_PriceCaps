@@ -1,5 +1,5 @@
 """File containing the general settings for the oTree app
-Version: 1.4
+Version: 1.5
 Made By: Edgar RP
 """
 from os import environ
@@ -23,6 +23,7 @@ SESSION_CONFIGS = [
             "gracias"
         ],
         num_demo_participants=8,
+        groups_folder="NA",
         treatment_FME=True,
         treatment_FMI=False,
         treatment_PCE=False,
