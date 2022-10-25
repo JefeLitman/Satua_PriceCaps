@@ -1,5 +1,5 @@
 """File containing utilities functions for every market section in the whole app
-Version: 1.7
+Version: 1.8
 Made By: Edgar RP
 """
 
@@ -41,7 +41,8 @@ def set_players_bids(group, total_rounds):
     for r in range(1, total_rounds+1):
         for i, p in enumerate(players):
             if total_rounds == 10 and r <= 2:
-                p.in_round(r).bid_value = bids[i]
+                sub_bids = sorted(bids[:len(players)], reverse= r==2)
+                p.in_round(r).bid_value = sub_bids[i]
             else:
                 p.in_round(r).bid_value = bids_matrix[r-1-start][i]
 
@@ -65,9 +66,13 @@ def set_players_results(group, section, round_number):
     for i, p in enumerate(bids):
         price = get_price(p)
         p.bid_accepted = p.bid_value >= asks[i] and asks[i] <= price
+        if p.bid_accepted:
+            p.earnings = p.bid_value - price
+        else:
+            p.earnings = 0
         if section == p.session.winner_section and round_number == p.session.winner_round:
             if p.bid_accepted:
-                p.payoff = p.bid_value - price
+                p.payoff = p.earnings
 
 def creating_session(subsession):
     if subsession.round_number == 1:
