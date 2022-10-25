@@ -1,5 +1,5 @@
 """File containing the section 1 (market) configuration param of players
-Version: 1.8
+Version: 1.9
 Made By: Edgar RP
 """
 from otree.api import *
@@ -25,6 +25,7 @@ class Group(BaseGroup):
     seller_4_ask = models.IntegerField()
 
 class Player(BasePlayer):
+    earnings = models.CurrencyField()
     bid_value = models.IntegerField()
     bid_accepted = models.BooleanField()
     expectation_0_after = models.IntegerField()
@@ -149,13 +150,18 @@ class O008_historial(Page):
     def vars_for_template(player):
         price = get_price(player)
         if player.round_number >= 3:
+            head = "1",
+            section = "1",
             total = C.NUM_ROUNDS - C.practice_rounds
             compras = sum([p.bid_accepted for p in player.in_rounds(3,10)])
         else:
+            head = "de práctica",
+            section = "de práctica",
             total = C.NUM_ROUNDS - 8
             compras = sum([p.bid_accepted for p in player.in_rounds(1,2)])
         return dict(
-            seccion = 1,
+            header = head,
+            seccion = section,
             total_periodos = total,
             precio = price,
             compras = compras
