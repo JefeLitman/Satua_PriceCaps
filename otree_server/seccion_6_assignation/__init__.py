@@ -1,5 +1,5 @@
 """File containing the section 6 (assignation) configuration param of players
-Version: 1.3
+Version: 1.4
 Made By: Edgar RP
 """
 from otree.api import *
@@ -34,7 +34,7 @@ def creating_session(subsession):
     set_groups(subsession)
     groups = subsession.get_groups()
     randomized_groups = random.sample(groups, len(groups))
-    correspondence = randomized_groups[1:] + randomized_groups[0]
+    correspondence = randomized_groups[1:] + [randomized_groups[0]]
     
     for i, g in enumerate(randomized_groups):
         set_chosen_player(g)
