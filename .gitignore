@@ -130,3 +130,11 @@ dmypy.json
 
 # Env variables
 *.env
+
+# Sensible Data oTree
+*.csv
+*.txt
+
+# FileBrowser Data
+*.json
+*.db
