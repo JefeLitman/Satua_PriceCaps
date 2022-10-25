@@ -1,5 +1,5 @@
 {{ block content }}
-    <!-- Version 1.4 -->
+    <!-- Version 1.5 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
@@ -79,6 +79,10 @@
                 </div>
             </div>
             <div class="row d-none">
+                <input type="text" id="Q1" name="checking_1_history" value="">
+                <input type="text" id="Q2" name="checking_2_history" value="">
+                <input type="text" id="Q3" name="checking_3_history" value="">
+                <input type="text" id="Q4" name="checking_4_history" value="">
                 <button id="submit">Siguiente</button>
             </div>
         </div>
@@ -103,6 +107,9 @@
             await fade(prev, good_msg);
             await sleep(1000);
             if (idx == 5){
+                for (let i=1; i<=4; i++){
+                    document.getElementById("Q"+i).value += "X"
+                }
                 document.getElementById("submit").click();
                 return null;
             }
@@ -110,7 +117,8 @@
             idx++;
         };
 
-        wrong_answer = async () => {
+        wrong_answer = async (q_id, value) => {
+            document.getElementById(q_id).value += value + "-";
             let err_msg = document.getElementById("error_msg");
             await fade_in(err_msg);
             await sleep(3000);
@@ -119,7 +127,9 @@
 
         for (let i=1; i<=4; i++){
             for (let j=1; j<=4; j++){
-                document.getElementById("Q"+i+"_B"+j).onclick = wrong_answer;
+                let button = document.getElementById("Q"+i+"_B"+j);
+                let wrapper = () => wrong_answer("Q"+i, button.innerHTML);
+                button.onclick = wrapper;
             }
         }
         document.getElementById("Q1_B1").onclick = correct_answer;
