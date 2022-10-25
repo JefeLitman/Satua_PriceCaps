@@ -1,5 +1,5 @@
 """File containing the section 1 (market) configuration param of players
-Version: 2.0
+Version: 2.1
 Made By: Edgar RP
 """
 import numpy as np
@@ -38,6 +38,10 @@ class Player(BasePlayer):
     winner_round = models.StringField()
     winner_section = models.StringField()
     treatment = models.StringField()
+    checking_1_history = models.StringField()
+    checking_2_history = models.StringField()
+    checking_3_history = models.StringField()
+    checking_4_history = models.StringField()
 
 # PAGES
 class O001_instrucciones(Page):
@@ -51,6 +55,14 @@ class O002_resumen(Page):
         return player.participant.consentimiento and player.round_number == 1
 
 class O003_chequeo(Page):
+    form_model = 'player'
+    form_fields = [
+        'checking_1_history',
+        'checking_2_history',
+        'checking_3_history',
+        'checking_4_history'
+    ]
+
     @staticmethod
     def is_displayed(player):
         return player.participant.consentimiento and player.round_number == 1
@@ -108,7 +120,7 @@ class O006_mercado(Page):
             current_round = player.round_number
         return dict(
             header = head,
-            grupo = player.group_id,
+            grupo = player.group.group_id,
             seccion = 1,
             periodo = current_round,
             total_periodos = total,
@@ -133,7 +145,7 @@ class O007_resultado(Page):
             current_round = player.round_number
         return dict(
             header = head,
-            grupo = player.group_id,
+            grupo = player.group.group_id,
             seccion = 1,
             periodo = current_round,
             total_periodos = total,
@@ -197,6 +209,11 @@ class O010_expectativa(Page):
     @staticmethod
     def before_next_page(player, timeout_happened):
         player.participant.section_setting = None
+        for i in range(1,5):
+            attr = "checking_{}_history".format(i)
+            value = getattr(player.in_round(1), attr)
+            for p in player.in_rounds(2, C.NUM_ROUNDS):
+                setattr(p, attr, value)
         for p in player.in_previous_rounds():
             for i in range(5):
                 attr = "expectation_{}_after".format(i)
