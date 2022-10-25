@@ -1,5 +1,5 @@
 """File containing the section 4 (market) configuration param of players
-Version: 1.3
+Version: 1.4
 Made By: Edgar RP
 """
 from otree.api import *
@@ -24,6 +24,7 @@ class Group(BaseGroup):
     seller_4_ask = models.IntegerField()
 
 class Player(BasePlayer):
+    earnings = models.CurrencyField()
     winner_round = models.StringField()
     winner_section = models.StringField()
     treatment = models.StringField()
