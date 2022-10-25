@@ -1,5 +1,5 @@
 """File containing the section 2 (market) configuration param of players
-Version: 1.6
+Version: 1.7
 Made By: Edgar RP
 """
 import numpy as np
@@ -120,7 +120,7 @@ class O004_mercado(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
-            grupo = player.group_id,
+            grupo = player.group.group_id,
             seccion = 2,
             periodo = player.round_number,
             total_periodos = C.NUM_ROUNDS,
@@ -136,7 +136,7 @@ class O005_resultado(Page):
     def vars_for_template(player):
         price = get_price(player)
         return dict(
-            grupo = player.group_id,
+            grupo = player.group.group_id,
             seccion = 2,
             periodo = player.round_number,
             total_periodos = C.NUM_ROUNDS,
