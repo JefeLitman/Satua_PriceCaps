@@ -12,13 +12,13 @@
                 <div class="card">
                     <div class="card-body">
                         <ul>
-                            <li class="fs-4">Su ID en la sesion es: <b>{{ p_id }}</b></li>
+                            <li class="fs-4">Su ID en la sesión es: <b>{{ p_id }}</b></li>
                             {{ if aplica_ronda }}
-                                <li class="fs-4">La seccion para pago es <b>{{ seccion }}</b> en la ronda {{ ronda }}</li>
+                                <li class="fs-4">La sección para pago es <b>{{ seccion }}</b> en la ronda {{ ronda }}</li>
                             {{ else }}
-                                <li class="fs-4">La seccion para pago es <b>{{ seccion }}</b></li>
+                                <li class="fs-4">La sección para pago es <b>{{ seccion }}</b></li>
                             {{ endif }}
-                            <li class="fs-4">Sus ganancias en esta sesion fueron: <b>{{ fee }} COP + {{ ganancias }} COP = {{ ganancias_totales }} COP</b></li>
+                            <li class="fs-4">Sus ganancias en esta sesión fueron: <b>{{ fee }} COP + {{ ganancias }} COP = {{ ganancias_totales }} COP</b></li>
                             <li class="fs-4"><a href="https://forms.gle/rNXD64rjpV7SoD2w5" class="link-primary">Formulario para el registro de la cuenta bancaria.</a></li>
                         </ul>
                     </div>
