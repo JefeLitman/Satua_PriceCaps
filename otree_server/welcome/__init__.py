@@ -1,5 +1,5 @@
 """File containing the welcome config for the players
-Version: 1.1
+Version: 1.2
 Made By: Edgar RP
 """
 import os
@@ -48,7 +48,7 @@ class O001_codigo(Page):
     @staticmethod
     def live_method(player, data):
         base_path = "./participants_data/"
-        google_data = pd.read_csv(os.path.join(base_path, "google_form.csv"))
+        google_data = pd.read_csv(os.path.join(base_path, "google_form.csv"), dtype = str)
         old_columns = google_data.columns.values
         old_columns[1] = "id"
         google_data.columns = old_columns
@@ -69,9 +69,9 @@ class O001_codigo(Page):
         history = pd.read_csv(os.path.join(base_path, "history.csv"))
         search = google_data.loc[google_data["id"] == str(data).lower()].values
         has_participated = history.loc[history["participant_id"] == str(data).upper()].shape[0] > 0
-        if search.shape[0] == 1 and str(data).lower() not in present_persons and not has_participated:
+        if search.shape[0] >= 1 and str(data).lower() not in present_persons and not has_participated:
             with open(participants_file, "a") as csv:
-                csv.write(",".join(["{}".format(i) for i in search[0,1:]])+"\n")
+                csv.write(",".join(['\"{}\"'.format(i) for i in search[-1,1:]])+"\n")
             return {player.id_in_group: 1}
         else:
             return {player.id_in_group: 0}
