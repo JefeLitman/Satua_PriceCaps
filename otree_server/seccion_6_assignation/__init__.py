@@ -1,5 +1,5 @@
 """File containing the section 6 (assignation) configuration param of players
-Version: 1.5
+Version: 1.6
 Made By: Edgar RP
 """
 from otree.api import *
@@ -54,7 +54,7 @@ class O001_asignacion(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
-            my_group = player.group_id,
+            my_group = player.group.group_id,
             other_group = player.group_designed
         )
 
