@@ -1,5 +1,5 @@
 """File containing utilities functions for every market section in the whole app
-Version: 2.0
+Version: 2.1
 Made By: Edgar RP
 """
 
@@ -80,7 +80,7 @@ def set_players_results(group, section, round_number):
 def set_groups(subsession):
     groups_file = os.path.join("./participants_data", subsession.session.config["groups_folder"], "groups.csv")
     if not os.path.isfile(groups_file):
-        raise AssertionError("The groups_folder that you specified doesn't exist or the name is wrong")
+        raise AssertionError("The groups_folder that you specified doesn't exist, the name is wrong or the groups csv file is not present")
     groups = pd.read_csv(groups_file)
     if groups.shape[1] != 2:
         raise AssertionError("The groups csv file is wrong, it must have only two columns")
