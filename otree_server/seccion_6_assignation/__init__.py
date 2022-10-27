@@ -1,5 +1,5 @@
 """File containing the section 6 (assignation) configuration param of players
-Version: 1.4
+Version: 1.5
 Made By: Edgar RP
 """
 from otree.api import *
@@ -105,6 +105,11 @@ class O002_resultado(Page):
             other_group = player.group_designed,
             puntos = player.earnings
         )
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        with open("./participants_data/history.csv", "a") as history:
+            history.write('\"{}\"'.format(player.participant.label) + "\n")
         
 
 page_sequence = [
