@@ -134,6 +134,7 @@ dmypy.json
 # Sensible Data oTree
 *.csv
 *.txt
+*.xlsx
 
 # FileBrowser Data
 *.json
