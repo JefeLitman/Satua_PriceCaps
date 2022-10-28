@@ -5,5 +5,6 @@ RUN pip install \
     otree \
     psycopg2 \
     numpy \
-    pandas
+    pandas \ 
+    openpyxl
 CMD ["sh", "-c", "sleep 10; otree prodserver 0.0.0.0:8000"]
