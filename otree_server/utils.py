@@ -1,5 +1,5 @@
 """File containing utilities functions for every market section in the whole app
-Version: 2.1
+Version: 2.2
 Made By: Edgar RP
 """
 
@@ -81,16 +81,16 @@ def set_groups(subsession):
     groups_file = os.path.join("./participants_data", subsession.session.config["groups_folder"], "groups.csv")
     if not os.path.isfile(groups_file):
         raise AssertionError("The groups_folder that you specified doesn't exist, the name is wrong or the groups csv file is not present")
-    groups = pd.read_csv(groups_file)
+    groups = pd.read_csv(groups_file)[["id", "group"]]
     if groups.shape[1] != 2:
-        raise AssertionError("The groups csv file is wrong, it must have only two columns")
-    group_dict = {i:[] for i in np.unique(groups["group_id"])}
+        raise AssertionError("The groups csv file is wrong, it must have 'id' and 'groups' columns")
+    group_dict = {i:[] for i in np.unique(groups["group"])}
     players = subsession.get_players()
     if groups.shape[0] != len(players):
         raise AssertionError("You tried to create a session with different player quantities in group csv and number of participants at the moment of creating a session")
 
     for p, (label, group_id) in zip(players, groups.values):
-        p.participant.label = label
+        p.participant.label = str(label).upper()
         group_dict[group_id].append(p)
     subsession.set_group_matrix([group_dict[i] for i in group_dict])
     for i, g in enumerate(subsession.get_groups()):
