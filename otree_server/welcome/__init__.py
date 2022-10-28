@@ -1,5 +1,5 @@
 """File containing the welcome config for the players
-Version: 1.2
+Version: 1.3
 Made By: Edgar RP
 """
 import os
@@ -30,10 +30,10 @@ class Player(BasePlayer):
 
 def creating_session(subsession):
     labels_path = "./labels.txt"
-    participants_file = "./participants_data/google_form.csv"
+    participants_file = "./participants_data/google_form.xlsx"
     history_participants = "./participants_data/history.csv"
     if os.path.isfile(participants_file):
-        ids = pd.read_csv(participants_file).values[:,1]
+        ids = pd.read_excel(participants_file).values[:,1]
         with open(labels_path, "w") as labels:
             labels.write("\n".join([str(i).upper() for i in ids]))
     else:
@@ -48,7 +48,7 @@ class O001_codigo(Page):
     @staticmethod
     def live_method(player, data):
         base_path = "./participants_data/"
-        google_data = pd.read_csv(os.path.join(base_path, "google_form.csv"), dtype = str)
+        google_data = pd.read_excel(os.path.join(base_path, "google_form.xlsx"), dtype = str)
         old_columns = google_data.columns.values
         old_columns[1] = "id"
         google_data.columns = old_columns
