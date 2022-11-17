@@ -1,5 +1,5 @@
 """File containing the general settings for the oTree app
-Version: 1.5
+Version: 1.6
 Made By: Edgar RP
 """
 from os import environ
@@ -11,15 +11,37 @@ SESSION_CONFIGS = [
         num_demo_participants=1,
     ),
     dict(
-        name='Precios_Maximos_Simple',
+        name='Market_First',
         app_sequence=[
             'informacion', 
-            'seccion_1_market', 
-            'seccion_2_market',
-            'seccion_3_market', 
-            'seccion_4_market',
-            'seccion_5_lottery',
-            'seccion_6_assignation',
+            'market_1', 
+            'market_2',
+            'market_3', 
+            'market_4',
+            'lottery',
+            'assignation',
+            "gracias"
+        ],
+        num_demo_participants=8,
+        groups_folder="NA",
+        treatment_FME=True,
+        treatment_FMI=False,
+        treatment_PCE=False,
+        seed = 8128,
+        max_price = 7,
+        seller_asks = "2,2,8,9",
+        players_bids = "11,11,12,12"
+    ),
+    dict(
+        name='Lottery_First',
+        app_sequence=[
+            'informacion', 
+            'lottery',
+            'assignation',
+            'market_1', 
+            'market_2',
+            'market_3', 
+            'market_4',
             "gracias"
         ],
         num_demo_participants=8,
@@ -50,7 +72,10 @@ PARTICIPANT_FIELDS = [
 ]
 SESSION_FIELDS = [
     "winner_section",
-    "winner_round"
+    "winner_round",
+    "lottery_section_number",
+    "assignation_section_number",
+    "market_initial_number"
 ]
 
 # ISO-639 code
