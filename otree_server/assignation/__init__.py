@@ -1,5 +1,5 @@
-"""File containing the section 6 (assignation) configuration param of players
-Version: 1.6
+"""File containing the assignation section configuration params of players
+Version: 1.7
 Made By: Edgar RP
 """
 from otree.api import *
@@ -11,7 +11,7 @@ Your app description
 """
 
 class C(BaseConstants):
-    NAME_IN_URL = 'seccion_6_assignation'
+    NAME_IN_URL = 'assignation'
     PLAYERS_PER_GROUP = 4
     NUM_ROUNDS = 1
 
@@ -54,6 +54,7 @@ class O001_asignacion(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            seccion = player.session.assignation_section_number,
             my_group = player.group.group_id,
             other_group = player.group_designed
         )
@@ -73,21 +74,21 @@ class wait_for_all_groups(WaitPage):
                             for i, o_p in enumerate(randomized_players):
                                 if i < len(players) / 2:
                                     o_p.earnings = 3
-                                    if subsession.session.winner_section == 6:
+                                    if subsession.session.winner_section == subsession.session.assignation_section_number:
                                         o_p.payoff = 3
                                 else:
                                     o_p.earnings = 2
-                                    if subsession.session.winner_section == 6:
+                                    if subsession.session.winner_section == subsession.session.assignation_section_number:
                                         o_p.payoff = 2
                         else:
                             for i, o_p in enumerate(randomized_players):
                                 if i < len(players) / 2:
                                     o_p.earnings = 5
-                                    if subsession.session.winner_section == 6:
+                                    if subsession.session.winner_section == subsession.session.assignation_section_number:
                                         o_p.payoff = 5
                                 else:
                                     o_p.earnings = 0
-                                    if subsession.session.winner_section == 6:
+                                    if subsession.session.winner_section == subsession.session.assignation_section_number:
                                         o_p.payoff = 0 
                         break
 
@@ -102,14 +103,10 @@ class O002_resultado(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            seccion = player.session.assignation_section_number,
             other_group = player.group_designed,
             puntos = player.earnings
         )
-
-    @staticmethod
-    def before_next_page(player, timeout_happened):
-        with open("./participants_data/history.csv", "a") as history:
-            history.write('\"{}\"'.format(player.participant.label) + "\n")
         
 
 page_sequence = [
