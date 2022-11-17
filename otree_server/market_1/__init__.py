@@ -1,5 +1,5 @@
-"""File containing the section 1 (market) configuration param of players
-Version: 2.1
+"""File containing the market_1 section configuration param of players
+Version: 2.2
 Made By: Edgar RP
 """
 import numpy as np
@@ -11,7 +11,7 @@ Your app description
 """
 
 class C(BaseConstants):
-    NAME_IN_URL = 'seccion_1_market'
+    NAME_IN_URL = 'market_1'
     PLAYERS_PER_GROUP = 4
     NUM_ROUNDS = 10
     practice_rounds = 2
@@ -49,10 +49,22 @@ class O001_instrucciones(Page):
     def is_displayed(player):
         return player.participant.consentimiento and player.round_number == 1
 
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            seccion = player.session.market_initial_number
+        )
+
 class O002_resumen(Page):
     @staticmethod
     def is_displayed(player):
         return player.participant.consentimiento and player.round_number == 1
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            seccion = player.session.market_initial_number
+        )
 
 class O003_chequeo(Page):
     form_model = 'player'
@@ -67,6 +79,12 @@ class O003_chequeo(Page):
     def is_displayed(player):
         return player.participant.consentimiento and player.round_number == 1
 
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            seccion = player.session.market_initial_number
+        )
+
 class O004_info_practica(Page):
     @staticmethod
     def is_displayed(player):
@@ -75,6 +93,7 @@ class O004_info_practica(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            seccion = player.session.market_initial_number,
             pce = player.session.config["treatment_PCE"],
             max_price = player.session.config["max_price"]
         )
@@ -87,6 +106,7 @@ class O005_informacion(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            seccion = player.session.market_initial_number,
             pce = player.session.config["treatment_PCE"],
             max_price = player.session.config["max_price"]
         )
@@ -98,10 +118,11 @@ class wait_for_members(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(group):
+        section = group.session.market_initial_number
         if group.round_number > 2:
-            set_players_results(group, 1, group.round_number - C.practice_rounds)
+            set_players_results(group, section, group.round_number - C.practice_rounds)
         else:
-            set_players_results(group, 1, 0)
+            set_players_results(group, section, 0)
 
 class O006_mercado(Page):
     @staticmethod
@@ -121,7 +142,7 @@ class O006_mercado(Page):
         return dict(
             header = head,
             grupo = player.group.group_id,
-            seccion = 1,
+            seccion = player.session.market_initial_number,
             periodo = current_round,
             total_periodos = total,
             valor=player.bid_value,
@@ -146,7 +167,7 @@ class O007_resultado(Page):
         return dict(
             header = head,
             grupo = player.group.group_id,
-            seccion = 1,
+            seccion = player.session.market_initial_number,
             periodo = current_round,
             total_periodos = total,
             valor = player.bid_value,
@@ -164,8 +185,8 @@ class O008_historial(Page):
     def vars_for_template(player):
         price = get_price(player)
         if player.round_number >= 3:
-            head = "1"
-            section = "1"
+            head = player.session.market_initial_number
+            section = player.session.market_initial_number
             total = C.NUM_ROUNDS - C.practice_rounds
             compras = sum([p.bid_accepted for p in player.in_rounds(3,10)])
             (earnings_1, earnings_2), (quantity_1, quantity_2) = np.unique([p.earnings for p in player.in_rounds(3,10)], return_counts=1)
@@ -192,6 +213,12 @@ class O009_instr_expectativas(Page):
     def is_displayed(player):
         return player.participant.consentimiento and player.round_number == C.NUM_ROUNDS
 
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            seccion = player.session.market_initial_number
+        )
+
 class O010_expectativa(Page):
     form_model = 'player'
     form_fields = [
@@ -205,6 +232,12 @@ class O010_expectativa(Page):
     @staticmethod
     def is_displayed(player):
         return player.participant.consentimiento and player.round_number == C.NUM_ROUNDS
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            seccion = player.session.market_initial_number
+        )
 
     @staticmethod
     def before_next_page(player, timeout_happened):

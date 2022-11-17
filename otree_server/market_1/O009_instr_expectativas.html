@@ -1,11 +1,11 @@
 {{ block content }}
-    <!-- Version 1.2 -->
+    <!-- Version 1.3 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
             <div class="row text-center mt-5">
                 <div class="alert alert-info" role="alert">
-                    <h2>Sección 1 - Expectativas</h2>
+                    <h2>Sección {{seccion}} - Expectativas</h2>
                 </div>
             </div>
             <div id="slide1" class="row my-3">
@@ -22,7 +22,7 @@
             <div id="slide2" class="row my-3 d-none">
                 <div class="card">
                     <div class="card-body">
-                        <p>Para responder esta pregunta deberá utilizar la figura que encuentra abajo. En esta figura usted está observando una cuadrícula y, en la parte inferior, cinco círculos azules. En la posición inicial de los círculos sólo está viendo la mitad de cada uno de ellos, pero, una vez que los seleccione y los desplace hacia arriba, los podrá ver completos. Para mover cada círculo sólo tendrá que ubicar el cursor del ratón encima del círculo y moverlo hacia arriba. Podrá soltarlo cuando esté en la posición que usted desea. No es necesario que mueva todos los círculos, sólo deberá mover aquellos que necesite para dar su respuesta. Tenga en cuenta que la suma de los números que usted proporcione debe ser ocho (8) porque este es el número total de períodos en la Sección 1. Si infringe esta regla no podrá avanzar a la siguiente página.</p>
+                        <p>Para responder esta pregunta deberá utilizar la figura que encuentra abajo. En esta figura usted está observando una cuadrícula y, en la parte inferior, cinco círculos azules. En la posición inicial de los círculos sólo está viendo la mitad de cada uno de ellos, pero, una vez que los seleccione y los desplace hacia arriba, los podrá ver completos. Para mover cada círculo sólo tendrá que ubicar el cursor del ratón encima del círculo y moverlo hacia arriba. Podrá soltarlo cuando esté en la posición que usted desea. No es necesario que mueva todos los círculos, sólo deberá mover aquellos que necesite para dar su respuesta. Tenga en cuenta que la suma de los números que usted proporcione debe ser ocho (8) porque este es el número total de períodos en la Sección {{seccion}}. Si infringe esta regla no podrá avanzar a la siguiente página.</p>
                     </div>
                     <img src="{{ static 'market/expectations_initial.png' }}" class="card-img-bottom img-fluid border border-primary">
                 </div>

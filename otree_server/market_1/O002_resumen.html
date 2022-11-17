@@ -1,11 +1,11 @@
 {{ block content }}
-    <!-- Version 1.4 -->
+    <!-- Version 1.5 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
             <div class="row text-center mt-5">
                 <div class="alert alert-info" role="alert">
-                    <h2>Sección 1 - Resumen</h2>
+                    <h2>Sección {{seccion}} - Resumen</h2>
                 </div>
             </div>
             <div id="slide1" class="row my-3">
@@ -24,7 +24,7 @@
                         <p>En el lado derecho de la pantalla, hay un botón que dice <b>"Enviar solicitud de compra".</b> Para enviar la solicitud, simplemente dé clic en el botón.</p>
                         <p>Una vez que todas las solicitudes de compra y precios sugeridos fueron recopilados y ordenados, usted podrá ver (1) si su solicitud ha sido aceptada, (2) el precio de mercado y (3) sus ganancias.</p>
                         <p>En el ejemplo, su valor es 10, su solicitud ha sido aceptada y el precio de mercado es 6. Por lo tanto, sus ganancias en este período son 10 - 6 = 4.</p>
-                        <p>Recuerde que la Sección 1 incluye 8 períodos. Una vez que termine el último período, aparecerá la siguiente pantalla.</p>
+                        <p>Recuerde que la Sección {{seccion}} incluye 8 períodos. Una vez que termine el último período, aparecerá la siguiente pantalla.</p>
                     </div>
                     <img src="{{ static 'market/solicitud.png' }}" class="card-img-bottom img-fluid border border-primary">
                 </div>
