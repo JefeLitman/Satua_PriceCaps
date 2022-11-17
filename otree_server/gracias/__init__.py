@@ -1,5 +1,5 @@
 """File containing the gracias pages for the players
-Version: 1.3
+Version: 1.4
 Made By: Edgar RP
 """
 from otree.api import *
@@ -27,13 +27,24 @@ class Player(BasePlayer):
     pass
 
 # PAGES
+class saving_participation(WaitPage):
+    @staticmethod
+    def after_all_players_arrive(group):
+        for player in group.get_players():
+            with open("./participants_data/history.csv", "a") as history:
+                history.write('\"{}\"'.format(player.participant.label) + "\n")
+
 class O001_gracias(Page):
     @staticmethod
     def vars_for_template(player):
         total_payment = player.participant.payoff_plus_participation_fee()
+        unique_round = [
+            player.session.lottery_section_number, 
+            player.session.assignation_section_number
+        ]
         return dict(
             p_id = player.participant.label,
-            aplica_ronda = player.session.winner_section not in [5, 6],
+            aplica_ronda = player.session.winner_section not in unique_round,
             seccion = player.session.winner_section,
             ronda = player.session.winner_round,
             fee = int(player.session.config["participation_fee"]),
@@ -41,4 +52,4 @@ class O001_gracias(Page):
             ganancias_totales = int(total_payment)
         )
 
-page_sequence = [O001_gracias]
+page_sequence = [saving_participation, O001_gracias]
