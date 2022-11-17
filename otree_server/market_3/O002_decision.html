@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row text-center mt-5">
                 <div class="alert alert-info" role="alert">
-                    <h2>Sección 3 - Decisión</h2>
+                    <h2>Sección {{seccion}} - Decisión</h2>
                 </div>
             </div>
             <div class="row text-center my-3">
@@ -23,19 +23,19 @@
             <div class="row my-3">
                 <div class="col-6 border border-secondary text-center p-3">
                     {{ if pce }}
-                        <p>En la <b>Sección 4</b>, NO permitir a los vendedores automatizados que sugieran un precio mayor que {{ max_price }}, lo que garantiza que el precio de mercado NO superará {{ max_price }} (como en la Sección 1).</p>
+                        <p>En la <b>Sección {{next_seccion}}</b>, NO permitir a los vendedores automatizados que sugieran un precio mayor que {{ max_price }}, lo que garantiza que el precio de mercado NO superará {{ max_price }} (como en la Sección {{init_seccion}}).</p>
                         <button name="section_4_setting" value="False" class="btn btn-success">Escojo esta opción</button>
                     {{ else }}
-                        <p>En la <b>Sección 4</b>, permitir a los vendedores automatizados que sugieran cualquier precio por encima de su costo (como en la Sección 1).</p>
+                        <p>En la <b>Sección {{next_seccion}}</b>, permitir a los vendedores automatizados que sugieran cualquier precio por encima de su costo (como en la Sección {{init_seccion}}).</p>
                         <button name="section_4_setting" value="True" class="btn btn-success">Escojo esta opción</button>
                     {{ endif }}
                 </div>
                 <div class="col-6 border border-secondary text-center p-3">
                     {{ if pce }}
-                        <p>En la <b>Sección 4</b>, permitir a los vendedores automatizados que sugieran cualquier precio por encima de su costo (como en la Sección 2).</p>
+                        <p>En la <b>Sección {{next_seccion}}</b>, permitir a los vendedores automatizados que sugieran cualquier precio por encima de su costo (como en la Sección {{second_seccion}}).</p>
                         <button name="section_4_setting" value="True" class="btn btn-success">Escojo esta opción</button>
                     {{ else }}
-                        <p>En la <b>Sección 4</b>, NO permitir a los vendedores automatizados que sugieran un precio mayor que {{ max_price }}, lo que garantiza que el precio de mercado NO superará {{ max_price }} (como en la Sección 2).</p>
+                        <p>En la <b>Sección {{next_seccion}}</b>, NO permitir a los vendedores automatizados que sugieran un precio mayor que {{ max_price }}, lo que garantiza que el precio de mercado NO superará {{ max_price }} (como en la Sección {{second_seccion}}).</p>
                         <button name="section_4_setting" value="False" class="btn btn-success">Escojo esta opción</button>
                     {{ endif }}
                 </div>
