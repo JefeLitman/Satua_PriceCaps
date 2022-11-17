@@ -1,5 +1,5 @@
-"""File containing the section 2 (market) configuration param of players
-Version: 1.7
+"""File containing the market_2 section configuration param of players
+Version: 1.8
 Made By: Edgar RP
 """
 import numpy as np
@@ -11,7 +11,7 @@ Your app description
 """
 
 class C(BaseConstants):
-    NAME_IN_URL = 'seccion_2_market'
+    NAME_IN_URL = 'market_2'
     PLAYERS_PER_GROUP = 4
     NUM_ROUNDS = 8
 
@@ -54,6 +54,9 @@ class O001_informacion(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            seccion = player.session.market_initial_number + 1,
+            init_seccion = player.session.market_initial_number,
+            next_seccion = player.session.market_initial_number + 2,
             fmi = player.session.config["treatment_FMI"],
             pce = player.session.config["treatment_PCE"],
             chosen_one = player.chosen_player,
@@ -84,6 +87,7 @@ class O002_preexpectativa(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            seccion = player.session.market_initial_number + 1,
             pce = player.session.config["treatment_PCE"],
         )
 
@@ -98,6 +102,9 @@ class O003_decision(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            seccion = player.session.market_initial_number + 1,
+            init_seccion = player.session.market_initial_number,
+            next_seccion = player.session.market_initial_number + 2,
             pce = player.session.config["treatment_PCE"],
             chosen_one = player.chosen_player,
             max_price = player.session.config["max_price"]
@@ -110,7 +117,8 @@ class wait_for_members(WaitPage):
     
     @staticmethod
     def after_all_players_arrive(group):
-        set_players_results(group, 2, group.round_number)
+        sec = group.session.market_initial_number + 1
+        set_players_results(group, sec, group.round_number)
 
 class O004_mercado(Page):
     @staticmethod
@@ -121,7 +129,7 @@ class O004_mercado(Page):
     def vars_for_template(player):
         return dict(
             grupo = player.group.group_id,
-            seccion = 2,
+            seccion = player.session.market_initial_number + 1,
             periodo = player.round_number,
             total_periodos = C.NUM_ROUNDS,
             valor=player.bid_value,
@@ -137,7 +145,7 @@ class O005_resultado(Page):
         price = get_price(player)
         return dict(
             grupo = player.group.group_id,
-            seccion = 2,
+            seccion = player.session.market_initial_number + 1,
             periodo = player.round_number,
             total_periodos = C.NUM_ROUNDS,
             valor = player.bid_value,
@@ -157,7 +165,7 @@ class O006_historial(Page):
         compras = sum([p.bid_accepted for p in player.in_all_rounds()])
         (earnings_1, earnings_2), (quantity_1, quantity_2) = np.unique([p.earnings for p in player.in_all_rounds()], return_counts=1)
         return dict(
-            seccion = 2,
+            seccion = player.session.market_initial_number + 1,
             total_periodos = C.NUM_ROUNDS,
             precio = price,
             compras = compras,
@@ -184,6 +192,7 @@ class O007_postexpectativa(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            seccion = player.session.market_initial_number + 1,
             fmi = player.session.config["treatment_FMI"],
             max_price = player.session.config["max_price"]
         )

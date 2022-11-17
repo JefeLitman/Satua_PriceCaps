@@ -1,32 +1,32 @@
 {{ block content }}
-    <!-- Version 1.3 -->
+    <!-- Version 1.4 -->
     <link rel="stylesheet" href="{{ static 'global/base.css' }}">
     <div class="row">
         <div class="container-fluid">
             <div class="row text-center mt-5">
                 <div class="alert alert-info" role="alert">
-                    <h2>Sección 2 - Preparación</h2>
+                    <h2>Sección {{seccion}} - Preparación</h2>
                 </div>
             </div>
             <div id="slide1" class="row my-3">
                 <div class="card">
                     <div class="card-body">
                         {{ if fmi }}
-                            <p>En la Sección 2 le pediremos que imagine una situación <b>hipotética</b>, es decir, una situación que no ocurrirá. Imagine que participa en 8 períodos de mercado adicionales con su grupo.</p>
-                            <p>Suponga que la estructura y las reglas de estos períodos son las mismas que en la Sección 1 excepto por una diferencia:</p>
+                            <p>En la Sección {{seccion}} le pediremos que imagine una situación <b>hipotética</b>, es decir, una situación que no ocurrirá. Imagine que participa en 8 períodos de mercado adicionales con su grupo.</p>
+                            <p>Suponga que la estructura y las reglas de estos períodos son las mismas que en la Sección {{init_seccion}} excepto por una diferencia:</p>
                         {{ else }}
-                            <p>En la Sección 2, usted participará nuevamente en 8 períodos de mercado con su grupo. Si se selecciona la Sección 2 como la sección que cuenta para el pago, seleccionaremos al azar uno de los períodos y usted recibirá las ganancias de ese período. Todos los períodos tienen la misma probabilidad de ser seleccionados.</p>
-                            <p>La estructura y las reglas de estos períodos serán las mismas que en la Sección 1 excepto por una diferencia:</p>
+                            <p>En la Sección {{seccion}}, usted participará nuevamente en 8 períodos de mercado con su grupo. Si se selecciona la Sección {{seccion}} como la sección que cuenta para el pago, seleccionaremos al azar uno de los períodos y usted recibirá las ganancias de ese período. Todos los períodos tienen la misma probabilidad de ser seleccionados.</p>
+                            <p>La estructura y las reglas de estos períodos serán las mismas que en la Sección {{init_seccion}} excepto por una diferencia:</p>
                         {{ endif }}
                         {{ if pce }}
-                            <p class="fw-bold text-center">En la Sección 2, a los vendedores automatizados se les permite sugerir cualquier precio por encima de su costo, incluidos los precios superiores a {{ max_price }}.</p>
+                            <p class="fw-bold text-center">En la Sección {{seccion}}, a los vendedores automatizados se les permite sugerir cualquier precio por encima de su costo, incluidos los precios superiores a {{ max_price }}.</p>
                         {{ else }}
-                            <p class="fw-bold text-center">En la Sección 2, a los vendedores automatizados NO se les permite sugerir un precio mayor que {{ max_price }}. Esto garantiza que el precio de mercado NO superará {{ max_price }}.</p>
+                            <p class="fw-bold text-center">En la Sección {{seccion}}, a los vendedores automatizados NO se les permite sugerir un precio mayor que {{ max_price }}. Esto garantiza que el precio de mercado NO superará {{ max_price }}.</p>
                         {{ endif }}
                         {{ if fmi }}
-                            <p>En un momento usted nos dirá lo que cree que podría suceder en estos períodos hipotéticos. Antes de eso, uno de los compradores de su grupo será seleccionado al azar (por un programa del computador principal del laboratorio). El comprador que fue seleccionado al azar en su grupo elegirá las reglas del mercado para la <b>Sección 3</b>, donde nuevamente habrá 8 períodos <b>reales.</b></p>
+                            <p>En un momento usted nos dirá lo que cree que podría suceder en estos períodos hipotéticos. Antes de eso, uno de los compradores de su grupo será seleccionado al azar (por un programa del computador principal del laboratorio). El comprador que fue seleccionado al azar en su grupo elegirá las reglas del mercado para la <b>Sección {{next_seccion}}</b>, donde nuevamente habrá 8 períodos <b>reales.</b></p>
                         {{ else }}
-                            <p>Antes de comenzar los períodos de la Sección 2, uno de los compradores de su grupo será seleccionado al azar (por un programa del computador principal del laboratorio). El comprador que fue seleccionado al azar en su grupo elegirá las reglas del mercado para la <b>Sección 3</b>, donde nuevamente habrá 8 períodos.</p>
+                            <p>Antes de comenzar los períodos de la Sección {{seccion}}, uno de los compradores de su grupo será seleccionado al azar (por un programa del computador principal del laboratorio). El comprador que fue seleccionado al azar en su grupo elegirá las reglas del mercado para la <b>Sección {{next_seccion}}</b>, donde nuevamente habrá 8 períodos.</p>
                         {{ endif }}
                     </div>
                 </div>
@@ -34,28 +34,28 @@
             <div id="slide2" class="row my-3 d-none">
                 <div class="card">
                     <div class="card-body">
-                        <p>Si se selecciona la Sección 3 como la sección que cuenta, seleccionaremos al azar uno de los períodos y usted recibirá las ganancias de ese período.</p>
+                        <p>Si se selecciona la Sección {{next_seccion}} como la sección que cuenta, seleccionaremos al azar uno de los períodos y usted recibirá las ganancias de ese período.</p>
                         <p>El comprador seleccionado elegirá <b>una</b> de las dos opciones siguientes:</p>
                         {{ if pce }}
                             <ul>
                                 <li>
-                                    En la <b>Sección 3</b>, NO permitir a los vendedores automatizados que sugieran un precio mayor que {{ max_price }}, lo que garantiza que el precio de mercado NO superará {{ max_price }} (como en la Sección 1).
+                                    En la <b>Sección {{next_seccion}}</b>, NO permitir a los vendedores automatizados que sugieran un precio mayor que {{ max_price }}, lo que garantiza que el precio de mercado NO superará {{ max_price }} (como en la Sección {{init_seccion}}).
                                 </li>
                                 <li>
-                                    En la <b>Sección 3</b>, permitir a los vendedores automatizados que sugieran cualquier precio por encima de su costo (como en la Sección 2).
+                                    En la <b>Sección {{next_seccion}}</b>, permitir a los vendedores automatizados que sugieran cualquier precio por encima de su costo (como en la Sección {{seccion}}).
                                 </li>
                             </ul>
                         {{ else }}
                             <ul>
                                 <li>
-                                    En la <b>Sección 3</b>, permitir a los vendedores automatizados que sugieran cualquier precio por encima de su costo (como en la Sección 1).
+                                    En la <b>Sección {{next_seccion}}</b>, permitir a los vendedores automatizados que sugieran cualquier precio por encima de su costo (como en la Sección {{init_seccion}}).
                                 </li>
                                 <li>
-                                    En la <b>Sección 3</b>, NO permitir a los vendedores automatizados que sugieran un precio por encima de {{ max_price }}, lo que garantiza que el precio de mercado NO superará {{ max_price }} (como en la Sección 2).
+                                    En la <b>Sección {{next_seccion}}</b>, NO permitir a los vendedores automatizados que sugieran un precio por encima de {{ max_price }}, lo que garantiza que el precio de mercado NO superará {{ max_price }} (como en la Sección {{seccion}}).
                                 </li>
                             </ul>
                         {{ endif }}
-                        <p>La elección que haga el comprador seleccionado se revelará una vez que lleguemos a la Sección 3.</p>
+                        <p>La elección que haga el comprador seleccionado se revelará una vez que lleguemos a la Sección {{next_seccion}}.</p>
                         <p><b>Incluso si usted no fue seleccionado para determinar las reglas del mercado, nos gustaría conocer su preferencia</b>, así que le pediremos que nos indique qué opción prefiere.</p>
                         <p>En un momento, usted verá en su pantalla si ha sido seleccionado.</p>
                     </div>
@@ -76,14 +76,14 @@
                 <div class="card">
                     <div class="card-body">
                         {{ if fmi }}
-                            <p>Antes de elegir las reglas del mercado para la <b>Sección 3</b>, nos gustaría conocer sus expectativas sobre los períodos hipotéticos de la <b>Sección 2</b>.</p>
+                            <p>Antes de elegir las reglas del mercado para la <b>Sección {{next_seccion}}</b>, nos gustaría conocer sus expectativas sobre los períodos hipotéticos de la <b>Sección {{seccion}}</b>.</p>
                         {{ else }}
-                            <p>Antes de elegir las reglas del mercado para la <b>Sección 3</b>, nos gustaría conocer sus expectativas sobre los próximos períodos de la <b>Sección 2</b>.</p>
+                            <p>Antes de elegir las reglas del mercado para la <b>Sección {{next_seccion}}</b>, nos gustaría conocer sus expectativas sobre los próximos períodos de la <b>Sección {{seccion}}</b>.</p>
                         {{ endif }}
                         {{ if pce }}
-                            <p class="fw-bold">Recuerde que en la Sección 2 a los vendedores automatizados se les permite sugerir cualquier precio por encima de su costo</p>
+                            <p class="fw-bold">Recuerde que en la Sección {{seccion}} a los vendedores automatizados se les permite sugerir cualquier precio por encima de su costo</p>
                         {{ else }}
-                            <p class="fw-bold">Recuerde que en la Sección 2 a los vendedores automatizados NO se les permite sugerir un precio mayor que {{ max_price }}</p>
+                            <p class="fw-bold">Recuerde que en la Sección {{seccion}} a los vendedores automatizados NO se les permite sugerir un precio mayor que {{ max_price }}</p>
                         {{ endif }}
                     </div>
                 </div>
