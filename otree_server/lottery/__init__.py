@@ -1,5 +1,5 @@
-"""File containing the section 5 (lottery) configuration param of players
-Version: 1.4
+"""File containing the lottery section configuration param of players
+Version: 1.5
 Made By: Edgar RP
 """
 from otree.api import *
@@ -11,7 +11,7 @@ Your app description
 """
 
 class C(BaseConstants):
-    NAME_IN_URL = 'seccion_5_lottery'
+    NAME_IN_URL = 'lottery'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
@@ -52,6 +52,7 @@ class O001_loteria(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            seccion = player.session.lottery_section_number,
             roja = player.ticket_color.lower() == "roja"
         )
 
@@ -63,6 +64,7 @@ class O002_espera(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            seccion = player.session.lottery_section_number,
             roja = player.ticket_color.lower() == "roja",
             loteria_1 = player.lottery_selection == 1
         )
@@ -79,7 +81,7 @@ class O002_espera(Page):
                 player.earnings = 5
             else:
                 player.earnings = 0
-        if player.session.winner_section == 5:
+        if player.session.winner_section == player.session.lottery_section_number:
             player.payoff = player.earnings
 
 page_sequence = [
